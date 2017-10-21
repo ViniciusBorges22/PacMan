@@ -1,0 +1,68 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+utils	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^package utils;$/;"	package	line:1
+Position	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^public class Position implements Serializable {$/;"	class	line:11
+x	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    private double x;$/;"	field	line:18	class:Position	file:
+y	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    private double y;$/;"	field	line:19	class:Position	file:
+previousX	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    private double previousX;$/;"	field	line:21	class:Position	file:
+previousY	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    private double previousY;$/;"	field	line:22	class:Position	file:
+Position	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public Position(double x, double y){$/;"	method	line:24	class:Position	signature:(double x, double y)
+setPosition	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public final boolean setPosition(double x, double y){$/;"	method	line:28	class:Position	signature:(double x, double y)
+getX	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public double getX(){$/;"	method	line:45	class:Position	signature:()
+getY	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public double getY(){$/;"	method	line:49	class:Position	signature:()
+comeBack	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public boolean comeBack(){$/;"	method	line:53	class:Position	signature:()
+moveUp	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public boolean moveUp(){$/;"	method	line:57	class:Position	signature:()
+moveDown	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public boolean moveDown(){$/;"	method	line:60	class:Position	signature:()
+moveRight	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public boolean moveRight(){$/;"	method	line:63	class:Position	signature:()
+moveLeft	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Position.java	/^    public boolean moveLeft(){$/;"	method	line:66	class:Position	signature:()
+utils	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Drawing.java	/^package utils;$/;"	package	line:1
+Drawing	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Drawing.java	/^public class Drawing {$/;"	class	line:13
+screen	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Drawing.java	/^    static GameScreen screen;$/;"	field	line:14	class:Drawing
+getGameScreen	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Drawing.java	/^    public static GameScreen getGameScreen() {$/;"	method	line:16	class:Drawing	signature:()
+setGameScreen	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Drawing.java	/^    public static void setGameScreen(GameScreen newScreen) {$/;"	method	line:20	class:Drawing	signature:(GameScreen newScreen)
+draw	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Drawing.java	/^    public static void draw(Graphics g, ImageIcon imageIcon, double y, double x) {$/;"	method	line:23	class:Drawing	signature:(Graphics g, ImageIcon imageIcon, double y, double x)
+utils	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^package utils;$/;"	package	line:1
+Consts	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^public class Consts {$/;"	class	line:11
+CELL_SIZE	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^    public static final int CELL_SIZE = 30;$/;"	field	line:12	class:Consts
+NUM_CELLS	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^    public static final int NUM_CELLS = 20;$/;"	field	line:13	class:Consts
+WALK_STEP_DEC_PLACES	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^    public static final int WALK_STEP_DEC_PLACES = 1;$/;"	field	line:15	class:Consts
+WALK_STEP	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^    public static final double WALK_STEP = 0.1;$/;"	field	line:16	class:Consts
+PATH	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^    public static final String PATH = File.separator+"imgs"+File.separator;$/;"	field	line:18	class:Consts
+DELAY	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^    public static final int DELAY = 20;$/;"	field	line:20	class:Consts
+TIMER_FOGO	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/utils/Consts.java	/^    public static final int TIMER_FOGO = 40;$/;"	field	line:21	class:Consts
+control	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameController.java	/^package control;$/;"	package	line:1
+GameController	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameController.java	/^public class GameController {$/;"	class	line:14
+drawAllElements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameController.java	/^    public void drawAllElements(ArrayList<Element> elemArray, Graphics g){$/;"	method	line:15	class:GameController	signature:(ArrayList<Element> elemArray, Graphics g)
+processAllElements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameController.java	/^    public void processAllElements(ArrayList<Element> e){$/;"	method	line:20	class:GameController	signature:(ArrayList<Element> e)
+isValidPosition	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameController.java	/^    public boolean isValidPosition(ArrayList<Element> elemArray, Element elem){$/;"	method	line:41	class:GameController	signature:(ArrayList<Element> elemArray, Element elem)
+control	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/Main.java	/^package control;$/;"	package	line:1
+Main	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/Main.java	/^public class Main {$/;"	class	line:9
+main	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/Main.java	/^    public static void main(String[] args) {$/;"	method	line:11	class:Main	signature:(String[] args)
+elements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Fire.java	/^package elements;$/;"	package	line:1
+Fire	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Fire.java	/^public class Fire extends Element implements Serializable{$/;"	class	line:13
+Fire	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Fire.java	/^    public Fire() {$/;"	method	line:15	class:Fire	signature:()
+autoDraw	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Fire.java	/^    public void autoDraw(Graphics g) {$/;"	method	line:21	class:Fire	signature:(Graphics g)
+elements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^package elements;$/;"	package	line:1
+Element	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^public abstract class Element implements Serializable{$/;"	class	line:18
+directions	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected ImageIcon[] directions;$/;"	field	line:20	class:Element
+imageIcon	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected ImageIcon imageIcon;$/;"	field	line:21	class:Element
+pos	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected Position pos;$/;"	field	line:22	class:Element
+isTransposable	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected boolean isTransposable; \/\/ Pode passar por cima?$/;"	field	line:23	class:Element
+isMortal	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected boolean isMortal;       \/\/ Se encostar, morre?$/;"	field	line:24	class:Element
+Element	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected Element(String[] imageName, int dir) {$/;"	method	line:26	class:Element	signature:(String[] imageName, int dir)
+getImageIcon	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    private ImageIcon getImageIcon(String imageName)$/;"	method	line:40	class:Element	file:	signature:(String imageName)
+setImageIcon	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected final void setImageIcon(int dir)$/;"	method	line:57	class:Element	signature:(int dir)
+overlap	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean overlap(Element elem) {$/;"	method	line:62	class:Element	signature:(Element elem)
+getStringPosition	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public String getStringPosition() {$/;"	method	line:72	class:Element	signature:()
+setPosition	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean setPosition(double x, double y) {$/;"	method	line:76	class:Element	signature:(double x, double y)
+isTransposable	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean isTransposable() {$/;"	method	line:80	class:Element	signature:()
+setTransposable	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public void setTransposable(boolean isTransposable) {$/;"	method	line:84	class:Element	signature:(boolean isTransposable)
+autoDraw	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    abstract public void autoDraw(Graphics g);$/;"	method	line:88	class:Element	signature:(Graphics g)
+moveUp	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveUp() {$/;"	method	line:90	class:Element	signature:()
+moveDown	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveDown() {$/;"	method	line:94	class:Element	signature:()
+moveRight	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveRight() {$/;"	method	line:98	class:Element	signature:()
+moveLeft	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveLeft() {$/;"	method	line:102	class:Element	signature:()

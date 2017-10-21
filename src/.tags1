@@ -1,0 +1,26 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+elements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^package elements;$/;"	package	line:1
+Element	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^public abstract class Element implements Serializable{$/;"	class	line:18
+directions	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected ImageIcon[] directions;$/;"	field	line:20	class:Element
+imageIcon	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected ImageIcon imageIcon;$/;"	field	line:21	class:Element
+pos	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected Position pos;$/;"	field	line:22	class:Element
+isTransposable	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected boolean isTransposable; \/\/ Pode passar por cima?$/;"	field	line:23	class:Element
+isMortal	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected boolean isMortal;       \/\/ Se encostar, morre?$/;"	field	line:24	class:Element
+Element	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected Element(String[] imageName, int dir) {$/;"	method	line:26	class:Element	signature:(String[] imageName, int dir)
+getImageIcon	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    private ImageIcon getImageIcon(String imageName)$/;"	method	line:40	class:Element	file:	signature:(String imageName)
+setImageIcon	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    protected final void setImageIcon(int dir)$/;"	method	line:57	class:Element	signature:(int dir)
+overlap	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean overlap(Element elem) {$/;"	method	line:62	class:Element	signature:(Element elem)
+getStringPosition	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public String getStringPosition() {$/;"	method	line:72	class:Element	signature:()
+setPosition	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean setPosition(double x, double y) {$/;"	method	line:76	class:Element	signature:(double x, double y)
+isTransposable	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean isTransposable() {$/;"	method	line:80	class:Element	signature:()
+setTransposable	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public void setTransposable(boolean isTransposable) {$/;"	method	line:84	class:Element	signature:(boolean isTransposable)
+autoDraw	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    abstract public void autoDraw(Graphics g);$/;"	method	line:88	class:Element	signature:(Graphics g)
+moveUp	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveUp() {$/;"	method	line:90	class:Element	signature:()
+moveDown	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveDown() {$/;"	method	line:94	class:Element	signature:()
+moveRight	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveRight() {$/;"	method	line:98	class:Element	signature:()
+moveLeft	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Element.java	/^    public boolean moveLeft() {$/;"	method	line:102	class:Element	signature:()
