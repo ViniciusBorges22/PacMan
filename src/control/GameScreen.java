@@ -2,6 +2,7 @@ package control;
 
 import elements.Skull;
 import elements.PacMan;
+import elements.Brick;
 import elements.Element;
 import utils.Consts;
 import utils.Drawing;
@@ -49,6 +50,13 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
         Skull skull = new Skull();
         skull.setPosition(9, 1);
         this.addElement(skull);
+
+        for (int i = 0; i < Consts.NUM_CELLS; i++)
+        {
+            Brick brick = new Brick();
+            brick.setPosition(i, Consts.NUM_CELLS/2);
+            this.addElement(brick);
+        }
     }
 
     public final void addElement(Element elem) {
@@ -73,7 +81,7 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
         for (int i = 0; i < Consts.NUM_CELLS; i++) {
             for (int j = 0; j < Consts.NUM_CELLS; j++) {
                 try {
-                    Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + "bricks.png");
+                    Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + "fundo.png");
                     g2.drawImage(newImage,
                             j * Consts.CELL_SIZE, i * Consts.CELL_SIZE, Consts.CELL_SIZE, Consts.CELL_SIZE, null);
 

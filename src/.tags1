@@ -4,17 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-elements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^package elements;$/;"	package	line:1
-PacMan	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^public class PacMan extends Element  implements Serializable{$/;"	class	line:13
-STOP	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public static final int STOP = 0;$/;"	field	line:15	class:PacMan
-MOVE_LEFT	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public static final int MOVE_LEFT = 1;$/;"	field	line:16	class:PacMan
-MOVE_RIGHT	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public static final int MOVE_RIGHT = 2;$/;"	field	line:17	class:PacMan
-MOVE_UP	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public static final int MOVE_UP = 3;$/;"	field	line:18	class:PacMan
-MOVE_DOWN	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public static final int MOVE_DOWN = 4;$/;"	field	line:19	class:PacMan
-movDirection	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    private int movDirection = STOP;$/;"	field	line:21	class:PacMan	file:
-PacMan	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public PacMan() {$/;"	method	line:23	class:PacMan	signature:()
-changeDirection	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public void changeDirection(int dir)$/;"	method	line:27	class:PacMan	signature:(int dir)
-autoDraw	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public void autoDraw(Graphics g){$/;"	method	line:33	class:PacMan	signature:(Graphics g)
-backToLastPosition	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public void backToLastPosition(){$/;"	method	line:37	class:PacMan	signature:()
-setMovDirection	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public void setMovDirection(int direction) {$/;"	method	line:41	class:PacMan	signature:(int direction)
-move	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/PacMan.java	/^    public void move() {$/;"	method	line:45	class:PacMan	signature:()
+elements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^package elements;$/;"	package	line:1
+Brick	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^public class Brick extends Element$/;"	class	line:6
+Brick	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^    public Brick()$/;"	method	line:8	class:Brick	signature:()
+autoDraw	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^    public void autoDraw(Graphics g){$/;"	method	line:14	class:Brick	signature:(Graphics g)
