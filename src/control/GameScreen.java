@@ -1,7 +1,7 @@
 package control;
 
 import elements.Skull;
-import elements.Lolo;
+import elements.PacMan;
 import elements.Element;
 import utils.Consts;
 import utils.Drawing;
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class GameScreen extends javax.swing.JFrame implements KeyListener {
 
-    private final Lolo lolo;
+    private final PacMan pacMan;
     private final ArrayList<Element> elemArray;
     private final GameController controller = new GameController();
 
@@ -42,9 +42,9 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
         elemArray = new ArrayList<Element>();
 
         /*Cria e adiciona elementos*/
-        lolo = new Lolo();
-        lolo.setPosition(0, 0);
-        this.addElement(lolo);
+        pacMan = new PacMan();
+        pacMan.setPosition(0, 0);
+        this.addElement(pacMan);
 
         Skull skull = new Skull();
         skull.setPosition(9, 1);
@@ -85,7 +85,7 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
 
         this.controller.drawAllElements(elemArray, g2);
         this.controller.processAllElements(elemArray);
-        this.setTitle("-> Cell: " + lolo.getStringPosition());
+        this.setTitle("-> Cell: " + pacMan.getStringPosition());
 
         g.dispose();
         g2.dispose();
@@ -107,19 +107,19 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            lolo.setMovDirection(Lolo.MOVE_UP);
-            lolo.changeDirection(3);
+            pacMan.setMovDirection(PacMan.MOVE_UP);
+            pacMan.changeDirection(3);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            lolo.setMovDirection(Lolo.MOVE_DOWN);
-            lolo.changeDirection(1);
+            pacMan.setMovDirection(PacMan.MOVE_DOWN);
+            pacMan.changeDirection(1);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            lolo.setMovDirection(Lolo.MOVE_LEFT);
-            lolo.changeDirection(2);
+            pacMan.setMovDirection(PacMan.MOVE_LEFT);
+            pacMan.changeDirection(2);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            lolo.setMovDirection(Lolo.MOVE_RIGHT);
-            lolo.changeDirection(0);
+            pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+            pacMan.changeDirection(0);
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            lolo.setMovDirection(Lolo.STOP);
+            pacMan.setMovDirection(PacMan.STOP);
         }
 
         //repaint(); /*invoca o paint imediatamente, sem aguardar o refresh*/
