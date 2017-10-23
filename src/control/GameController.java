@@ -2,6 +2,7 @@ package control;
 
 import elements.Element;
 import elements.PacMan;
+import elements.Cherry;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -31,9 +32,15 @@ public class GameController {
         Element eTemp;
         for(int i = 1; i < e.size(); i++){
             eTemp = e.get(i);
-            if(pPacMan.overlap(eTemp))
+            if(pPacMan.overlap(eTemp)){
                 if(eTemp.isTransposable())
                     e.remove(eTemp);
+            }
+            else if(eTemp instanceof Cherry){
+                ((Cherry) eTemp).decrementDuration();
+                if(((Cherry) eTemp).getDuration() == 0)
+                    e.remove(eTemp);
+            }
         }
 
         pPacMan.move();

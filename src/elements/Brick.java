@@ -10,7 +10,8 @@ public class Brick extends Element
         super(new String[]{"brick.png"}, 0);
         this.isTransposable = false;
     }
-
+    
+    @Override
     public void autoDraw(Graphics g){
         Drawing.draw(g, this.imageIcon, pos.getY(), pos.getX());
     }

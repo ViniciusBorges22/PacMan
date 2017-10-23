@@ -4,7 +4,17 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-elements	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^package elements;$/;"	package	line:1
-Brick	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^public class Brick extends Element$/;"	class	line:6
-Brick	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^    public Brick()$/;"	method	line:8	class:Brick	signature:()
-autoDraw	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/elements/Brick.java	/^    public void autoDraw(Graphics g){$/;"	method	line:14	class:Brick	signature:(Graphics g)
+control	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^package control;$/;"	package	line:1
+GameScreen	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^public class GameScreen extends javax.swing.JFrame implements KeyListener {$/;"	class	line:28
+pacMan	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    private final PacMan pacMan;$/;"	field	line:30	class:GameScreen	file:
+elemArray	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    private final ArrayList<Element> elemArray;$/;"	field	line:31	class:GameScreen	file:
+controller	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    private final GameController controller = new GameController();$/;"	field	line:32	class:GameScreen	file:
+GameScreen	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public GameScreen() {$/;"	method	line:34	class:GameScreen	signature:()
+addElement	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public final void addElement(Element elem) {$/;"	method	line:65	class:GameScreen	signature:(Element elem)
+removeElement	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public void removeElement(Element elem) {$/;"	method	line:69	class:GameScreen	signature:(Element elem)
+paint	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public void paint(Graphics gOld) {$/;"	method	line:74	class:GameScreen	signature:(Graphics gOld)
+go	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public void go() {$/;"	method	line:108	class:GameScreen	signature:()
+keyPressed	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public void keyPressed(KeyEvent e) {$/;"	method	line:119	class:GameScreen	signature:(KeyEvent e)
+initComponents	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    private void initComponents() {$/;"	method	line:146	class:GameScreen	file:	signature:()
+keyTyped	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public void keyTyped(KeyEvent e) {$/;"	method	line:171	class:GameScreen	signature:(KeyEvent e)
+keyReleased	/home/vinicius/Dropbox/Graduação/Programação/POO/PacMan_Alunos/src/control/GameScreen.java	/^    public void keyReleased(KeyEvent e) {$/;"	method	line:175	class:GameScreen	signature:(KeyEvent e)
