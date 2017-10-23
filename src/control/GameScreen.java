@@ -4,7 +4,7 @@ import elements.Skull;
 import elements.PacMan;
 import elements.Brick;
 import elements.Element;
-import elements.Cherry;
+import elements.Fruit;
 import utils.Consts;
 import utils.Drawing;
 import java.awt.Graphics;
@@ -48,11 +48,17 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
         pacMan.setPosition(0, 0);
         this.addElement(pacMan);
 
-        Cherry cherry = new Cherry();
+        Fruit morango = new Fruit("strawberry.png");
         double x = Math.random()*Consts.NUM_CELLS;
-        double y = Math.random()*Consts.NUM_CELLS;
-        cherry.setPosition(x, y);
-        this.addElement(cherry);
+        double y = Math.random()*Consts.NUM_CELLS;  
+        morango.setPosition(x, y);
+        this.addElement(morango);
+        
+        Fruit cereja = new Fruit("cherry.png");
+        x = Math.random()*Consts.NUM_CELLS;
+        y = Math.random()*Consts.NUM_CELLS;  
+        morango.setPosition(x, y);
+        this.addElement(cereja);
 
         for (int i = 0; i < Consts.NUM_CELLS; i++)
         {
