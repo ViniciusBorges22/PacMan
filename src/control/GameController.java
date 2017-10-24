@@ -2,7 +2,7 @@ package control;
 
 import elements.Element;
 import elements.PacMan;
-import elements.Cherry;
+import elements.Fruit;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -36,9 +36,9 @@ public class GameController {
                 if(eTemp.isTransposable())
                     e.remove(eTemp);
             }
-            else if(eTemp instanceof Cherry){
-                ((Cherry) eTemp).decrementDuration();
-                if(((Cherry) eTemp).getDuration() == 0)
+            else if(eTemp instanceof Fruit){
+                ((Fruit) eTemp).decrementDuration();
+                if(((Fruit) eTemp).getDuration() == 0)
                     e.remove(eTemp);
             }
         }
