@@ -29,6 +29,8 @@ import java.util.logging.Logger;
 public class GameScreen extends javax.swing.JFrame implements KeyListener {
 
     private final PacMan pacMan;
+    private final Strawberry strawberry;
+    private final Cherry cherry;
     private final ArrayList<Element> elemArray;
     private final GameController controller = new GameController();
 
@@ -49,24 +51,17 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
         pacMan.setPosition(0, 0);
         this.addElement(pacMan);
 
-        Strawberry strawberry = new Strawberry();
+        strawberry = new Strawberry();
         double x = Math.random()*Consts.NUM_CELLS;
         double y = Math.random()*Consts.NUM_CELLS;
         strawberry.setPosition(x, y);
         this.addElement(strawberry);
 
-        Cherry cherry = new Cherry();
+        cherry = new Cherry();
         x = Math.random()*Consts.NUM_CELLS;
         y = Math.random()*Consts.NUM_CELLS;
         cherry.setPosition(x, y);
         this.addElement(cherry);
-
-        for (int i = 0; i < Consts.NUM_CELLS; i++)
-        {
-            Brick brick = new Brick();
-            brick.setPosition(i, Consts.NUM_CELLS/2);
-            this.addElement(brick);
-        }
     }
 
     public final void addElement(Element elem) {
@@ -113,14 +108,25 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
     }
 
     public void go() {
-        TimerTask task = new TimerTask() {
-
+        TimerTask repaint = new TimerTask(){
             public void run() {
                 repaint();
             }
         };
+        TimerTask eraseStrawberry = new TimerTask(){
+            public void run(){
+                elemArray.remove(strawberry);
+            }
+        };
+        TimerTask eraseCherry = new TimerTask(){
+            public void run(){
+                elemArray.remove(cherry);
+            }
+        };
         Timer timer = new Timer();
-        timer.schedule(task, 0, Consts.DELAY);
+        timer.schedule(repaint, 0, Consts.DELAY);
+        timer.schedule(eraseStrawberry, Consts.TIMER_STRAWBERRY);
+        timer.schedule(eraseCherry, Consts.TIMER_CHERRY);
     }
 
     public void keyPressed(KeyEvent e) {

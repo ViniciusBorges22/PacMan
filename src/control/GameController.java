@@ -36,11 +36,11 @@ public class GameController {
                 if(eTemp.isTransposable())
                     e.remove(eTemp);
             }
-            else if(eTemp instanceof Fruit){
+            /*else if(eTemp instanceof Fruit){
                 ((Fruit) eTemp).decrementDuration();
                 if(((Fruit) eTemp).getDuration() == 0)
                     e.remove(eTemp);
-            }
+            }*/
         }
 
         pPacMan.move();
