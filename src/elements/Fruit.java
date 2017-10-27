@@ -3,26 +3,25 @@ package elements;
 import java.awt.Graphics;
 import utils.Drawing;
 
-public abstract class Fruit extends Element{
+public abstract class Fruit extends Element {
+
     protected int points;
     protected int duration;
 
-    public Fruit(String iconName)
-    {
+    public Fruit(String iconName) {
         super(new String[]{iconName}, 0);
         this.isMortal = true;
     }
 
-    public int getPoints()
-    {
+    public int getPoints() {
         return points;
     }
 
-    public int getDuration(){
+    public int getDuration() {
         return duration;
     }
 
-    public void decrementDuration(){
+    public void decrementDuration() {
         this.duration--;
     }
 

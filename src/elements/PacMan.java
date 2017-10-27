@@ -4,13 +4,7 @@ import utils.Drawing;
 import java.awt.Graphics;
 import java.io.Serializable;
 
-/**
- * Projeto de POO 2017
- *
- * @author Luiz Eduardo
- * Baseado em material do Prof. Jose Fernando Junior
- */
-public class PacMan extends Element  implements Serializable{
+public class PacMan extends Element implements Serializable {
 
     public static final int STOP = 0;
     public static final int MOVE_LEFT = 1;
@@ -21,20 +15,20 @@ public class PacMan extends Element  implements Serializable{
     private int movDirection = STOP;
 
     public PacMan() {
-        super(new String[]{"pacman_right.png", "pacman_down.png", "pacman_left.png", "pacman_up.png"}, 0);
+        super(new String[]{"pacman_right.png", "pacman_down.png",
+            "pacman_left.png", "pacman_up.png"}, 0);
     }
 
-    public void changeDirection(int dir)
-    {
+    public void changeDirection(int dir) {
         setImageIcon(dir);
     }
 
     @Override
-    public void autoDraw(Graphics g){
-        Drawing.draw(g, this.imageIcon, pos.getY(), pos.getX());
+    public void autoDraw(Graphics g) {
+        Drawing.draw(g, imageIcon, pos.getY(), pos.getX());
     }
 
-    public void backToLastPosition(){
+    public void backToLastPosition() {
         this.pos.comeBack();
     }
 

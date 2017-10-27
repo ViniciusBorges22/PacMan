@@ -9,13 +9,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.swing.ImageIcon;
 
-/**
- * Projeto de POO 2017
- *
- * @author Luiz Eduardo
- * Baseado em material do Prof. Jose Fernando Junior
- */
-public abstract class Element implements Serializable{
+public abstract class Element implements Serializable {
 
     protected ImageIcon[] directions;
     protected ImageIcon imageIcon;
@@ -29,16 +23,14 @@ public abstract class Element implements Serializable{
         this.isMortal = false;
         directions = new ImageIcon[imageName.length];
 
-        for(int i = 0; i < imageName.length; i++)
-        {
+        for (int i = 0; i < imageName.length; i++) {
             directions[i] = getImageIcon(imageName[i]);
         }
 
         setImageIcon(dir);
     }
 
-    private ImageIcon getImageIcon(String imageName)
-    {
+    private ImageIcon getImageIcon(String imageName) {
         try {
             ImageIcon imageIconFunc = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + imageName);
             Image img = imageIconFunc.getImage();
@@ -47,26 +39,21 @@ public abstract class Element implements Serializable{
             g.drawImage(img, 0, 0, Consts.CELL_SIZE, Consts.CELL_SIZE, null);
             imageIconFunc = new ImageIcon(bi);
             return imageIconFunc;
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
             return null;
         }
     }
 
-    protected final void setImageIcon(int dir)
-    {
+    protected final void setImageIcon(int dir) {
         imageIcon = directions[dir];
     }
 
-    public boolean overlap(Element elem) {
+    public boolean overlap(final Element elem) {
         double xDist = Math.abs(elem.pos.getX() - this.pos.getX());
         double yDist = Math.abs(elem.pos.getY() - this.pos.getY());
 
-        if (xDist < 1.0 && yDist < 1.0)
-            return true;
-        else
-            return false;
+        return (xDist < 1.0 && yDist < 1.0);
     }
 
     public String getStringPosition() {
@@ -102,4 +89,10 @@ public abstract class Element implements Serializable{
     public boolean moveLeft() {
         return this.pos.moveLeft();
     }
+
+    public Position getPos() {
+        return pos;
+    }
+    
+    
 }

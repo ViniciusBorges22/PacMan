@@ -1,6 +1,6 @@
 package elements;
 
-public class Strawberry extends Fruit{
+public class Strawberry extends Fruit {
 
     public Strawberry() {
         super("strawberry.png");

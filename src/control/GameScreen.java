@@ -1,32 +1,28 @@
 package control;
 
-import elements.Skull;
 import elements.PacMan;
-import elements.Brick;
 import elements.Element;
 import elements.Cherry;
 import elements.Strawberry;
+
 import utils.Consts;
 import utils.Drawing;
+
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFrame;
 
-/**
- * Projeto de POO 2017
- *
- * @author Luiz Eduardo
- * Baseado em material do Prof. Jose Fernando Junior
- */
-public class GameScreen extends javax.swing.JFrame implements KeyListener {
+import scene.Scene;
+import scene.Scene1;
+import scene.Scene2;
+import scene.Scene3;
+
+public class GameScreen extends JFrame implements KeyListener {
 
     private final PacMan pacMan;
     private final Strawberry strawberry;
@@ -34,40 +30,69 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
     private final ArrayList<Element> elemArray;
     private final GameController controller = new GameController();
 
+    private Scene scene;
+
+    // Construtor
     public GameScreen() {
         Drawing.setGameScreen(this);
         initComponents();
 
-        this.addKeyListener(this);   /*teclado*/
+        this.addKeyListener(this);
 
         /*Cria a janela do tamanho do tabuleiro + insets (bordas) da janela*/
         this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
-                     Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
+                Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
 
-        elemArray = new ArrayList<Element>();
+        // Lista de elementos
+        this.elemArray = new ArrayList<>();
 
-        /*Cria e adiciona elementos*/
-        pacMan = new PacMan();
-        pacMan.setPosition(0, 0);
+        // Pacman
+        this.pacMan = new PacMan();
+        this.pacMan.setPosition(1, 1);
         this.addElement(pacMan);
 
-        strawberry = new Strawberry();
-        double x = Math.random()*Consts.NUM_CELLS;
-        double y = Math.random()*Consts.NUM_CELLS;
-        strawberry.setPosition(x, y);
-        this.addElement(strawberry);
+        // Strawberry
+        this.strawberry = new Strawberry();
+        this.strawberry.setPosition(Math.random() * Consts.NUM_CELLS,
+                Math.random() * Consts.NUM_CELLS);
+//        this.addElement(strawberry);
 
-        cherry = new Cherry();
-        x = Math.random()*Consts.NUM_CELLS;
-        y = Math.random()*Consts.NUM_CELLS;
-        cherry.setPosition(x, y);
-        this.addElement(cherry);
+        // Cherry
+        this.cherry = new Cherry();
+        this.cherry.setPosition(Math.random() * Consts.NUM_CELLS,
+                Math.random() * Consts.NUM_CELLS);
+//        this.addElement(cherry);
+    
+        // Cria cenario 1
+        newScene(1);
     }
 
+    // Cria cenario com todos os seus elementos
+    private void newScene(final int scene) {
+        switch (scene) {
+            // Tela 1
+            case 1:
+                this.scene = new Scene1("brick.png", 2);
+                break;
+
+            // Tela 2
+            case 2:
+                this.scene = new Scene2("brick.png", 2);
+                break;
+
+            // Tela 3
+            case 3:
+                this.scene = new Scene3("brick.png", 2);
+                break;
+        }
+    }
+
+    // Adicionar elementos na lista
     public final void addElement(Element elem) {
         elemArray.add(elem);
     }
 
+    // Remover elementos na lista
     public void removeElement(Element elem) {
         elemArray.remove(elem);
     }
@@ -75,29 +100,19 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
     @Override
     public void paint(Graphics gOld) {
         Graphics g = getBufferStrategy().getDrawGraphics();
+        Graphics g2 = g.create(getInsets().right, getInsets().top,
+                getWidth() - getInsets().left, getHeight() - getInsets().bottom);
 
-        /*Criamos um contexto grafico*/
-        Graphics g2 = g.create(getInsets().right, getInsets().top, getWidth() - getInsets().left, getHeight() - getInsets().bottom);
+        // Pintar cenario
+        this.scene.paintScene(g2);
 
-        /* DESENHA CENARIO
-           Trocar essa parte por uma estrutura mais bem organizada
-           Utilizando a classe Stage
-        */
-        for (int i = 0; i < Consts.NUM_CELLS; i++) {
-            for (int j = 0; j < Consts.NUM_CELLS; j++) {
-                try {
-                    Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + "fundo.png");
-                    g2.drawImage(newImage,
-                            j * Consts.CELL_SIZE, i * Consts.CELL_SIZE, Consts.CELL_SIZE, Consts.CELL_SIZE, null);
-
-                } catch (IOException ex) {
-                    Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-
+        // Pintar elementos
         this.controller.drawAllElements(elemArray, g2);
-        this.controller.processAllElements(elemArray);
+
+        // Verificar colisao entre elementos
+        this.controller.processAllElements(elemArray, scene);
+
+        // Titulo da janela
         this.setTitle("-> Cell: " + pacMan.getStringPosition());
 
         g.dispose();
@@ -108,45 +123,61 @@ public class GameScreen extends javax.swing.JFrame implements KeyListener {
     }
 
     public void go() {
-        TimerTask repaint = new TimerTask(){
+        // Time para pintar a tela
+        TimerTask repaint = new TimerTask() {
+            @Override
             public void run() {
                 repaint();
             }
         };
-        TimerTask eraseStrawberry = new TimerTask(){
-            public void run(){
+
+        // Time para strawberry
+        TimerTask eraseStrawberry = new TimerTask() {
+            @Override
+            public void run() {
                 elemArray.remove(strawberry);
             }
         };
-        TimerTask eraseCherry = new TimerTask(){
-            public void run(){
+
+        // Time para cherry
+        TimerTask eraseCherry = new TimerTask() {
+            @Override
+            public void run() {
                 elemArray.remove(cherry);
             }
         };
+
         Timer timer = new Timer();
         timer.schedule(repaint, 0, Consts.DELAY);
-        timer.schedule(eraseStrawberry, Consts.TIMER_STRAWBERRY);
-        timer.schedule(eraseCherry, Consts.TIMER_CHERRY);
+//        timer.schedule(eraseStrawberry, Consts.TIMER_STRAWBERRY);
+//        timer.schedule(eraseCherry, Consts.TIMER_CHERRY);
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            pacMan.setMovDirection(PacMan.MOVE_UP);
-            pacMan.changeDirection(3);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            pacMan.setMovDirection(PacMan.MOVE_DOWN);
-            pacMan.changeDirection(1);
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            pacMan.setMovDirection(PacMan.MOVE_LEFT);
-            pacMan.changeDirection(2);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            pacMan.setMovDirection(PacMan.MOVE_RIGHT);
-            pacMan.changeDirection(0);
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            pacMan.setMovDirection(PacMan.STOP);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                pacMan.setMovDirection(PacMan.MOVE_UP);
+                pacMan.changeDirection(3);
+                break;
+            case KeyEvent.VK_DOWN:
+                pacMan.setMovDirection(PacMan.MOVE_DOWN);
+                pacMan.changeDirection(1);
+                break;
+            case KeyEvent.VK_LEFT:
+                pacMan.setMovDirection(PacMan.MOVE_LEFT);
+                pacMan.changeDirection(2);
+                break;
+            case KeyEvent.VK_RIGHT:
+                pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+                pacMan.changeDirection(0);
+                break;
+            case KeyEvent.VK_SPACE:
+                pacMan.setMovDirection(PacMan.STOP);
+                break;
+            default:
+                break;
         }
-
-        //repaint(); /*invoca o paint imediatamente, sem aguardar o refresh*/
     }
 
     /**

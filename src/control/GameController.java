@@ -2,57 +2,58 @@ package control;
 
 import elements.Element;
 import elements.PacMan;
-import elements.Fruit;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import scene.Scene;
 
-/**
- * Projeto de POO 2017
- *
- * @author Luiz Eduardo
- * Baseado em material do Prof. Jose Fernando Junior
- */
 public class GameController {
-    public void drawAllElements(ArrayList<Element> elemArray, Graphics g){
-        for(int i=0; i<elemArray.size(); i++){
+
+    public void drawAllElements(ArrayList<Element> elemArray, Graphics g) {
+        for (int i = 1; i < elemArray.size(); i++) {
             elemArray.get(i).autoDraw(g);
         }
+        elemArray.get(0).autoDraw(g);
     }
-    public void processAllElements(ArrayList<Element> e){
-        if(e.isEmpty())
-            return;
 
-        PacMan pPacMan = (PacMan)e.get(0);
-        if (!isValidPosition(e, pPacMan)) {
+    public void processAllElements(ArrayList<Element> e, Scene scene) {
+        if (e.isEmpty()) {
+            return;
+        }
+
+        PacMan pPacMan = (PacMan) e.get(0);
+        
+        // Verifica colisao entre pacman e o cenario
+        if (scene.overlap(pPacMan) || !isValidPosition(e, pPacMan)) {
             pPacMan.backToLastPosition();
             pPacMan.setMovDirection(PacMan.STOP);
             return;
         }
-
+        
         Element eTemp;
-        for(int i = 1; i < e.size(); i++){
+        // Verifica colisao entre PacMan e outros elementos
+        for (int i = 1; i < e.size(); i++) {
             eTemp = e.get(i);
-            if(pPacMan.overlap(eTemp)){
-                if(eTemp.isTransposable())
+            if (pPacMan.overlap(eTemp)) {
+                if (eTemp.isTransposable()) {
                     e.remove(eTemp);
+                }
             }
-            /*else if(eTemp instanceof Fruit){
-                ((Fruit) eTemp).decrementDuration();
-                if(((Fruit) eTemp).getDuration() == 0)
-                    e.remove(eTemp);
-            }*/
         }
 
         pPacMan.move();
     }
-    public boolean isValidPosition(ArrayList<Element> elemArray, Element elem){
+
+    private boolean isValidPosition(ArrayList<Element> elemArray, Element elem) {
         Element elemAux;
-        for(int i = 1; i < elemArray.size(); i++){
+        for (int i = 1; i < elemArray.size(); i++) {
             elemAux = elemArray.get(i);
-            if(!elemAux.isTransposable())
-                if(elemAux.overlap(elem))
+            if (!elemAux.isTransposable()) {
+                if (elemAux.overlap(elem)) {
                     return false;
+                }
+            }
         }
         return true;
     }
+    
 }
