@@ -13,9 +13,15 @@ public class PacMan extends Element implements Serializable {
     public static final int MOVE_DOWN = 4;
 
     private int movDirection = STOP;
+    
+    // Controle da imagem
+    private int control_right = 0;
+    private int control_down = 2;
+    private int control_left = 4;
+    private int control_up = 6;
 
     public PacMan() {
-        super(new String[]{"pacman_right.png", "pacman_down.png",
+        super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png",
             "pacman_left.png", "pacman_up.png"}, 0);
     }
 
@@ -34,6 +40,13 @@ public class PacMan extends Element implements Serializable {
 
     public void setMovDirection(int direction) {
         movDirection = direction;
+    }
+
+    public boolean overlapBall(final Element elem) {
+        double xDist = Math.abs(elem.pos.getX() - this.pos.getX());
+        double yDist = Math.abs(elem.pos.getY() - this.pos.getY());
+
+        return (xDist < 0.45 && yDist < 0.45);
     }
 
     public void move() {

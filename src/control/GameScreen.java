@@ -62,7 +62,7 @@ public class GameScreen extends JFrame implements KeyListener {
         this.cherry.setPosition(Math.random() * Consts.NUM_CELLS,
                 Math.random() * Consts.NUM_CELLS);
 //        this.addElement(cherry);
-    
+
         // Cria cenario 1
         newScene(1);
     }
@@ -72,17 +72,17 @@ public class GameScreen extends JFrame implements KeyListener {
         switch (scene) {
             // Tela 1
             case 1:
-                this.scene = new Scene1("brick.png", 2);
+                this.scene = new Scene1("brick.png");
                 break;
 
             // Tela 2
             case 2:
-                this.scene = new Scene2("brick.png", 2);
+                this.scene = new Scene2("brick.png");
                 break;
 
             // Tela 3
             case 3:
-                this.scene = new Scene3("brick.png", 2);
+                this.scene = new Scene3("brick.png");
                 break;
         }
     }
@@ -103,17 +103,15 @@ public class GameScreen extends JFrame implements KeyListener {
         Graphics g2 = g.create(getInsets().right, getInsets().top,
                 getWidth() - getInsets().left, getHeight() - getInsets().bottom);
 
-        // Pintar cenario
-        this.scene.paintScene(g2);
-
         // Pintar elementos
-        this.controller.drawAllElements(elemArray, g2);
+        this.controller.drawAllElements(scene, elemArray, g2);
 
         // Verificar colisao entre elementos
-        this.controller.processAllElements(elemArray, scene);
+        this.controller.processAllElements(scene, elemArray);
 
         // Titulo da janela
-        this.setTitle("-> Cell: " + pacMan.getStringPosition());
+        this.setTitle("-> Cell: " + pacMan.getStringPosition()
+                + " Total de bolinhas: " + this.scene.getTotalBall());
 
         g.dispose();
         g2.dispose();

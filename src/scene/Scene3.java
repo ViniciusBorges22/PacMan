@@ -13,9 +13,8 @@ import java.awt.Graphics;
  */
 public class Scene3 extends Scene {
 
-    public Scene3(final String imageName, final int fruits) {
+    public Scene3(final String imageName) {
         super(imageName);
-        this.fruits = fruits;
     }
     
     @Override

@@ -14,13 +14,17 @@ public abstract class Element implements Serializable {
     protected ImageIcon[] directions;
     protected ImageIcon imageIcon;
     protected Position pos;
-    protected boolean isTransposable; // Pode passar por cima?
-    protected boolean isMortal;       // Se encostar, morre?
+    protected boolean isTransposable;
+    
+    // Verifica se deve remover ?????
+    // protected boolean isMortal;       
 
     protected Element(String[] imageName, int dir) {
         this.pos = new Position(1, 1);
         this.isTransposable = true;
-        this.isMortal = false;
+        
+        // this.isMortal = false;
+        
         directions = new ImageIcon[imageName.length];
 
         for (int i = 0; i < imageName.length; i++) {
@@ -55,7 +59,7 @@ public abstract class Element implements Serializable {
 
         return (xDist < 1.0 && yDist < 1.0);
     }
-
+    
     public String getStringPosition() {
         return ("(" + pos.getX() + ", " + pos.getY() + ")");
     }
@@ -92,7 +96,6 @@ public abstract class Element implements Serializable {
 
     public Position getPos() {
         return pos;
-    }
-    
-    
+    }  
+   
 }
