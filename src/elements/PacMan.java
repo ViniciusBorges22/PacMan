@@ -21,7 +21,7 @@ public class PacMan extends Element implements Serializable {
     private int control_up = 6;
 
     public PacMan() {
-        super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png",
+        super(new String[]{"pacman_right.png", "pacman_down.png",
             "pacman_left.png", "pacman_up.png"}, 0);
     }
 
