@@ -11,7 +11,7 @@ import utils.Consts;
  * @author vrtornisiello
  */
 public class Cherry extends Fruit {
-
+    
     //construtor
     public Cherry(){
         super("cherry.png");
@@ -20,3 +20,5 @@ public class Cherry extends Fruit {
         this.state = false;
     }
 }
+
+

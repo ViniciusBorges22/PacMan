@@ -19,12 +19,12 @@ public class PacMan extends Element  implements Serializable{
     public static final int MOVE_DOWN = 4;
 
     private int movDirection = STOP;
-
+    
     //construtor
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_down.png", "pacman_left.png", "pacman_up.png"}, 0);
     }
-
+    
     //métodos
     public void changeDirection(int dir)
     {

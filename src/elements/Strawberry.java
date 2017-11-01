@@ -11,7 +11,7 @@ import utils.Consts;
  * @author vrtornisiello
  */
 public class Strawberry extends Fruit{
-
+    
     //construtor
     public Strawberry(){
         super("strawberry.png");

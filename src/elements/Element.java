@@ -80,7 +80,7 @@ public abstract class Element implements Serializable{
     public boolean isTransposable() {
         return isTransposable;
     }
-
+    
     public boolean isMortal() {
         return isMortal;
     }

@@ -14,17 +14,17 @@ import utils.Drawing;
  */
 public class Ghost extends Element{
     private final int points;
-
+       
     //construtor
     public Ghost(String iconName){
         super(new String[]{iconName}, 0);
         this.isMortal = true;
         points = 200;
     }
-
+    
     //métodos
     @Override
-    public void autoDraw(Graphics g) {
-        Drawing.draw(g, this.imageIcon, pos.getY(), pos.getX());
+    public void autoDraw(Graphics g) {    
+        Drawing.draw(g, this.imageIcon, pos.getY(), pos.getX()); 
     }
 }

@@ -2,7 +2,7 @@ package control;
 
 /**
  * Projeto de POO 2017
- *
+ * 
  * @author Luiz Eduardo
  * Baseado em material do Prof. Jose Fernando Junior
  */
@@ -20,3 +20,4 @@ public class Main {
         });
     }
 }
+
