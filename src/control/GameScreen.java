@@ -55,13 +55,13 @@ public class GameScreen extends JFrame implements KeyListener {
         this.strawberry = new Strawberry();
         this.strawberry.setPosition(Math.random() * Consts.NUM_CELLS,
                 Math.random() * Consts.NUM_CELLS);
-//        this.addElement(strawberry);
+        this.addElement(strawberry);
 
         // Cherry
         this.cherry = new Cherry();
         this.cherry.setPosition(Math.random() * Consts.NUM_CELLS,
                 Math.random() * Consts.NUM_CELLS);
-//        this.addElement(cherry);
+        this.addElement(cherry);
 
         // Cria cenario 1
         newScene(1);
@@ -147,8 +147,8 @@ public class GameScreen extends JFrame implements KeyListener {
 
         Timer timer = new Timer();
         timer.schedule(repaint, 0, Consts.DELAY);
-//        timer.schedule(eraseStrawberry, Consts.TIMER_STRAWBERRY);
-//        timer.schedule(eraseCherry, Consts.TIMER_CHERRY);
+        timer.schedule(eraseStrawberry, Consts.TIMER_STRAWBERRY);
+        timer.schedule(eraseCherry, Consts.TIMER_CHERRY);
     }
 
     @Override
