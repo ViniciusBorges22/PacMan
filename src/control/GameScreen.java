@@ -53,14 +53,14 @@ public class GameScreen extends JFrame implements KeyListener {
 
         // Strawberry
         this.strawberry = new Strawberry();
-        this.strawberry.setPosition(Math.random() * Consts.NUM_CELLS,
-                Math.random() * Consts.NUM_CELLS);
+        this.strawberry.setPosition(Math.round(Math.random() * Consts.NUM_CELLS),
+                Math.round(Math.random() * Consts.NUM_CELLS));
         this.addElement(strawberry);
 
         // Cherry
         this.cherry = new Cherry();
-        this.cherry.setPosition(Math.random() * Consts.NUM_CELLS,
-                Math.random() * Consts.NUM_CELLS);
+        this.cherry.setPosition(Math.round(Math.random() * Consts.NUM_CELLS),
+                Math.round(Math.random() * Consts.NUM_CELLS));
         this.addElement(cherry);
 
         // Cria cenario 1
