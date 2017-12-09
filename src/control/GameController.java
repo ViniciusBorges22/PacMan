@@ -14,13 +14,13 @@ public class GameController {
     public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g) {
         // Desenha cenario e bolinhas
         scene.paintScene(g);
-        
+
         // Desenha outros elementos
         Iterator<Element> it = elemArray.listIterator(1);
         while (it.hasNext()) {
             it.next().autoDraw(g);
         }
-        
+
         // Desenha pacman
         elemArray.get(0).autoDraw(g);
     }
@@ -31,14 +31,14 @@ public class GameController {
         }
 
         PacMan pPacMan = (PacMan) e.get(0);
-        
+
         // Verifica colisao entre pacman e o cenario
         if (!isValidPositionScene(pPacMan, scene)) {
             pPacMan.backToLastPosition();
             pPacMan.setMovDirection(PacMan.STOP);
             return;
         }
-        
+
         // Verifica colisao entre as bolinhas e pacman
         Iterator<Ball> it = scene.getBalls().listIterator();
         while (it.hasNext()) {
@@ -47,21 +47,21 @@ public class GameController {
                 break;
             }
         }
-        
-//        Element eTemp;
-//        // Verifica colisao entre PacMan e outros elementos
-//        for (int i = 1; i < e.size(); i++) {
-//            eTemp = e.get(i);
-//            if (pPacMan.overlap(eTemp)) {
-//                if (eTemp.isTransposable()) {
-//                    e.remove(eTemp);
-//                }
-//            }
-//        }
-        
+
+        Element eTemp;
+        // Verifica colisao entre PacMan e outros elementos
+        for (int i = 1; i < e.size(); i++) {
+            eTemp = e.get(i);
+            if (pPacMan.overlap(eTemp)) {
+                if (eTemp.isTransposable()) {
+                    e.remove(eTemp);
+                }
+            }
+        }
+
         pPacMan.move();
     }
-    
+
     // Verifica colisão entre elem e cenario
     private boolean isValidPositionScene(final Element elem, final Scene scene) {
         int map[][] = scene.getMap();
@@ -79,7 +79,7 @@ public class GameController {
         }
         return true;
     }
-    
+
     public boolean isValidPosition(ArrayList<Element> elemArray, Element elem) {
         Element elemAux;
         for (int i = 1; i < elemArray.size(); i++) {
@@ -92,5 +92,5 @@ public class GameController {
         }
         return true;
     }
-    
+
 }
