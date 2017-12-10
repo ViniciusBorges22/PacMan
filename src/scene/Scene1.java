@@ -50,7 +50,6 @@ public class Scene1 extends Scene {
         map[13][16] = 1;
         map[13][17] = 1;
         map[13][18] = 1;
-        map[13][19] = 1;
 
         map[16][11] = 1;
         map[16][12] = 1;
@@ -60,26 +59,26 @@ public class Scene1 extends Scene {
         map[16][16] = 1;
         map[16][17] = 1;
         map[16][18] = 1;
-        map[16][19] = 1;
 
         map[14][11] = 1;
-        map[14][19] = 1;
+        map[14][18] = 1;
         map[15][11] = 1;
-        map[15][19] = 1;
+        map[15][18] = 1;
 
         map[1][1] = 1;
 
         for (int x = 0; x < Consts.NUM_CELLS; x++) {
             for (int y = 0; y < Consts.NUM_CELLS; y++) {
                 if (map[x][y] == 0
-                        && ((x < 13 || x > 16) && (y < 11 || y > 19))) {
+                        && !(x > 13 && x < 16 && y > 11 && y < 19)) {
                     this.balls.add(new Ball("ball.png", 100, x, y));
                 }
             }
         }
-
+        
         map[1][1] = 0;
-
+        map[13][14] = 3;
+        map[13][15] = 3;
     }
 
 }

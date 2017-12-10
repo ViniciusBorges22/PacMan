@@ -12,7 +12,7 @@ import java.awt.Graphics;
  * @author lllgabrielll
  */
 public class Enemy extends Element {
-
+    
     public Enemy(String[] imgs) {
         super(imgs, 0);
     }
