@@ -89,5 +89,22 @@ public class Position implements Serializable {
 
     public boolean moveLeftFruit() {
         return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_FRUIT);
+    }    
+    
+    // Movimentação Blinky
+    public boolean moveUpEnemy() {
+        return this.setPosition(this.getX() - Consts.WALK_STEP_ENEMY, this.getY());
+    }
+
+    public boolean moveDownEnemy() {
+        return this.setPosition(this.getX() + Consts.WALK_STEP_ENEMY, this.getY());
+    }
+
+    public boolean moveRightEnemy() {
+        return this.setPosition(this.getX(), this.getY() + Consts.WALK_STEP_ENEMY);
+    }
+
+    public boolean moveLeftEnemy() {
+        return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_ENEMY);
     }
 }

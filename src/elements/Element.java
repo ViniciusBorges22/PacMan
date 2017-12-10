@@ -77,7 +77,8 @@ public abstract class Element implements Serializable {
     }
 
     abstract public void autoDraw(Graphics g);
-
+    
+    // Pacman
     public boolean moveUp() {
         return this.pos.moveUp();
     }
@@ -92,6 +93,23 @@ public abstract class Element implements Serializable {
 
     public boolean moveLeft() {
         return this.pos.moveLeft();
+    }
+    
+    // Enemy
+    public boolean moveUpEnemy() {
+        return this.pos.moveUpEnemy();
+    }
+
+    public boolean moveDownEnemy() {
+        return this.pos.moveDownEnemy();
+    }
+
+    public boolean moveRightEnemy() {
+        return this.pos.moveRightEnemy();
+    }
+
+    public boolean moveLeftEnemy() {
+        return this.pos.moveLeftEnemy();
     }
 
     public Position getPos() {

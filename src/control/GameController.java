@@ -1,6 +1,7 @@
 package control;
 
 import elements.Ball;
+import elements.Blinky;
 import elements.Cherry;
 import elements.Element;
 import elements.PacMan;
@@ -16,15 +17,12 @@ public class GameController {
     public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g) {
         // Desenha cenario e bolinhas
         scene.paintScene(g);
-
+        
         // Desenha outros elementos
-        Iterator<Element> it = elemArray.listIterator(1);
-        while (it.hasNext()) {
+        Iterator<Element> it = elemArray.listIterator();
+        while (it.hasNext()) {  
             it.next().autoDraw(g);
         }
-
-        // Desenha pacman
-        elemArray.get(0).autoDraw(g);
     }
 
     public void processAllElements(Scene scene, ArrayList<Element> e) {
@@ -40,17 +38,6 @@ public class GameController {
             pPacMan.setMovDirection(PacMan.STOP);
             return;
         }
-
-        // Verifica movimentação das frutas
-//        if (e.size() > 1) {
-//            // Strawberry
-//            if (e.contains(s))
-//                setMoveStrawberry(s, scene);
-//
-//            // Cherry
-//            if (e.contains(c))
-//                setMoveCherry(c, scene);
-//        }
 
         // Verifica colisao entre as bolinhas e pacman
         Iterator<Ball> it = scene.getBalls().listIterator();

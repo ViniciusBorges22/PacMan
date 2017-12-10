@@ -11,14 +11,21 @@ import java.awt.Graphics;
  *
  * @author lllgabrielll
  */
-public class Pinky extends Enemy {
+public class Pinky extends Enemy implements Runnable {
 
-    public Pinky(String[] imgs) {
-        super(imgs);
+    public Pinky() {
+        super(new String[] {"pinky_ghost.png"});
     }
 
     @Override
     public void autoDraw(Graphics g) {
     }
 
+    @Override
+    public void run() {
+        // Implementar movimentação
+    }
+
+    
+    
 }

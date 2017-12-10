@@ -33,10 +33,10 @@ public class Scene1 extends Scene {
         }
 
         // Desenhar bolinhas da tela
-        Iterator<Ball> it = balls.listIterator();
-        while (it.hasNext()) {
-            it.next().autoDraw(g);
-        }
+//        Iterator<Ball> it = balls.listIterator();
+//        while (it.hasNext()) {
+//            it.next().autoDraw(g);
+//        }
     }
 
     @Override

@@ -9,10 +9,15 @@ package elements;
  *
  * @author lllgabrielll
  */
-public class Blinky extends Enemy {
-
-    public Blinky(String[] imgs) {
-        super(imgs);
-    }
+public class Blinky extends Enemy implements Runnable {
     
+    public Blinky() {
+        super(new String[]{"red_ghost.png"});
+    }
+
+    @Override
+    public void run() {
+        // Thread para realizar algum calculo para seguir o pacman
+    }
+
 }

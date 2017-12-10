@@ -1,8 +1,12 @@
 package control;
 
+import elements.Blinky;
 import elements.PacMan;
 import elements.Element;
 import elements.Cherry;
+import elements.Clyde;
+import elements.Inky;
+import elements.Pinky;
 import elements.Strawberry;
 
 import utils.Consts;
@@ -25,6 +29,10 @@ import scene.Scene3;
 public class GameScreen extends JFrame implements KeyListener {
 
     private final PacMan pacMan;
+    private final Blinky blinky;
+    private final Clyde clyde;
+    private final Inky inky;
+    private final Pinky pinky;
     private final Strawberry strawberry;
     private final Cherry cherry;
     private final ArrayList<Element> elemArray;
@@ -63,6 +71,26 @@ public class GameScreen extends JFrame implements KeyListener {
                 Math.round(Math.random() * Consts.NUM_CELLS));
         this.addElement(cherry);
 
+        // Blinky
+        this.blinky = new Blinky();
+        this.blinky.setPosition(10, 10);
+        this.addElement(blinky);
+        
+        // Clyde
+        this.clyde = new Clyde();
+        this.clyde.setPosition(10, 10);
+        this.addElement(clyde);
+        
+        // Inky
+        this.inky = new Inky();
+        this.inky.setPosition(10, 10);
+        this.addElement(inky);
+        
+        // Pinky
+        this.pinky = new Pinky();
+        this.pinky.setPosition(10, 10);
+        this.addElement(pinky);
+        
         // Cria cenario 1
         newScene(1);
     }
