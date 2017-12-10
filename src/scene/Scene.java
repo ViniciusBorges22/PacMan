@@ -22,9 +22,6 @@ public abstract class Scene {
     
     // Lista de bolinhas
     protected List<Ball> balls;
-    
-    // Lista de frutas
-    protected List<Fruit> fruits;
 
     // Bloco
     protected Image brick;
@@ -32,7 +29,6 @@ public abstract class Scene {
     public Scene(final String imageName) {
         this.map = new int[Consts.NUM_CELLS][Consts.NUM_CELLS];
         this.balls = new ArrayList<>();
-        this.fruits = new ArrayList<>();
 
         // Bordas
         for (int i = 0; i < Consts.NUM_CELLS; i++) {
