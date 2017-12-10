@@ -1,8 +1,10 @@
 package control;
 
 import elements.Ball;
+import elements.Cherry;
 import elements.Element;
 import elements.PacMan;
+import elements.Strawberry;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,6 +40,17 @@ public class GameController {
             pPacMan.setMovDirection(PacMan.STOP);
             return;
         }
+
+        // Verifica movimentação das frutas
+//        if (e.size() > 1) {
+//            // Strawberry
+//            if (e.contains(s))
+//                setMoveStrawberry(s, scene);
+//
+//            // Cherry
+//            if (e.contains(c))
+//                setMoveCherry(c, scene);
+//        }
 
         // Verifica colisao entre as bolinhas e pacman
         Iterator<Ball> it = scene.getBalls().listIterator();
@@ -80,17 +93,44 @@ public class GameController {
         return true;
     }
 
-    public boolean isValidPosition(ArrayList<Element> elemArray, Element elem) {
-        Element elemAux;
-        for (int i = 1; i < elemArray.size(); i++) {
-            elemAux = elemArray.get(i);
-            if (!elemAux.isTransposable()) {
-                if (elemAux.overlap(elem)) {
-                    return false;
-                }
-            }
+    // Movimenta Strawberry
+    private void setMoveStrawberry(Strawberry s, Scene scene) {
+        if (!isValidPositionScene(s, scene)) {
+            s.backToLastPosition();
+            int aux;
+            do {
+                aux = (int) Math.round(Math.random() * 10 - 6);
+            } while (aux != s.getMoveDirection());
+            s.setMoveDirection(aux);
+        } else {
+            s.move();
         }
-        return true;
+    }
+    
+    // Movimenta Cherrytrawberry
+    private void setMoveCherry(Cherry c, Scene scene) {
+        if (!isValidPositionScene(c, scene)) {
+            c.backToLastPosition();
+            int aux;
+            do {
+                aux = (int) Math.round(Math.random() * 10 - 6);
+            } while (aux != c.getMoveDirection());
+            c.setMoveDirection(aux);
+        } else {
+            c.move();
+        }
     }
 
+//    private boolean isValidPosition(ArrayList<Element> elemArray, Element elem) {
+//        Element elemAux;
+//        for (int i = 1; i < elemArray.size(); i++) {
+//            elemAux = elemArray.get(i);
+//            if (!elemAux.isTransposable()) {
+//                if (elemAux.overlap(elem)) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 }

@@ -15,10 +15,10 @@ public class PacMan extends Element implements Serializable {
     private int movDirection = STOP;
     
     // Controle da imagem
-    private int control_right = 0;
-    private int control_down = 2;
-    private int control_left = 4;
-    private int control_up = 6;
+//    private int control_right = 0;
+//    private int control_down = 2;
+//    private int control_left = 4;
+//    private int control_up = 6;
 
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_down.png",

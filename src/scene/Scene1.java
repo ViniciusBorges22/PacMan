@@ -31,7 +31,7 @@ public class Scene1 extends Scene {
                 }
             }
         }
-
+        
         // Desenhar bolinhas da tela
         Iterator<Ball> it = balls.listIterator();
         while (it.hasNext()) {
@@ -41,13 +41,29 @@ public class Scene1 extends Scene {
 
     @Override
     protected void drawSceneFinal() {
-        // Terminar de desenhar cenario
-        map[3][3] = 1;
-        map[4][8] = 1;
-        map[10][11] = 1;
-
         // Criar bolinhas
+        map[13][11] = 1;
+        map[13][12] = 1;
+        map[13][13] = 1;
+        map[13][14] = 1;
+        map[13][15] = 1;
+        map[13][16] = 1;
+        map[13][17] = 1;
+        map[13][18] = 1;
+        map[13][19] = 1;
+        
+        map[16][11] = 1;
+        map[16][12] = 1;
+        map[16][13] = 1;
+        map[16][14] = 1;
+        map[16][15] = 1;
+        map[16][16] = 1;
+        map[16][17] = 1;
+        map[16][18] = 1;
+        map[16][19] = 1;
+        
         map[1][1] = 1;
+        
         for (int x = 0; x < Consts.NUM_CELLS; x++) {
             for (int y = 0; y < Consts.NUM_CELLS; y++) {
                 if (map[x][y] == 0) {
@@ -55,6 +71,7 @@ public class Scene1 extends Scene {
                 }
             }
         }
+        
         map[1][1] = 0;
 
     }
