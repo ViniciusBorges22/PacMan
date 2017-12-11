@@ -12,7 +12,7 @@ import scene.Scene;
 import utils.Consts;
 
 public class GameController {
-
+    
     public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g) {
         // Desenha cenario e bolinhas
         scene.paintScene(g);
@@ -66,7 +66,6 @@ public class GameController {
         int map[][] = scene.getMap();
         for (int y = 0; y < Consts.NUM_CELLS; y++) {
             for (int x = 0; x < Consts.NUM_CELLS; x++) {
-                System.out.println(y + " " + x);
                 if (map[y][x] == 1) {
                     double x_aux = Math.abs(y - elem.getPos().getX());
                     double y_aux = Math.abs(x - elem.getPos().getY());

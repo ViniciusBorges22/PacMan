@@ -49,7 +49,7 @@ public abstract class Scene {
     public abstract void paintScene(Graphics g);
 
     // Termina de definir cenario
-    protected abstract void drawSceneFinal();
+    protected abstract void drawScene();
 
     // Obter elementos bolinhas
     public List<Ball> getBalls() {

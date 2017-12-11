@@ -6,8 +6,11 @@
 package scene;
 
 import java.awt.Graphics;
-import java.awt.Point;
-import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import utils.Consts;
 
 /**
  *
@@ -15,31 +18,30 @@ import javax.swing.ImageIcon;
  */
 public class InitScene extends Scene {
 
-    private Point pStart;
-    private Point pExit;
-    private ImageIcon imgStart;
-    private ImageIcon imgExit;
+    private Image imgStart;
+    private Image imgExit;
 
     public InitScene(String[] imgs) {
-
+        try {
+            this.imgStart = Toolkit.getDefaultToolkit().getImage(
+                    new java.io.File(".").getCanonicalPath() + Consts.PATH + imgs[0]);
+            this.imgExit = Toolkit.getDefaultToolkit().getImage(
+                    new File(".").getCanonicalPath() + Consts.PATH + imgs[1]);
+        } catch (IOException e) {
+            System.err.println("Erro: Imagens da tela inicial não encontradas\n " + e.getMessage());
+        }
     }
 
     @Override
     public void paintScene(Graphics g) {
+        int aux = Consts.NUM_CELLS * Consts.CELL_SIZE;
+        g.fillRect(0, 0, aux, aux);
+        g.drawImage(imgStart, (aux / 2) - 150, 200, 300, 90, null);
+        g.drawImage(imgExit, (aux / 2) - 150, 320, 300, 90, null);
     }
 
     @Override
-    protected void drawSceneFinal() {
-    }
-
-    // Botao de sair
-    public Point getpExit() {
-        return pExit;
-    }
-
-    // Botao de Iniciar
-    public Point getpStart() {
-        return pStart;
+    protected void drawScene() {
     }
 
 }

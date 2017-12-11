@@ -15,18 +15,22 @@ import utils.Drawing;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import scene.InitScene;
 
 import scene.Scene;
 import scene.Scene1;
 import scene.Scene2;
 import scene.Scene3;
 
-public class GameScreen extends JFrame implements KeyListener {
+public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
     private final PacMan pacMan;
     private final Blinky blinky;
@@ -53,6 +57,7 @@ public class GameScreen extends JFrame implements KeyListener {
         initComponents();
 
         this.addKeyListener(this);
+        this.addMouseListener(this);
 
         /*Cria a janela do tamanho do tabuleiro + insets (bordas) da janela*/
         this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
@@ -95,7 +100,7 @@ public class GameScreen extends JFrame implements KeyListener {
         this.pinky.setPosition(10, 10);
 
         // Tela inicial
-        this.controlScene = 1;
+        this.controlScene = 0;
         newScene(controlScene);
     }
 
@@ -104,6 +109,7 @@ public class GameScreen extends JFrame implements KeyListener {
         switch (scene) {
             // Tela Inicial
             case 0:
+                this.scene = new InitScene(new String[]{"button_start.png", "button_start.png"});
                 break;
 
             // Tela 1
@@ -142,11 +148,17 @@ public class GameScreen extends JFrame implements KeyListener {
         Graphics g2 = g.create(getInsets().right, getInsets().top,
                 getWidth() - getInsets().left, getHeight() - getInsets().bottom);
 
-        // Pintar elementos
-        this.controller.drawAllElements(scene, elemArray, g2);
+        // Se estiver na primeira tela, não é necessario desenhar todo os elementos
+        if (this.controlScene == 0) {
+            // Desenhar tela inicial
+            scene.paintScene(g);
+        } else {
+            // Desenha todos os elementos
+            this.controller.drawAllElements(scene, elemArray, g);
 
-        // Verificar colisao entre elementos
-        this.controller.processAllElements(scene, elemArray);
+            // Verificar colisao entre elementos
+            this.controller.processAllElements(scene, elemArray);
+        }
 
         // Titulo da janela
         this.setTitle("-> Cell: " + pacMan.getStringPosition()
@@ -192,27 +204,80 @@ public class GameScreen extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-                pacMan.setMovDirection(PacMan.MOVE_UP);
-                pacMan.changeDirection(3);
+        int aux = controlScene;
+        switch (aux) {
+            // Tela Inicial
+            case 0:
+                // Iniciar Jogo
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    controlScene = 1;
+                    newScene(controlScene);
+                } // Fim fo jogo 
+                else if (e.getKeyCode() == KeyEvent.VK_Q) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+                        System.exit(0);
+                    }
+                }
                 break;
-            case KeyEvent.VK_DOWN:
-                pacMan.setMovDirection(PacMan.MOVE_DOWN);
-                pacMan.changeDirection(1);
+
+            // Tela Final
+            case 5:
                 break;
-            case KeyEvent.VK_LEFT:
-                pacMan.setMovDirection(PacMan.MOVE_LEFT);
-                pacMan.changeDirection(2);
-                break;
-            case KeyEvent.VK_RIGHT:
-                pacMan.setMovDirection(PacMan.MOVE_RIGHT);
-                pacMan.changeDirection(0);
-                break;
-            case KeyEvent.VK_SPACE:
-                pacMan.setMovDirection(PacMan.STOP);
-                break;
+
+            // Qualquer outra tela
             default:
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        pacMan.setMovDirection(PacMan.MOVE_UP);
+                        pacMan.changeDirection(3);
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        pacMan.setMovDirection(PacMan.MOVE_DOWN);
+                        pacMan.changeDirection(1);
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        pacMan.setMovDirection(PacMan.MOVE_LEFT);
+                        pacMan.changeDirection(2);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+                        pacMan.changeDirection(0);
+                        break;
+                    case KeyEvent.VK_SPACE:
+                        pacMan.setMovDirection(PacMan.STOP);
+                        break;
+                    default:
+                        break;
+                }
+
+                break;
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        int aux = controlScene;
+        switch (aux) {
+            case 0:
+                // Verifica se clicou em algum botao
+                int a1 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
+                int x1 = e.getPoint().x;
+                int y1 = e.getPoint().y;
+
+                if ((200 <= y1 && y1 <= 290) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                    controlScene = 1;
+                    newScene(controlScene);
+                } else if ((320 <= y1 && y1 <= 410) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+                        System.exit(0);
+                    }
+                }
+
+                break;
+
+            case 5:
                 break;
         }
     }
@@ -254,5 +319,21 @@ public class GameScreen extends JFrame implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }

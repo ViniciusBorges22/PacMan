@@ -22,7 +22,7 @@ public class Scene2 extends Scene {
     }
 
     @Override
-    protected void drawSceneFinal() {
+    protected void drawScene() {
     }
 
 }

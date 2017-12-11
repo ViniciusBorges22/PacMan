@@ -14,7 +14,7 @@ public class Scene1 extends Scene {
     
     public Scene1() {
         super();
-        this.drawSceneFinal();
+        this.drawScene();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Scene1 extends Scene {
     }
 
     @Override
-    protected void drawSceneFinal() {
+    protected void drawScene() {
         // Bordas
         for (int i = 0; i < Consts.NUM_CELLS; i++) {
             for (int j = 0; j < Consts.NUM_CELLS; j++) {
