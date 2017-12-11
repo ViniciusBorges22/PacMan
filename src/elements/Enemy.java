@@ -28,6 +28,8 @@ public class Enemy extends Element {
 
     public Enemy(String[] imgs) {
         super(imgs, 0);
+        this.isVisible = true;
+        this.isTransposable = false;
     }
 
     public void setMoveDirection(int movDirection) {

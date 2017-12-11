@@ -14,7 +14,7 @@ public class Consts {
 
     public static final int TIMER_CHERRY = 10000;
 
-    public static final int TIMER_STRAWBERRY = 15000;
+    public static final int TIMER_STRAWBERRY = 1000;
 
     public static final int BALL_SIZE = 2;
 

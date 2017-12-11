@@ -18,6 +18,10 @@ public abstract class Fruit extends Element {
     public Fruit(String iconName, int direction) {
         super(new String[]{iconName}, 0);
         this.move_direction = direction;
+        
+        // Condições iniciais da fruta
+        this.isTransposable = true;
+        this.isVisible = false;
     }
 
     public int getPoints() {
@@ -35,15 +39,15 @@ public abstract class Fruit extends Element {
     public void setMoveDirection(int direction) {
         this.move_direction = direction;
     }
-    
+
     public int getMoveDirection() {
         return move_direction;
     }
-    
+
     public void backToLastPosition() {
         this.getPos().comeBack();
     }
-    
+
     public void move() {
         switch (move_direction) {
             case MOVE_LEFT:
@@ -65,6 +69,10 @@ public abstract class Fruit extends Element {
 
     @Override
     public void autoDraw(Graphics g) {
-        Drawing.draw(g, this.imageIcon, pos.getY(), pos.getX());
+        // Se a fruta estiver visivel
+        if (isVisible) {
+            Drawing.draw(g, this.imageIcon, pos.getY(), pos.getX());
+        }
     }
+
 }

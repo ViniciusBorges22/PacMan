@@ -12,14 +12,14 @@ import scene.Scene;
 import utils.Consts;
 
 public class GameController {
-    
+
     public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g) {
         // Desenha cenario e bolinhas
         scene.paintScene(g);
-        
+
         // Desenha outros elementos
         Iterator<Element> it = elemArray.listIterator();
-        while (it.hasNext()) {  
+        while (it.hasNext()) {
             it.next().autoDraw(g);
         }
     }
@@ -51,10 +51,9 @@ public class GameController {
         // Verifica colisao entre PacMan e outros elementos
         for (int i = 1; i < e.size(); i++) {
             eTemp = e.get(i);
-            if (pPacMan.overlap(eTemp)) {
-                if (eTemp.isTransposable()) {
-                    e.remove(eTemp);
-                }
+            if (!eTemp.isTransposable() && pPacMan.overlap(eTemp)) {
+                System.out.println("Teste");
+                e.remove(eTemp);
             }
         }
 
@@ -92,7 +91,7 @@ public class GameController {
             s.move();
         }
     }
-    
+
     // Movimenta Cherrytrawberry
     private void setMoveCherry(Cherry c, Scene scene) {
         if (!isValidPositionScene(c, scene)) {

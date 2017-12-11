@@ -33,17 +33,21 @@ import scene.Scene3;
 public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
     private final PacMan pacMan;
+
     private final Blinky blinky;
     private final Clyde clyde;
     private final Inky inky;
     private final Pinky pinky;
+
     private final Strawberry strawberry;
     private final Cherry cherry;
+
     private final ArrayList<Element> elemArray;
     private final GameController controller = new GameController();
 
     private Scene scene;
 
+    // Controle de tela
     // 0 - Tela inicial
     // 1 - Primeira tela
     // 2 - Segunda tela
@@ -75,13 +79,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.strawberry = new Strawberry();
         this.strawberry.setPosition(Math.round(Math.random() * Consts.NUM_CELLS),
                 Math.round(Math.random() * Consts.NUM_CELLS));
-        this.addElement(strawberry);
 
         // Cherry
         this.cherry = new Cherry();
         this.cherry.setPosition(Math.round(Math.random() * Consts.NUM_CELLS),
                 Math.round(Math.random() * Consts.NUM_CELLS));
-        this.addElement(cherry);
 
         // Blinky
         this.blinky = new Blinky();
@@ -100,13 +102,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.pinky.setPosition(10, 10);
 
         // Tela inicial
-        this.controlScene = 4;
+        this.controlScene = 1;
         newScene(controlScene);
     }
 
     // Cria cenario com todos os seus elementos
-    private void newScene(final int scene) {
-        switch (scene) {
+    private void newScene(final int sc) {
+        switch (sc) {
             // Tela Inicial
             case 0:
                 this.scene = new InitScene(new String[]{"button_start.png",
@@ -117,6 +119,24 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 1:
                 this.scene = new Scene1();
                 this.scene.setBlock("brick.png");
+
+                // Determinar posição strawberry
+                int aux1,
+                 aux2;
+                do {
+                    aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                    aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                } while (scene.map(aux1, aux2) == 1);
+                this.strawberry.setPosition(aux1, aux2);
+                this.addElement(strawberry);
+
+                // Determinar posição cherry
+                do {
+                    aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                    aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                } while (scene.map(aux1, aux2) == 1);
+                this.cherry.setPosition(aux1, aux2);
+                this.addElement(cherry);
                 break;
 
             // Tela 2
@@ -167,10 +187,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             this.controller.processAllElements(scene, elemArray);
         }
 
-        // Titulo da janela
-        this.setTitle("-> Cell: " + pacMan.getStringPosition()
-                + " Total de bolinhas: " + this.scene.getTotalBall());
-
         g.dispose();
         g2.dispose();
         if (!getBufferStrategy().contentsLost()) {
@@ -188,25 +204,59 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         };
 
         // Time para strawberry
-        TimerTask eraseStrawberry = new TimerTask() {
+        TimerTask timerStrawberry = new TimerTask() {
             @Override
             public void run() {
-                elemArray.remove(strawberry);
+                if (!strawberry.isVisible()) {
+                    // Determinar uma nova posição para strawberry
+                    int aux1, aux2;
+                    do {
+                        aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                        aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                    } while (scene.map(aux1, aux2) == 1);
+                    
+                    strawberry.setPosition(aux1, aux2);
+                    
+                    // Deixar fruta visivel
+                    strawberry.setVisible(true);
+                    strawberry.setTransposable(false);
+                
+                } else {
+                    strawberry.setVisible(false);
+                    strawberry.setTransposable(true);
+                }
             }
         };
 
         // Time para cherry
-        TimerTask eraseCherry = new TimerTask() {
+        TimerTask timerCherry = new TimerTask() {
             @Override
             public void run() {
-                elemArray.remove(cherry);
+                if (!cherry.isVisible()) {
+                    // Determinar uma nova posição para cherry
+                    int aux1, aux2;
+                    do {
+                        aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                        aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                    } while (scene.map(aux1, aux2) == 1);
+                    
+                    strawberry.setPosition(aux1, aux2);
+                    
+                    // Deixar fruta visivel
+                    cherry.setVisible(true);
+                    cherry.setTransposable(false);
+
+                } else {
+                    cherry.setVisible(false);
+                    cherry.setTransposable(true);
+                }
             }
         };
 
         Timer timer = new Timer();
         timer.schedule(repaint, 0, Consts.DELAY);
-        timer.schedule(eraseStrawberry, Consts.TIMER_STRAWBERRY);
-        timer.schedule(eraseCherry, Consts.TIMER_CHERRY);
+        timer.schedule(timerStrawberry, Consts.TIMER_STRAWBERRY, 2000);
+        timer.schedule(timerCherry, Consts.TIMER_CHERRY, 30000);
     }
 
     @Override
@@ -297,7 +347,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 int a2 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
                 int x2 = e.getPoint().x;
                 int y2 = e.getPoint().y;
-                
+
                 // Volta para a tela inicial
                 if ((500 <= y2 && y2 <= 600) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
                     controlScene = 0;

@@ -44,7 +44,11 @@ public abstract class Scene {
     public int[][] getMap() {
         return map;
     }
-
+    
+    public int map(int x, int y) {
+        return map[x][y];
+    }
+    
     // Pintar cenario
     public abstract void paintScene(Graphics g);
 
