@@ -1,5 +1,6 @@
 package control;
 
+import scene.GameOver;
 import elements.Blinky;
 import elements.PacMan;
 import elements.Element;
@@ -13,6 +14,7 @@ import utils.Consts;
 import utils.Drawing;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -28,8 +30,6 @@ import scene.InitScene;
 
 import scene.Scene;
 import scene.Scene1;
-import scene.Scene2;
-import scene.Scene3;
 
 public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
@@ -40,8 +40,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final Inky inky;
     private final Pinky pinky;
 
-    private Strawberry strawberry;
-    private Cherry cherry;
+    private final Strawberry strawberry;
+    private final Cherry cherry;
 
     private final ArrayList<Element> elemArray;
     private final GameController controller = new GameController();
@@ -49,6 +49,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final Random random = new Random();
 
     private Scene scene;
+    
+    private Image imgPontuacao;
+    private Image imgFase;
 
     // Controle de tela
     // 0 - Tela inicial
@@ -65,10 +68,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
         this.addKeyListener(this);
         this.addMouseListener(this);
-
-        /*Cria a janela do tamanho do tabuleiro + insets (bordas) da janela*/
-        this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
-                Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
 
         // Lista de elementos
         this.elemArray = new ArrayList<>();
@@ -94,8 +93,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.pinky = new Pinky();
         this.pinky.setPosition(10, 10);
 
+        this.strawberry = new Strawberry();
+        this.cherry = new Cherry();
+
         // Tela inicial
-        this.controlScene = 0;
+        this.controlScene = 1;
         newScene(controlScene);
     }
 
@@ -104,12 +106,18 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         switch (sc) {
             // Tela Inicial
             case 0:
+                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
+                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
+
                 this.scene = new InitScene(new String[]{"button_start.png",
                     "button_start.png", "background_pacman1.jpg"});
                 break;
 
             // Tela 1
             case 1:
+                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right + 300,
+                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
+
                 this.scene = new Scene1();
                 this.scene.setBlock("brick.png");
 
@@ -121,7 +129,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     aux2 = random.nextInt(29);
                 } while (scene.map(aux1, aux2) == 1);
 
-                this.strawberry = new Strawberry();
                 this.strawberry.setPosition(aux1, aux2);
                 this.addElement(strawberry);
 
@@ -131,27 +138,24 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     aux2 = random.nextInt(29);
                 } while (scene.map(aux1, aux2) == 1);
 
-                this.cherry = new Cherry();
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
                 break;
 
             // Tela 2
             case 2:
-                this.scene = new Scene2();
-                this.scene.setBlock("brick.png");
                 break;
 
             // Tela 3
             case 3:
-                this.scene = new Scene3();
-                this.scene.setBlock("brick.png");
                 break;
 
             // Game Over
             case 4:
-                this.scene = new GameOver(new String[]{"button_start.png",
-                    "background_game_over.jpg"});
+                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
+                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
+
+                this.scene = new GameOver();
                 break;
         }
     }
@@ -174,7 +178,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
         // Se estiver na primeira ou ultima tela, não é necessario desenhar todo os elementos
         if (controlScene == 0 || controlScene == 4) {
-            // Desenhar tela inicial
+            // Desenhar tela
             scene.paintScene(g);
         } else {
             // Desenha todos os elementos
@@ -183,6 +187,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             // Verificar colisao entre elementos
             this.controller.processAllElements(scene, elemArray);
         }
+
+        // Pontuação / Fase atual / Vidas
+        this.setTitle("Tela atual: " + controlScene + " Pontuação: "
+                + scene.getPoints() + " Vidas: " + pacMan.getLife());
 
         g.dispose();
         g2.dispose();
@@ -204,10 +212,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         TimerTask timerStrawberry = new TimerTask() {
             @Override
             public void run() {
-                // Só começa a funcionar a partir do inicio do jogo
                 if (controlScene != 0 && controlScene != 4) {
                     if (!strawberry.isVisible()) {
+
                         // Determinar uma nova posição para strawberry
+                        // a cada nova aparição
                         int aux1, aux2;
                         do {
                             aux1 = random.nextInt(29);
@@ -221,6 +230,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                         strawberry.setTransposable(false);
 
                     } else {
+
+                        // Deixar fruta invisivel
                         strawberry.setVisible(false);
                         strawberry.setTransposable(true);
                     }
@@ -232,10 +243,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         TimerTask timerCherry = new TimerTask() {
             @Override
             public void run() {
-                // Só começa a funcionar a partir do inicio do jogo
                 if (controlScene != 0 && controlScene != 4) {
                     if (!cherry.isVisible()) {
+
                         // Determinar uma nova posição para cherry
+                        // a cada nova aparição
                         int aux1, aux2;
                         do {
                             aux1 = random.nextInt(29);
@@ -249,6 +261,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                         cherry.setTransposable(false);
 
                     } else {
+
+                        // Deixar fruta invisivel
                         cherry.setVisible(false);
                         cherry.setTransposable(true);
                     }
@@ -268,12 +282,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         switch (aux) {
             // Tela Inicial
             case 0:
-                // Iniciar Jogo
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     controlScene = 1;
                     newScene(controlScene);
-                } // Fim fo jogo 
-                else if (e.getKeyCode() == KeyEvent.VK_Q) {
+                } else if (e.getKeyCode() == KeyEvent.VK_Q) {
                     if (JOptionPane.showConfirmDialog(null,
                             "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
                         System.exit(0);

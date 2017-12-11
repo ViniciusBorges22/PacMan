@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package control;
+package scene;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -22,15 +22,16 @@ public class GameOver extends Scene {
     private Image imgStart;
     private Image background;
 
-    public GameOver(String[] imgs) {
+    public GameOver() {
         try {
             this.imgStart = Toolkit.getDefaultToolkit().getImage(
-                    new java.io.File(".").getCanonicalPath() + Consts.PATH + imgs[0]);
+                    new java.io.File(".").getCanonicalPath() + Consts.PATH + "button_start.png");
             this.background = Toolkit.getDefaultToolkit().getImage(
-                    new java.io.File(".").getCanonicalPath() + Consts.PATH + imgs[1]);
+                    new java.io.File(".").getCanonicalPath() + Consts.PATH + "background_game_over.png");
         } catch (IOException e) {
             System.err.println("Erro: Imagens da tela inicial não encontradas\n " + e.getMessage());
         }
+        
     }
 
     @Override

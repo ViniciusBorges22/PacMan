@@ -11,7 +11,7 @@ import java.util.Iterator;
 import utils.Consts;
 
 public class Scene1 extends Scene {
-    
+
     public Scene1() {
         super();
         this.drawScene();
@@ -19,6 +19,8 @@ public class Scene1 extends Scene {
 
     @Override
     public void paintScene(Graphics g) {
+        g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS + 300, Consts.CELL_SIZE * Consts.NUM_CELLS);
+
         // Desenha cenario
         for (int i = 0; i < Consts.NUM_CELLS; i++) {
             for (int j = 0; j < Consts.NUM_CELLS; j++) {
@@ -37,6 +39,9 @@ public class Scene1 extends Scene {
         while (it.hasNext()) {
             it.next().autoDraw(g);
         }
+
+        // Calcula a quantidade de pontos nessa fase
+        points = (tballs - balls.size()) * 10;
     }
 
     @Override
@@ -90,6 +95,9 @@ public class Scene1 extends Scene {
         map[1][1] = 0;
         map[13][14] = 3;
         map[13][15] = 3;
+
+        // Total de bolinhas
+        tballs = balls.size();
     }
 
 }

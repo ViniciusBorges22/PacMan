@@ -21,13 +21,20 @@ public abstract class Scene {
 
     // Lista de bolinhas
     protected List<Ball> balls;
-
+    
+    // Total de bolinhas
+    protected int tballs;
+    
+    // Pontos da fase
+    protected int points;
+    
     // Bloco
     protected Image brick;
 
     public Scene() {
         this.map = new int[Consts.NUM_CELLS][Consts.NUM_CELLS];
         this.balls = new ArrayList<>();
+        this.points = 0;
     }
     
     // Imagem
@@ -64,5 +71,10 @@ public abstract class Scene {
     public int getTotalBall() {
         return this.balls.size();
     }
-
+    
+    // Obter total de pontos
+    public int getPoints() {
+        return points;
+    }
+    
 }
