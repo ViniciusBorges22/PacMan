@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
@@ -39,11 +40,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final Inky inky;
     private final Pinky pinky;
 
-    private final Strawberry strawberry;
-    private final Cherry cherry;
+    private Strawberry strawberry;
+    private Cherry cherry;
 
     private final ArrayList<Element> elemArray;
     private final GameController controller = new GameController();
+
+    private final Random random = new Random();
 
     private Scene scene;
 
@@ -75,16 +78,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.pacMan.setPosition(1, 1);
         this.addElement(pacMan);
 
-        // Strawberry
-        this.strawberry = new Strawberry();
-        this.strawberry.setPosition(Math.round(Math.random() * Consts.NUM_CELLS),
-                Math.round(Math.random() * Consts.NUM_CELLS));
-
-        // Cherry
-        this.cherry = new Cherry();
-        this.cherry.setPosition(Math.round(Math.random() * Consts.NUM_CELLS),
-                Math.round(Math.random() * Consts.NUM_CELLS));
-
         // Blinky
         this.blinky = new Blinky();
         this.blinky.setPosition(10, 10);
@@ -102,7 +95,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.pinky.setPosition(10, 10);
 
         // Tela inicial
-        this.controlScene = 1;
+        this.controlScene = 0;
         newScene(controlScene);
     }
 
@@ -124,17 +117,21 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 int aux1,
                  aux2;
                 do {
-                    aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
-                    aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                    aux1 = random.nextInt(29);
+                    aux2 = random.nextInt(29);
                 } while (scene.map(aux1, aux2) == 1);
+
+                this.strawberry = new Strawberry();
                 this.strawberry.setPosition(aux1, aux2);
                 this.addElement(strawberry);
 
                 // Determinar posição cherry
                 do {
-                    aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
-                    aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
+                    aux1 = random.nextInt(29);
+                    aux2 = random.nextInt(29);
                 } while (scene.map(aux1, aux2) == 1);
+
+                this.cherry = new Cherry();
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
                 break;
@@ -207,23 +204,26 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         TimerTask timerStrawberry = new TimerTask() {
             @Override
             public void run() {
-                if (!strawberry.isVisible()) {
-                    // Determinar uma nova posição para strawberry
-                    int aux1, aux2;
-                    do {
-                        aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
-                        aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
-                    } while (scene.map(aux1, aux2) == 1);
-                    
-                    strawberry.setPosition(aux1, aux2);
-                    
-                    // Deixar fruta visivel
-                    strawberry.setVisible(true);
-                    strawberry.setTransposable(false);
-                
-                } else {
-                    strawberry.setVisible(false);
-                    strawberry.setTransposable(true);
+                // Só começa a funcionar a partir do inicio do jogo
+                if (controlScene != 0 && controlScene != 4) {
+                    if (!strawberry.isVisible()) {
+                        // Determinar uma nova posição para strawberry
+                        int aux1, aux2;
+                        do {
+                            aux1 = random.nextInt(29);
+                            aux2 = random.nextInt(29);
+                        } while (scene.map(aux1, aux2) == 1);
+
+                        strawberry.setPosition(aux1, aux2);
+
+                        // Deixar fruta visivel
+                        strawberry.setVisible(true);
+                        strawberry.setTransposable(false);
+
+                    } else {
+                        strawberry.setVisible(false);
+                        strawberry.setTransposable(true);
+                    }
                 }
             }
         };
@@ -232,23 +232,26 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         TimerTask timerCherry = new TimerTask() {
             @Override
             public void run() {
-                if (!cherry.isVisible()) {
-                    // Determinar uma nova posição para cherry
-                    int aux1, aux2;
-                    do {
-                        aux1 = Math.round((float) Math.random() * Consts.NUM_CELLS);
-                        aux2 = Math.round((float) Math.random() * Consts.NUM_CELLS);
-                    } while (scene.map(aux1, aux2) == 1);
-                    
-                    strawberry.setPosition(aux1, aux2);
-                    
-                    // Deixar fruta visivel
-                    cherry.setVisible(true);
-                    cherry.setTransposable(false);
+                // Só começa a funcionar a partir do inicio do jogo
+                if (controlScene != 0 && controlScene != 4) {
+                    if (!cherry.isVisible()) {
+                        // Determinar uma nova posição para cherry
+                        int aux1, aux2;
+                        do {
+                            aux1 = random.nextInt(29);
+                            aux2 = random.nextInt(29);
+                        } while (scene.map(aux1, aux2) == 1);
 
-                } else {
-                    cherry.setVisible(false);
-                    cherry.setTransposable(true);
+                        strawberry.setPosition(aux1, aux2);
+
+                        // Deixar fruta visivel
+                        cherry.setVisible(true);
+                        cherry.setTransposable(false);
+
+                    } else {
+                        cherry.setVisible(false);
+                        cherry.setTransposable(true);
+                    }
                 }
             }
         };
