@@ -44,11 +44,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
     private Scene scene;
 
-    // 1 - Tela inicial
-    // 2 - Primeira tela
-    // 3 - Segunda tela
-    // 4 - Terceira tela
-    // 5 - Tela de fim do jogo
+    // 0 - Tela inicial
+    // 1 - Primeira tela
+    // 2 - Segunda tela
+    // 3 - Terceira tela
+    // 4 - Tela de fim do jogo
     private int controlScene;
 
     // Construtor
@@ -100,7 +100,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.pinky.setPosition(10, 10);
 
         // Tela inicial
-        this.controlScene = 0;
+        this.controlScene = 4;
         newScene(controlScene);
     }
 
@@ -109,7 +109,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         switch (scene) {
             // Tela Inicial
             case 0:
-                this.scene = new InitScene(new String[]{"button_start.png", "button_start.png", "background_pacman1.jpg"});
+                this.scene = new InitScene(new String[]{"button_start.png",
+                    "button_start.png", "background_pacman1.jpg"});
                 break;
 
             // Tela 1
@@ -128,6 +129,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 3:
                 this.scene = new Scene3();
                 this.scene.setBlock("brick.png");
+                break;
+
+            // Game Over
+            case 4:
+                this.scene = new GameOver(new String[]{"button_start.png",
+                    "background_game_over.jpg"});
                 break;
         }
     }
@@ -148,8 +155,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         Graphics g2 = g.create(getInsets().right, getInsets().top,
                 getWidth() - getInsets().left, getHeight() - getInsets().bottom);
 
-        // Se estiver na primeira tela, não é necessario desenhar todo os elementos
-        if (this.controlScene == 0) {
+        // Se estiver na primeira ou ultima tela, não é necessario desenhar todo os elementos
+        if (controlScene == 0 || controlScene == 4) {
             // Desenhar tela inicial
             scene.paintScene(g);
         } else {
@@ -222,7 +229,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
 
             // Tela Final
-            case 5:
+            case 4:
+                if (e.getKeyCode() == KeyEvent.VK_Q) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+                        System.exit(0);
+                    }
+                }
                 break;
 
             // Qualquer outra tela
@@ -259,6 +272,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     public void mousePressed(MouseEvent e) {
         int aux = controlScene;
         switch (aux) {
+            // Tela inicial
             case 0:
                 // Verifica se clicou em algum botao
                 int a1 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
@@ -277,7 +291,18 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 break;
 
-            case 5:
+            // Game Over
+            case 4:
+                // Verifica se clicou em algum botao
+                int a2 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
+                int x2 = e.getPoint().x;
+                int y2 = e.getPoint().y;
+                
+                // Volta para a tela inicial
+                if ((500 <= y2 && y2 <= 600) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
+                    controlScene = 0;
+                    newScene(controlScene);
+                }
                 break;
         }
     }
