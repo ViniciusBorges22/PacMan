@@ -40,6 +40,13 @@ public class GameScreen extends JFrame implements KeyListener {
 
     private Scene scene;
 
+    // 1 - Tela inicial
+    // 2 - Primeira tela
+    // 3 - Segunda tela
+    // 4 - Terceira tela
+    // 5 - Tela de fim do jogo
+    private int controlScene;
+
     // Construtor
     public GameScreen() {
         Drawing.setGameScreen(this);
@@ -74,43 +81,47 @@ public class GameScreen extends JFrame implements KeyListener {
         // Blinky
         this.blinky = new Blinky();
         this.blinky.setPosition(10, 10);
-        this.addElement(blinky);
-        
+
         // Clyde
         this.clyde = new Clyde();
         this.clyde.setPosition(10, 10);
-        this.addElement(clyde);
-        
+
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
-        this.addElement(inky);
-        
+
         // Pinky
         this.pinky = new Pinky();
         this.pinky.setPosition(10, 10);
-        this.addElement(pinky);
-        
-        // Cria cenario 1
-        newScene(1);
+
+        // Tela inicial
+        this.controlScene = 1;
+        newScene(controlScene);
     }
 
     // Cria cenario com todos os seus elementos
     private void newScene(final int scene) {
         switch (scene) {
+            // Tela Inicial
+            case 0:
+                break;
+
             // Tela 1
             case 1:
-                this.scene = new Scene1("brick.png");
+                this.scene = new Scene1();
+                this.scene.setBlock("brick.png");
                 break;
 
             // Tela 2
             case 2:
-                this.scene = new Scene2("brick.png");
+                this.scene = new Scene2();
+                this.scene.setBlock("brick.png");
                 break;
 
             // Tela 3
             case 3:
-                this.scene = new Scene3("brick.png");
+                this.scene = new Scene3();
+                this.scene.setBlock("brick.png");
                 break;
         }
     }

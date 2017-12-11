@@ -11,9 +11,9 @@ import java.util.Iterator;
 import utils.Consts;
 
 public class Scene1 extends Scene {
-
-    public Scene1(final String imageName) {
-        super(imageName);
+    
+    public Scene1() {
+        super();
         this.drawSceneFinal();
     }
 
@@ -33,14 +33,25 @@ public class Scene1 extends Scene {
         }
 
         // Desenhar bolinhas da tela
-//        Iterator<Ball> it = balls.listIterator();
-//        while (it.hasNext()) {
-//            it.next().autoDraw(g);
-//        }
+        Iterator<Ball> it = balls.listIterator();
+        while (it.hasNext()) {
+            it.next().autoDraw(g);
+        }
     }
 
     @Override
     protected void drawSceneFinal() {
+        // Bordas
+        for (int i = 0; i < Consts.NUM_CELLS; i++) {
+            for (int j = 0; j < Consts.NUM_CELLS; j++) {
+                if (i == 0 || i == Consts.NUM_CELLS - 1 || j == 0 || j == Consts.NUM_CELLS - 1) {
+                    map[i][j] = 1;
+                } else {
+                    map[i][j] = 0;
+                }
+            }
+        }
+
         // Criar bolinhas
         map[13][11] = 1;
         map[13][12] = 1;
@@ -75,7 +86,7 @@ public class Scene1 extends Scene {
                 }
             }
         }
-        
+
         map[1][1] = 0;
         map[13][14] = 3;
         map[13][15] = 3;

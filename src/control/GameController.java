@@ -1,7 +1,6 @@
 package control;
 
 import elements.Ball;
-import elements.Blinky;
 import elements.Cherry;
 import elements.Element;
 import elements.PacMan;
@@ -67,6 +66,7 @@ public class GameController {
         int map[][] = scene.getMap();
         for (int y = 0; y < Consts.NUM_CELLS; y++) {
             for (int x = 0; x < Consts.NUM_CELLS; x++) {
+                System.out.println(y + " " + x);
                 if (map[y][x] == 1) {
                     double x_aux = Math.abs(y - elem.getPos().getX());
                     double y_aux = Math.abs(x - elem.getPos().getY());

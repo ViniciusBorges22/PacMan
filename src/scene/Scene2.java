@@ -12,9 +12,9 @@ import java.awt.Graphics;
  * @author lllgabrielll
  */
 public class Scene2 extends Scene {
-    
-    public Scene2(final String imageName) {
-        super(imageName);
+
+    public Scene2() {
+        super();
     }
 
     @Override
