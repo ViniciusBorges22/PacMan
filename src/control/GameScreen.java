@@ -109,7 +109,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         switch (scene) {
             // Tela Inicial
             case 0:
-                this.scene = new InitScene(new String[]{"button_start.png", "button_start.png"});
+                this.scene = new InitScene(new String[]{"button_start.png", "button_start.png", "background_pacman1.jpg"});
                 break;
 
             // Tela 1
@@ -265,10 +265,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 int x1 = e.getPoint().x;
                 int y1 = e.getPoint().y;
 
-                if ((200 <= y1 && y1 <= 290) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                if ((200 <= y1 && y1 <= 300) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
                     controlScene = 1;
                     newScene(controlScene);
-                } else if ((320 <= y1 && y1 <= 410) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                } else if ((340 <= y1 && y1 <= 440) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
                     if (JOptionPane.showConfirmDialog(null,
                             "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
                         System.exit(0);
