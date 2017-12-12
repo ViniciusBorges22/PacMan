@@ -7,7 +7,15 @@ package scene;
 
 import elements.Ball;
 import java.awt.Graphics;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.Consts;
 
 public class Scene1 extends Scene {
@@ -45,6 +53,19 @@ public class Scene1 extends Scene {
 
     @Override
     protected void drawSceneFinal() {
+            try {
+            Scanner mapRead = new Scanner(new FileInputStream("./src/maps/map1.txt"));
+            for(int i = 0; i < Consts.NUM_CELLS; i++) {
+                for(int j = 0; j < Consts.NUM_CELLS; j++) {
+                    map[i][j] = (int)mapRead.nextByte();
+                }
+            }
+            mapRead.close();
+            } catch (FileNotFoundException ex) {
+            System.out.println("Erro no arqv");
+            Logger.getLogger(Scene1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         // Criar bolinhas
         for (int x = 1; x < Consts.NUM_CELLS-1; x++) {
             for (int y = 1; y < Consts.NUM_CELLS-1; y++) {
