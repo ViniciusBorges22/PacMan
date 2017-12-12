@@ -16,6 +16,9 @@ public class Blinky extends Enemy implements Runnable {
     
     public Blinky() {
         super(new String[]{"red_ghost.png"});
+        
+        // Movimentação inicial
+        setMoveDirection(Enemy.MOVE_LEFT);
     }
 
     @Override

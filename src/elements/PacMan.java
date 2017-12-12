@@ -106,7 +106,7 @@ public class PacMan extends Element implements Serializable, Runnable {
         while (true) {
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(150);
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }

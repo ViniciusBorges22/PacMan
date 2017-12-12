@@ -15,10 +15,10 @@ import utils.Drawing;
  */
 public abstract class Enemy extends Element {
     
-    private static final int MOVE_LEFT = 1;
-    private static final int MOVE_RIGHT = 2;
-    private static final int MOVE_UP = 3;
-    private static final int MOVE_DOWN = 4;
+    public static final int MOVE_LEFT = 1;
+    public static final int MOVE_RIGHT = 2;
+    public static final int MOVE_UP = 3;
+    public static final int MOVE_DOWN = 4;
 
     protected static final int HOUSE = 1;
     protected static final int CHASE = 2;
@@ -59,16 +59,16 @@ public abstract class Enemy extends Element {
     public void move() {
         switch (movDirection) {
             case MOVE_LEFT:
-                this.moveLeft();
+                this.moveLeftEnemy();
                 break;
             case MOVE_RIGHT:
-                this.moveRight();
+                this.moveRightEnemy();
                 break;
             case MOVE_UP:
-                this.moveUp();
+                this.moveUpEnemy();
                 break;
             case MOVE_DOWN:
-                this.moveDown();
+                this.moveDownEnemy();
                 break;
             default:
                 break;
@@ -77,7 +77,7 @@ public abstract class Enemy extends Element {
 
     @Override
     public void autoDraw(Graphics g) {
-        Drawing.draw(g, this.imageIcon, pos.getX(), pos.getY());
+        Drawing.draw(g, this.imageIcon,  pos.getY(), pos.getX());
     }
 
     public void setPacman_pos(final int x, final int y) {

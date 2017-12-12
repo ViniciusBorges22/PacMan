@@ -5,6 +5,7 @@ import elements.PacMan;
 import elements.Element;
 import elements.Cherry;
 import elements.Clyde;
+import elements.Enemy;
 import elements.Inky;
 import elements.Pinky;
 import elements.Strawberry;
@@ -51,11 +52,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final Cherry cherry;
 
     private final ArrayList<Element> elemArray;
+    private final ArrayList<Enemy> enemys;
 
     private final GameController controller = new GameController();
     private final Random random = new Random();
     private final Executor executor_scene_1;
-    
+
     private Scene scene;
 
     private Image imgLife;
@@ -81,9 +83,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
         // Lista de elementos
         this.elemArray = new ArrayList<>();
-        
+        this.enemys = new ArrayList<>();
+
         this.executor_scene_1 = Executors.newCachedThreadPool();
-        
+
         // Pacman
         this.pacMan = new PacMan();
         this.pacMan.setPosition(1, 1);
@@ -93,18 +96,22 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.blinky = new Blinky();
         this.blinky.setPosition(10, 10);
         this.elemArray.add(blinky);
+        this.enemys.add(blinky);
 
         // Clyde
         this.clyde = new Clyde();
         this.clyde.setPosition(10, 10);
+        this.enemys.add(clyde);
 
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
+        this.enemys.add(inky);
 
         // Pinky
         this.pinky = new Pinky();
         this.pinky.setPosition(10, 10);
+        this.enemys.add(pinky);
 
         this.strawberry = new Strawberry();
         this.cherry = new Cherry();
@@ -128,7 +135,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             // Tela Inicial
             case 0:
                 this.scene = new InitScene();
-                
+
                 // Total de vidas do pacman
                 this.pacMan.setLife(3);
                 break;
@@ -157,10 +164,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
-                
+
                 // Thread para a animação do pacman
-                executor_scene_1.execute(pacMan);
-                
+                this.executor_scene_1.execute(pacMan);
+                this.blinky.setMap(this.scene.getMap());
                 break;
 
             // Tela 2
@@ -201,9 +208,46 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Pintar elementos
         this.controller.drawAllElements(scene, elemArray, g2, controlScene);
 
+        // Se nao for a tela inicial nem a final
         if (controlScene != 0 && controlScene != 4) {
+
+            // Verifica movimentação do blinky
+            switch (pacMan.getMovDirection()) {
+                case PacMan.MOVE_DOWN:
+                    if (pacMan.getPos().getX() > blinky.getPos().getX()) {
+                        blinky.setMoveDirection(Enemy.MOVE_DOWN);
+                    } else {
+                        blinky.setMoveDirection(Enemy.MOVE_UP);
+                    }
+                    break;
+
+                case PacMan.MOVE_UP:
+                    if (pacMan.getPos().getX() > blinky.getPos().getX()) {
+                        blinky.setMoveDirection(Enemy.MOVE_DOWN);
+                    } else {
+                        blinky.setMoveDirection(Enemy.MOVE_UP);
+                    }
+                    break;
+
+                case PacMan.MOVE_LEFT:
+                    if (pacMan.getPos().getY() > blinky.getPos().getY()) {
+                        blinky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    } else {
+                        blinky.setMoveDirection(Enemy.MOVE_LEFT);
+                    }
+                    break;
+
+                case PacMan.MOVE_RIGHT:
+                    if (pacMan.getPos().getY() > blinky.getPos().getY()) {
+                        blinky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    } else {
+                        blinky.setMoveDirection(Enemy.MOVE_LEFT);
+                    }
+                    break;
+            }
+
             // Verificar colisao entre elementos
-            if (controller.processAllElements(scene, elemArray)) {
+            if (controller.processAllElements(scene, elemArray, enemys)) {
 
                 // Remove uma vida do pacman
                 pacMan.removeLife();
@@ -348,28 +392,33 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             default:
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
+                        // Setar movimentação do pacman
                         pacMan.setMovDirection(PacMan.MOVE_UP);
                         pacMan.changeDirection(4);
                         break;
-                    
+
                     case KeyEvent.VK_DOWN:
+                        // Setar movimentação do pacman
                         pacMan.setMovDirection(PacMan.MOVE_DOWN);
                         pacMan.changeDirection(2);
                         break;
-                    
+
                     case KeyEvent.VK_LEFT:
+                        // Setar movimentaçao do pacman
                         pacMan.setMovDirection(PacMan.MOVE_LEFT);
                         pacMan.changeDirection(3);
                         break;
-                    
+
                     case KeyEvent.VK_RIGHT:
+                        // Setar movimentação do pacman
                         pacMan.setMovDirection(PacMan.MOVE_RIGHT);
                         pacMan.changeDirection(0);
                         break;
-                    
+
                     case KeyEvent.VK_SPACE:
                         pacMan.setMovDirection(PacMan.STOP);
                         break;
+
                     default:
                         break;
                 }

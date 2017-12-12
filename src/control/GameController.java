@@ -1,6 +1,7 @@
 package control;
 
 import elements.Ball;
+import elements.Blinky;
 import elements.Element;
 import elements.Enemy;
 import elements.PacMan;
@@ -26,12 +27,13 @@ public class GameController {
         }
     }
 
-    public boolean processAllElements(Scene scene, ArrayList<Element> e) {
+    public boolean processAllElements(Scene scene, ArrayList<Element> e, ArrayList<Enemy> enemys) {
         if (e.isEmpty()) {
             return false;
         }
 
         PacMan pPacMan = (PacMan) e.get(0);
+        Blinky blinky = (Blinky) enemys.get(0);
 
         // Verifica colisao entre pacman e o cenario
         if (!isValidPositionScene(pPacMan, scene)) {
@@ -39,6 +41,11 @@ public class GameController {
             pPacMan.setMovBefDirection(pPacMan.getMovDirection());
             pPacMan.setMovDirection(PacMan.STOP);
             return false;
+        }
+
+        // Verifica colisão entre blinky e cenario
+        if (!isValidPositionScene(blinky, scene)) {
+            setBlinkyMovDirection(blinky, pPacMan);
         }
 
         // Verifica colisao entre as bolinhas e pacman
@@ -67,7 +74,11 @@ public class GameController {
             }
         }
 
+        // Movimenta o pacman
         pPacMan.move();
+
+        // Movimentar inimigos
+        blinky.move();
 
         return aux;
     }
@@ -88,6 +99,49 @@ public class GameController {
             }
         }
         return true;
+    }
+
+    // Setar movimento do blinky
+    private void setBlinkyMovDirection(Enemy enemy, PacMan pPacMan) {
+
+        // Definir uma nova direção para o blinky
+        switch (enemy.getMovDirection()) {
+            case Enemy.MOVE_LEFT:
+//                if (pPacMan.getPos().getX() > enemy.getPos().getX()) {
+//                    enemy.setMoveDirection(Enemy.MOVE_DOWN);
+//                } else {
+//                    enemy.setMoveDirection(Enemy.MOVE_UP);
+//                }
+                enemy.setMoveDirection(Enemy.MOVE_RIGHT);
+                break;
+
+            case Enemy.MOVE_RIGHT:
+//                if (pPacMan.getPos().getX() > enemy.getPos().getX()) {
+//                    enemy.setMoveDirection(Enemy.MOVE_DOWN);
+//                } else {
+//                    enemy.setMoveDirection(Enemy.MOVE_UP);
+//                }
+                enemy.setMoveDirection(Enemy.MOVE_LEFT);
+                break;
+
+            case Enemy.MOVE_DOWN:
+//                if (pPacMan.getPos().getY() > enemy.getPos().getY()) {
+//                    enemy.setMoveDirection(Enemy.MOVE_RIGHT);
+//                } else {
+//                    enemy.setMoveDirection(Enemy.MOVE_LEFT);
+//                }
+                enemy.setMoveDirection(Enemy.MOVE_UP);
+                break;
+
+            case Enemy.MOVE_UP:
+//                if (pPacMan.getPos().getY() > enemy.getPos().getY()) {
+//                    enemy.setMoveDirection(Enemy.MOVE_RIGHT);
+//                } else {
+//                    enemy.setMoveDirection(Enemy.MOVE_LEFT);
+//                }
+                enemy.setMoveDirection(Enemy.MOVE_DOWN);
+                break;
+        }
     }
 
 }
