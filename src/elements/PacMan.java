@@ -169,5 +169,4 @@ public class PacMan extends Element implements Serializable, Runnable {
             }
         }
     }
-
 }
