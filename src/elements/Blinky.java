@@ -3,26 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scene;
-
-import java.awt.Graphics;
+package elements;
 
 /**
  *
  * @author lllgabrielll
  */
-public class Scene2 extends Scene {
-
-    public Scene2() {
-        super();
+public class Blinky extends Enemy implements Runnable {
+    
+    public Blinky() {
+        super(new String[]{"red_ghost.png"});
     }
 
     @Override
-    public void paintScene(Graphics g) {
-    }
-
-    @Override
-    protected void drawScene() {
+    public void run() {
+        // Thread para realizar algum calculo para seguir o pacman
     }
 
 }

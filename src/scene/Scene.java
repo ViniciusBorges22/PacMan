@@ -6,7 +6,6 @@
 package scene;
 
 import elements.Ball;
-import elements.Fruit;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -19,33 +18,27 @@ public abstract class Scene {
 
     // Mapa
     protected int map[][];
-    
+
     // Lista de bolinhas
     protected List<Ball> balls;
     
-    // Lista de frutas
-    protected List<Fruit> fruits;
-
+    // Total de bolinhas
+    protected int tballs;
+    
+    // Pontos da fase
+    protected int points;
+    
     // Bloco
     protected Image brick;
-    
-    public Scene(final String imageName) {
+
+    public Scene() {
         this.map = new int[Consts.NUM_CELLS][Consts.NUM_CELLS];
         this.balls = new ArrayList<>();
-        this.fruits = new ArrayList<>();
-
-        // Bordas
-        for (int i = 0; i < Consts.NUM_CELLS; i++) {
-            for (int j = 0; j < Consts.NUM_CELLS; j++) {
-                if (i == 0 || i == Consts.NUM_CELLS - 1 || j == 0 || j == Consts.NUM_CELLS - 1) {
-                    map[i][j] = 1;
-                } else {
-                    map[i][j] = 0;
-                }
-            }
-        }
-
-        // Imagem
+        this.points = 0;
+    }
+    
+    // Imagem
+    public void setBlock(String imageName) {
         try {
             this.brick = Toolkit.getDefaultToolkit().getImage(
                     new java.io.File(".").getCanonicalPath() + Consts.PATH + imageName);
@@ -59,20 +52,29 @@ public abstract class Scene {
         return map;
     }
     
+    public int map(int x, int y) {
+        return map[x][y];
+    }
+    
     // Pintar cenario
     public abstract void paintScene(Graphics g);
 
     // Termina de definir cenario
-    protected abstract void drawSceneFinal();
+    protected abstract void drawScene();
 
     // Obter elementos bolinhas
     public List<Ball> getBalls() {
         return balls;
     }
-    
+
     // Obter total de bolinhas
     public int getTotalBall() {
         return this.balls.size();
+    }
+    
+    // Obter total de pontos
+    public int getPoints() {
+        return points;
     }
     
 }

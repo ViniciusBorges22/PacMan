@@ -13,8 +13,8 @@ import java.awt.Graphics;
  */
 public class Scene3 extends Scene {
 
-    public Scene3(final String imageName) {
-        super(imageName);
+    public Scene3() {
+        super();
     }
     
     @Override
@@ -22,7 +22,7 @@ public class Scene3 extends Scene {
     }
 
     @Override
-    protected void drawSceneFinal() {
+    protected void drawScene() {
     }
     
 }

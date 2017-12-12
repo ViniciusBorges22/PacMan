@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scene;
+package elements;
 
 import java.awt.Graphics;
 
@@ -11,18 +11,22 @@ import java.awt.Graphics;
  *
  * @author lllgabrielll
  */
-public class Scene2 extends Scene {
+public class Clyde extends Enemy implements Runnable {
 
-    public Scene2() {
-        super();
+    public Clyde() {
+        super(new String[] {"blue_ghost.png"});
     }
 
     @Override
-    public void paintScene(Graphics g) {
+    public void autoDraw(Graphics g) {
+        
     }
 
     @Override
-    protected void drawScene() {
+    public void run() {
+        // Implementar movimentação
     }
-
+    
+    
+    
 }
