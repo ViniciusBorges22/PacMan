@@ -17,26 +17,26 @@ public abstract class Element implements Serializable {
     protected boolean isTransposable;
     protected boolean isVisible;    
 
-    protected Element(String[] imageName, int dir) {
+    protected Element(String[] imageName, int dir, int size) {
         this.pos = new Position(1, 1);
         this.isTransposable = true;
         
         directions = new ImageIcon[imageName.length];
 
         for (int i = 0; i < imageName.length; i++) {
-            directions[i] = getImageIcon(imageName[i]);
+            directions[i] = getImageIcon(imageName[i], size);
         }
 
         setImageIcon(dir);
     }
 
-    private ImageIcon getImageIcon(String imageName) {
+    private ImageIcon getImageIcon(String imageName, int size) {
         try {
             ImageIcon imageIconFunc = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + imageName);
             Image img = imageIconFunc.getImage();
             BufferedImage bi = new BufferedImage(Consts.CELL_SIZE, Consts.CELL_SIZE, BufferedImage.TYPE_INT_ARGB);
             Graphics g = bi.createGraphics();
-            g.drawImage(img, 0, 0, Consts.CELL_SIZE, Consts.CELL_SIZE, null);
+            g.drawImage(img, 4, 4, size, size, null);
             imageIconFunc = new ImageIcon(bi);
             return imageIconFunc;
         } catch (IOException ex) {

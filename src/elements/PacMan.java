@@ -3,6 +3,7 @@ package elements;
 import utils.Drawing;
 import java.awt.Graphics;
 import java.io.Serializable;
+import utils.Consts;
 
 public class PacMan extends Element implements Serializable, Runnable {
 
@@ -23,7 +24,7 @@ public class PacMan extends Element implements Serializable, Runnable {
 
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png",
-            "pacman_left.png", "pacman_up.png"}, 0);
+            "pacman_left.png", "pacman_up.png"}, 0, Consts.ELEMENT_SIZE);
         this.isVisible = true;
         this.isTransposable = false;
     }

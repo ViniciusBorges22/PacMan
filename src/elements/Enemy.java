@@ -7,6 +7,7 @@ package elements;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import utils.Consts;
 import utils.Drawing;
 
 /**
@@ -34,7 +35,7 @@ public abstract class Enemy extends Element {
     private int state;
     
     public Enemy(String[] imgs) {
-        super(imgs, 0);
+        super(imgs, 0, Consts.ELEMENT_SIZE);
         this.isVisible = true;
         this.isTransposable = false;
         this.pacman_pos = new Point();
