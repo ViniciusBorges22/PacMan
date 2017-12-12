@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 /**
  * Projeto de POO 2017
- *
- * @author Luiz Eduardo Baseado em material do Prof. Jose Fernando Junior
+ * 
+ * @author Luiz Eduardo
+ * Baseado em material do Prof. Jose Fernando Junior
  */
 public class Position implements Serializable {
-
     /* Elements are positioned in a grid layout (integers).
        However, walking is implemented with float steps (continuous).
        This is why x and y are double types.
@@ -17,81 +17,56 @@ public class Position implements Serializable {
        As consequence, any element has size 1x1 (x and y). */
     private double x;
     private double y;
-
+    
     private double previousX;
     private double previousY;
 
-    public Position(double x, double y) {
-        this.setPosition(x, y);
+    public Position(double x, double y){
+        this.setPosition(x,y);
     }
 
-    public final boolean setPosition(double x, double y) {
-        int factor = (int) Math.pow(10, Consts.WALK_STEP_DEC_PLACES + 1);
-        x = (double) Math.round(x * factor) / factor;
-        y = (double) Math.round(y * factor) / factor;
-
-        if (x < 0 || x > utils.Consts.NUM_CELLS - 1) {
+    public final boolean setPosition(double x, double y){
+        int factor = (int)Math.pow(10, Consts.WALK_STEP_DEC_PLACES+1);
+        x = (double)Math.round(x * factor) / factor;
+        y = (double)Math.round(y * factor) / factor;
+        
+        if(x < 0 || x > utils.Consts.NUM_CELLS-1)
             return false;
-        }
         previousX = this.x;
         this.x = x;
-
-        if (y < 0 || y > utils.Consts.NUM_CELLS - 1) {
+        
+        if(y < 0 || y > utils.Consts.NUM_CELLS-1)
             return false;
-        }
         previousY = this.y;
         this.y = y;
         return true;
     }
     
-    public double getX() {
+    public double getX(){
         return x;
     }
-
-    public double getY() {
+   
+    public double getY(){
         return y;
     }
 
-    public boolean comeBack() {
-        return this.setPosition(previousX, previousY);
+    public boolean comeBack(){
+        return this.setPosition(previousX,previousY);
     }
     
-    // Movimentação do Pacman
-    public boolean moveUp() {
-        return this.setPosition(this.getX() - Consts.WALK_STEP, this.getY());
+    public boolean moveUp(){
+        return this.setPosition(this.getX()-Consts.WALK_STEP, this.getY());
     }
-
-    public boolean moveDown() {
-        return this.setPosition(this.getX() + Consts.WALK_STEP, this.getY());
+    public boolean moveDown(){
+        return this.setPosition(this.getX()+Consts.WALK_STEP, this.getY());
     }
-
-    public boolean moveRight() {
-        return this.setPosition(this.getX(), this.getY() + Consts.WALK_STEP);
+    public boolean moveRight(){
+        return this.setPosition(this.getX(), this.getY()+Consts.WALK_STEP);
     }
-
-    public boolean moveLeft() {
-        return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP);
+    public boolean moveLeft(){
+        return this.setPosition(this.getX(), this.getY()-Consts.WALK_STEP);        
     }
     
-    
-    // Movimentação da fruta
-    public boolean moveUpFruit() {
-        return this.setPosition(this.getX() - Consts.WALK_STEP_FRUIT, this.getY());
-    }
-
-    public boolean moveDownFruit() {
-        return this.setPosition(this.getX() + Consts.WALK_STEP_FRUIT, this.getY());
-    }
-
-    public boolean moveRightFruit() {
-        return this.setPosition(this.getX(), this.getY() + Consts.WALK_STEP_FRUIT);
-    }
-
-    public boolean moveLeftFruit() {
-        return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_FRUIT);
-    }    
-    
-    // Movimentação Blinky
     public boolean moveUpEnemy() {
         return this.setPosition(this.getX() - Consts.WALK_STEP_ENEMY, this.getY());
     }

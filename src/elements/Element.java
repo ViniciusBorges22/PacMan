@@ -21,7 +21,9 @@ public abstract class Element implements Serializable {
     // protected boolean isMortal;       
 
     protected Element(String[] imageName, int dir) {
-        this.pos = new Position(1, 1);        
+        this.pos = new Position(1, 1);
+        this.isTransposable = true;
+        
         // this.isMortal = false;
         
         directions = new ImageIcon[imageName.length];
@@ -70,19 +72,19 @@ public abstract class Element implements Serializable {
     public boolean isTransposable() {
         return isTransposable;
     }
-    
-    public boolean isVisible() {
+
+     public boolean isVisible() {
         return isVisible;
     }
 
     public void setTransposable(boolean isTransposable) {
         this.isTransposable = isTransposable;
     }
-    
+
     public void setVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
-    
+
     abstract public void autoDraw(Graphics g);
     
     // Pacman
@@ -101,7 +103,7 @@ public abstract class Element implements Serializable {
     public boolean moveLeft() {
         return this.pos.moveLeft();
     }
-    
+
     // Enemy
     public boolean moveUpEnemy() {
         return this.pos.moveUpEnemy();
@@ -121,6 +123,6 @@ public abstract class Element implements Serializable {
 
     public Position getPos() {
         return pos;
-    }  
+    }
    
 }

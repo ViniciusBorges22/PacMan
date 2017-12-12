@@ -1,6 +1,5 @@
 package control;
 
-import scene.GameOver;
 import elements.Blinky;
 import elements.PacMan;
 import elements.Element;
@@ -15,10 +14,13 @@ import utils.Drawing;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,10 +28,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import scene.GameOver;
 import scene.InitScene;
 
 import scene.Scene;
 import scene.Scene1;
+import scene.Scene2;
+import scene.Scene3;
 
 public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
@@ -45,13 +50,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
     private final ArrayList<Element> elemArray;
     private final GameController controller = new GameController();
-
     private final Random random = new Random();
 
     private Scene scene;
-    
+
     private Image imgPontuacao;
     private Image imgFase;
+    private Image imgLife;
 
     // Controle de tela
     // 0 - Tela inicial
@@ -96,47 +101,53 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.strawberry = new Strawberry();
         this.cherry = new Cherry();
 
-        // Tela inicial
+        // Vida
+        try {
+            this.imgLife = Toolkit.getDefaultToolkit().getImage(
+                    new File(".").getCanonicalPath() + Consts.PATH + "pacman_right.png");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Cria cenario
         this.controlScene = 1;
         newScene(controlScene);
     }
 
     // Cria cenario com todos os seus elementos
-    private void newScene(final int sc) {
-        switch (sc) {
+    private void newScene(int scene) {
+        switch (scene) {
             // Tela Inicial
             case 0:
+                this.scene = new InitScene();
+
                 this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
                         Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
-
-                this.scene = new InitScene(new String[]{"button_start.png",
-                    "button_start.png", "background_pacman1.jpg"});
                 break;
 
             // Tela 1
             case 1:
-                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right + 300,
-                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
-
                 this.scene = new Scene1();
                 this.scene.setBlock("brick.png");
+                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
+                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom + 50);
 
-                // Determinar posição strawberry
+                // Determinar posição para strawberry
                 int aux1,
                  aux2;
                 do {
-                    aux1 = random.nextInt(29);
-                    aux2 = random.nextInt(29);
-                } while (scene.map(aux1, aux2) == 1);
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
 
                 this.strawberry.setPosition(aux1, aux2);
                 this.addElement(strawberry);
 
-                // Determinar posição cherry
+                // Determinar posição para cherry
                 do {
-                    aux1 = random.nextInt(29);
-                    aux2 = random.nextInt(29);
-                } while (scene.map(aux1, aux2) == 1);
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
 
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
@@ -144,17 +155,18 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
             // Tela 2
             case 2:
+                this.scene = new Scene2();
+                this.scene.setBlock("brick.png");
                 break;
 
             // Tela 3
             case 3:
+                this.scene = new Scene3();
+                this.scene.setBlock("brick.png");
                 break;
 
             // Game Over
             case 4:
-                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
-                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
-
                 this.scene = new GameOver();
                 break;
         }
@@ -176,22 +188,30 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         Graphics g2 = g.create(getInsets().right, getInsets().top,
                 getWidth() - getInsets().left, getHeight() - getInsets().bottom);
 
-        // Se estiver na primeira ou ultima tela, não é necessario desenhar todo os elementos
-        if (controlScene == 0 || controlScene == 4) {
-            // Desenhar tela
-            scene.paintScene(g);
-        } else {
-            // Desenha todos os elementos
-            this.controller.drawAllElements(scene, elemArray, g);
+        // Pintar elementos
+        this.controller.drawAllElements(scene, elemArray, g2, controlScene);
 
-            // Verificar colisao entre elementos
-            this.controller.processAllElements(scene, elemArray);
-        }
+        // Verificar colisao entre elementos
+        this.controller.processAllElements(scene, elemArray);
 
         // Pontuação / Fase atual / Vidas
         this.setTitle("Tela atual: " + controlScene + " Pontuação: "
                 + scene.getPoints() + " Vidas: " + pacMan.getLife());
-
+        
+        // Verifica se acabou as vidas
+        if (pacMan.getLife() == 0) {
+            this.controlScene = 4;
+            newScene(controlScene);
+        }
+        
+        // Desenhar informações
+        int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
+        
+        // Vidas
+        for (int i = 0; i < pacMan.getLife(); i++) {
+            g2.drawImage(imgLife, 10 + (32 * i), aux+10, 30, 30, null);
+        }
+        
         g.dispose();
         g2.dispose();
         if (!getBufferStrategy().contentsLost()) {
@@ -219,8 +239,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                         // a cada nova aparição
                         int aux1, aux2;
                         do {
-                            aux1 = random.nextInt(29);
-                            aux2 = random.nextInt(29);
+                            aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                            aux2 = random.nextInt(Consts.NUM_CELLS - 1);
                         } while (scene.map(aux1, aux2) == 1);
 
                         strawberry.setPosition(aux1, aux2);
@@ -250,8 +270,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                         // a cada nova aparição
                         int aux1, aux2;
                         do {
-                            aux1 = random.nextInt(29);
-                            aux2 = random.nextInt(29);
+                            aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                            aux2 = random.nextInt(Consts.NUM_CELLS - 1);
                         } while (scene.map(aux1, aux2) == 1);
 
                         strawberry.setPosition(aux1, aux2);
@@ -333,45 +353,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         }
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        int aux = controlScene;
-        switch (aux) {
-            // Tela inicial
-            case 0:
-                // Verifica se clicou em algum botao
-                int a1 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
-                int x1 = e.getPoint().x;
-                int y1 = e.getPoint().y;
-
-                if ((200 <= y1 && y1 <= 300) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
-                    controlScene = 1;
-                    newScene(controlScene);
-                } else if ((340 <= y1 && y1 <= 440) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
-                    if (JOptionPane.showConfirmDialog(null,
-                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
-                        System.exit(0);
-                    }
-                }
-
-                break;
-
-            // Game Over
-            case 4:
-                // Verifica se clicou em algum botao
-                int a2 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
-                int x2 = e.getPoint().x;
-                int y2 = e.getPoint().y;
-
-                // Volta para a tela inicial
-                if ((500 <= y2 && y2 <= 600) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
-                    controlScene = 0;
-                    newScene(controlScene);
-                }
-                break;
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -412,18 +393,57 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(MouseEvent me) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
+        int aux = controlScene;
+        switch (aux) {
+            // Tela inicial
+            case 0:
+                // Verifica se clicou em algum botao
+                int a1 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
+                int x1 = e.getPoint().x;
+                int y1 = e.getPoint().y;
+
+                if ((100 <= y1 && y1 <= 200) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                    controlScene = 1;
+                    newScene(controlScene);
+                } else if ((240 <= y1 && y1 <= 340) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+                        System.exit(0);
+                    }
+                }
+
+                break;
+
+            // Game Over
+            case 4:
+                // Verifica se clicou em algum botao
+                int a2 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
+                int x2 = e.getPoint().x;
+                int y2 = e.getPoint().y;
+
+                // Volta para a tela inicial
+                if ((300 <= y2 && y2 <= 400) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
+                    controlScene = 0;
+                    newScene(controlScene);
+                }
+                break;
+        }
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseReleased(MouseEvent me) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
 }

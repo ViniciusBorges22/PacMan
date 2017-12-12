@@ -13,14 +13,13 @@ import utils.Consts;
 public class Scene1 extends Scene {
 
     public Scene1() {
-        super();
-        this.drawScene();
+        this.drawSceneFinal();
     }
 
     @Override
     public void paintScene(Graphics g) {
-        g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS + 300, Consts.CELL_SIZE * Consts.NUM_CELLS);
-
+        g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS, Consts.CELL_SIZE * Consts.NUM_CELLS + 50);
+        
         // Desenha cenario
         for (int i = 0; i < Consts.NUM_CELLS; i++) {
             for (int j = 0; j < Consts.NUM_CELLS; j++) {
@@ -39,65 +38,24 @@ public class Scene1 extends Scene {
         while (it.hasNext()) {
             it.next().autoDraw(g);
         }
-
+        
         // Calcula a quantidade de pontos nessa fase
         points = (tballs - balls.size()) * 10;
     }
 
     @Override
-    protected void drawScene() {
-        // Bordas
-        for (int i = 0; i < Consts.NUM_CELLS; i++) {
-            for (int j = 0; j < Consts.NUM_CELLS; j++) {
-                if (i == 0 || i == Consts.NUM_CELLS - 1 || j == 0 || j == Consts.NUM_CELLS - 1) {
-                    map[i][j] = 1;
-                } else {
-                    map[i][j] = 0;
-                }
-            }
-        }
-
+    protected void drawSceneFinal() {
         // Criar bolinhas
-        map[13][11] = 1;
-        map[13][12] = 1;
-        map[13][13] = 1;
-        map[13][14] = 1;
-        map[13][15] = 1;
-        map[13][16] = 1;
-        map[13][17] = 1;
-        map[13][18] = 1;
-
-        map[16][11] = 1;
-        map[16][12] = 1;
-        map[16][13] = 1;
-        map[16][14] = 1;
-        map[16][15] = 1;
-        map[16][16] = 1;
-        map[16][17] = 1;
-        map[16][18] = 1;
-
-        map[14][11] = 1;
-        map[14][18] = 1;
-        map[15][11] = 1;
-        map[15][18] = 1;
-
-        map[1][1] = 1;
-
-        for (int x = 0; x < Consts.NUM_CELLS; x++) {
-            for (int y = 0; y < Consts.NUM_CELLS; y++) {
-                if (map[x][y] == 0
-                        && !(x > 13 && x < 16 && y > 11 && y < 19)) {
+        for (int x = 1; x < Consts.NUM_CELLS-1; x++) {
+            for (int y = 1; y < Consts.NUM_CELLS-1; y++) {
+                if (map[x][y] == 0) {
                     this.balls.add(new Ball("ball.png", 100, x, y));
                 }
             }
         }
-
         map[1][1] = 0;
-        map[13][14] = 3;
-        map[13][15] = 3;
-
-        // Total de bolinhas
+        
+        // Total de bolinhas na tela
         tballs = balls.size();
     }
-
 }

@@ -12,9 +12,9 @@ import utils.Drawing;
  *
  * @author lllgabrielll
  */
-public class Enemy extends Element {
-
-    private static final int MOVE_LEFT = 1;
+public abstract class Enemy extends Element {
+    
+     private static final int MOVE_LEFT = 1;
     private static final int MOVE_RIGHT = 2;
     private static final int MOVE_UP = 3;
     private static final int MOVE_DOWN = 4;
@@ -71,5 +71,5 @@ public class Enemy extends Element {
     public void autoDraw(Graphics g) {
         Drawing.draw(g, this.imageIcon, pos.getX(), pos.getY());
     }
-
+    
 }

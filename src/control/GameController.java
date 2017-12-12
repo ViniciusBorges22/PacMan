@@ -1,10 +1,8 @@
 package control;
 
 import elements.Ball;
-import elements.Cherry;
 import elements.Element;
 import elements.PacMan;
-import elements.Strawberry;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,18 +10,21 @@ import scene.Scene;
 import utils.Consts;
 
 public class GameController {
-
-    public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g) {
+    
+    // Desenhar todos os elementos do jogo
+    public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g, int control) {
         // Desenha cenario e bolinhas
         scene.paintScene(g);
 
         // Desenha outros elementos
-        Iterator<Element> it = elemArray.listIterator();
-        while (it.hasNext()) {
-            it.next().autoDraw(g);
+        if (control != 0 && control != 4) {
+            Iterator<Element> it = elemArray.listIterator();
+            while (it.hasNext()) {
+                it.next().autoDraw(g);
+            }
         }
     }
-
+    
     public void processAllElements(Scene scene, ArrayList<Element> e) {
         if (e.isEmpty()) {
             return;
@@ -52,7 +53,6 @@ public class GameController {
         for (int i = 1; i < e.size(); i++) {
             eTemp = e.get(i);
             if (!eTemp.isTransposable() && pPacMan.overlap(eTemp)) {
-                System.out.println("Teste");
                 e.remove(eTemp);
             }
         }
@@ -78,44 +78,4 @@ public class GameController {
         return true;
     }
 
-    // Movimenta Strawberry
-    private void setMoveStrawberry(Strawberry s, Scene scene) {
-        if (!isValidPositionScene(s, scene)) {
-            s.backToLastPosition();
-            int aux;
-            do {
-                aux = (int) Math.round(Math.random() * 10 - 6);
-            } while (aux != s.getMoveDirection());
-            s.setMoveDirection(aux);
-        } else {
-            s.move();
-        }
-    }
-
-    // Movimenta Cherrytrawberry
-    private void setMoveCherry(Cherry c, Scene scene) {
-        if (!isValidPositionScene(c, scene)) {
-            c.backToLastPosition();
-            int aux;
-            do {
-                aux = (int) Math.round(Math.random() * 10 - 6);
-            } while (aux != c.getMoveDirection());
-            c.setMoveDirection(aux);
-        } else {
-            c.move();
-        }
-    }
-
-//    private boolean isValidPosition(ArrayList<Element> elemArray, Element elem) {
-//        Element elemAux;
-//        for (int i = 1; i < elemArray.size(); i++) {
-//            elemAux = elemArray.get(i);
-//            if (!elemAux.isTransposable()) {
-//                if (elemAux.overlap(elem)) {
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
 }

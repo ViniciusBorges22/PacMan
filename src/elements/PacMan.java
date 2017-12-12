@@ -13,18 +13,17 @@ public class PacMan extends Element implements Serializable {
     public static final int MOVE_DOWN = 4;
 
     private int movDirection = STOP;
-
     private int life = 3;
-
+    
     // Controle da imagem
 //    private int control_right = 0;
 //    private int control_down = 2;
 //    private int control_left = 4;
 //    private int control_up = 6;
+
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_down.png",
             "pacman_left.png", "pacman_up.png"}, 0);
-        
         this.isVisible = true;
         this.isTransposable = false;
     }
@@ -71,7 +70,7 @@ public class PacMan extends Element implements Serializable {
                 break;
         }
     }
-
+    
     // Adicionar vida
     public void addLife() {
         life++;
@@ -82,9 +81,9 @@ public class PacMan extends Element implements Serializable {
         life--;
     }
 
-    // Obter vida
     public int getLife() {
         return life;
     }
-
+    
+    
 }
