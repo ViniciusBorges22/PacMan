@@ -4,7 +4,7 @@ import utils.Drawing;
 import java.awt.Graphics;
 import java.io.Serializable;
 
-public class PacMan extends Element implements Serializable {
+public class PacMan extends Element implements Serializable, Runnable {
 
     public static final int STOP = 0;
     public static final int MOVE_LEFT = 1;
@@ -12,17 +12,17 @@ public class PacMan extends Element implements Serializable {
     public static final int MOVE_UP = 3;
     public static final int MOVE_DOWN = 4;
 
+    private int MOVE_RIGHT_STATE = 0;
+    private int MOVE_DOWN_STATE = 2;
+    private int MOVE_LEFT_STATE = 4;
+    private int MOVE_UP_STATE = 6;
+
     private int movDirection = STOP;
+    private int movBefDirection = STOP;
     private int life = 3;
-    
-    // Controle da imagem
-//    private int control_right = 0;
-//    private int control_down = 2;
-//    private int control_left = 4;
-//    private int control_up = 6;
 
     public PacMan() {
-        super(new String[]{"pacman_right.png", "pacman_down.png",
+        super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png",
             "pacman_left.png", "pacman_up.png"}, 0);
         this.isVisible = true;
         this.isTransposable = false;
@@ -57,23 +57,31 @@ public class PacMan extends Element implements Serializable {
             case MOVE_LEFT:
                 this.moveLeft();
                 break;
+
             case MOVE_RIGHT:
                 this.moveRight();
                 break;
+
             case MOVE_UP:
                 this.moveUp();
                 break;
+
             case MOVE_DOWN:
                 this.moveDown();
                 break;
+
             default:
                 break;
         }
     }
-    
+
     // Adicionar vida
     public void addLife() {
         life++;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
     }
 
     // Remover vida
@@ -84,6 +92,82 @@ public class PacMan extends Element implements Serializable {
     public int getLife() {
         return life;
     }
-    
-    
+
+    public int getMovDirection() {
+        return movDirection;
+    }
+
+    public void setMovBefDirection(int movBefDirection) {
+        this.movBefDirection = movBefDirection;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+            // A cada 0.3s acontece uma a atualização da imagem do pacman
+            switch (movDirection) {
+                case MOVE_RIGHT:
+                    if (MOVE_RIGHT_STATE == 0) {
+                        changeDirection(1);
+                        MOVE_RIGHT_STATE = 1;
+                    } else {
+                        changeDirection(0);
+                        MOVE_RIGHT_STATE = 0;
+                    }
+                    break;
+
+//                case MOVE_DOWN:
+//                    if (MOVE_DOWN_STATE == 2) {
+//                        changeDirection(3);
+//                        MOVE_DOWN_STATE = 3;
+//                    } else {
+//                        changeDirection(2);
+//                        MOVE_DOWN_STATE = 2;
+//                    }
+//                    break;
+//                    
+//                    case MOVE_LEFT:
+//                    if (MOVE_LEFT_STATE == 4) {
+//                        changeDirection(5);
+//                        MOVE_LEFT_STATE = 5;
+//                    } else {
+//                        changeDirection(4);
+//                        MOVE_LEFT_STATE = 4;
+//                    }
+//                    break;
+//                    
+//                    case MOVE_UP:
+//                    if (MOVE_UP_STATE == 6) {
+//                        changeDirection(7);
+//                        MOVE_UP_STATE = 7;
+//                    } else {
+//                        changeDirection(6);
+//                        MOVE_UP_STATE = 6;
+//                    }
+//                    break;
+                
+                case STOP:
+                    switch (movBefDirection) {
+                        case MOVE_RIGHT:
+                            if (MOVE_RIGHT_STATE == 0) {
+                                changeDirection(1);
+                                MOVE_RIGHT_STATE = 1;
+                            } else {
+                                changeDirection(0);
+                                MOVE_RIGHT_STATE = 0;
+                            }
+                            break;
+                    }
+                    break;
+            }
+        }
+    }
+
 }

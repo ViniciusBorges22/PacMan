@@ -15,16 +15,11 @@ public abstract class Element implements Serializable {
     protected ImageIcon imageIcon;
     protected Position pos;
     protected boolean isTransposable;
-    protected boolean isVisible;
-    
-    // Verifica se deve remover ?????
-    // protected boolean isMortal;       
+    protected boolean isVisible;    
 
     protected Element(String[] imageName, int dir) {
         this.pos = new Position(1, 1);
         this.isTransposable = true;
-        
-        // this.isMortal = false;
         
         directions = new ImageIcon[imageName.length];
 
@@ -125,4 +120,7 @@ public abstract class Element implements Serializable {
         return pos;
     }
    
+    public ImageIcon getImgElement() {
+        return imageIcon;
+    }
 }

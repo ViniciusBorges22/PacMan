@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import scene.GameOver;
@@ -49,13 +51,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final Cherry cherry;
 
     private final ArrayList<Element> elemArray;
+
     private final GameController controller = new GameController();
     private final Random random = new Random();
-
+    private final Executor executor_scene_1;
+    
     private Scene scene;
 
-    private Image imgPontuacao;
-    private Image imgFase;
     private Image imgLife;
 
     // Controle de tela
@@ -74,9 +76,14 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.addKeyListener(this);
         this.addMouseListener(this);
 
+        this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
+                Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom + 50);
+
         // Lista de elementos
         this.elemArray = new ArrayList<>();
-
+        
+        this.executor_scene_1 = Executors.newCachedThreadPool();
+        
         // Pacman
         this.pacMan = new PacMan();
         this.pacMan.setPosition(1, 1);
@@ -85,6 +92,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Blinky
         this.blinky = new Blinky();
         this.blinky.setPosition(10, 10);
+        this.elemArray.add(blinky);
 
         // Clyde
         this.clyde = new Clyde();
@@ -120,17 +128,15 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             // Tela Inicial
             case 0:
                 this.scene = new InitScene();
-
-                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
-                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
+                
+                // Total de vidas do pacman
+                this.pacMan.setLife(3);
                 break;
 
             // Tela 1
             case 1:
                 this.scene = new Scene1();
                 this.scene.setBlock("brick.png");
-                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
-                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom + 50);
 
                 // Determinar posição para strawberry
                 int aux1,
@@ -151,6 +157,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
+                
+                // Thread para a animação do pacman
+                executor_scene_1.execute(pacMan);
+                
                 break;
 
             // Tela 2
@@ -191,27 +201,38 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Pintar elementos
         this.controller.drawAllElements(scene, elemArray, g2, controlScene);
 
-        // Verificar colisao entre elementos
-        this.controller.processAllElements(scene, elemArray);
+        if (controlScene != 0 && controlScene != 4) {
+            // Verificar colisao entre elementos
+            if (controller.processAllElements(scene, elemArray)) {
 
-        // Pontuação / Fase atual / Vidas
-        this.setTitle("Tela atual: " + controlScene + " Pontuação: "
-                + scene.getPoints() + " Vidas: " + pacMan.getLife());
-        
-        // Verifica se acabou as vidas
-        if (pacMan.getLife() == 0) {
-            this.controlScene = 4;
-            newScene(controlScene);
+                // Remove uma vida do pacman
+                pacMan.removeLife();
+
+                // Verifica se acabou as vidas
+                if (pacMan.getLife() == 0) {
+                    this.controlScene = 4;
+                    newScene(controlScene);
+                }
+            }
+
+            // Desenhar informações
+            int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
+
+            // Vidas
+            for (int i = 0; i < pacMan.getLife(); i++) {
+                g2.drawImage(imgLife, 10 + (32 * i), aux + 10, 30, 30, null);
+            }
+
+            // Frutas
+            if (elemArray.contains(strawberry)) {
+                g2.drawImage(strawberry.getImgElement().getImage(), 140, aux + 7, 30, 33, null);
+            }
+
+            if (elemArray.contains(cherry)) {
+                g2.drawImage(cherry.getImgElement().getImage(), 180, aux + 7, 30, 33, null);
+            }
         }
-        
-        // Desenhar informações
-        int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
-        
-        // Vidas
-        for (int i = 0; i < pacMan.getLife(); i++) {
-            g2.drawImage(imgLife, 10 + (32 * i), aux+10, 30, 30, null);
-        }
-        
+
         g.dispose();
         g2.dispose();
         if (!getBufferStrategy().contentsLost()) {
@@ -328,20 +349,24 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         pacMan.setMovDirection(PacMan.MOVE_UP);
-                        pacMan.changeDirection(3);
+                        pacMan.changeDirection(4);
                         break;
+                    
                     case KeyEvent.VK_DOWN:
                         pacMan.setMovDirection(PacMan.MOVE_DOWN);
-                        pacMan.changeDirection(1);
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        pacMan.setMovDirection(PacMan.MOVE_LEFT);
                         pacMan.changeDirection(2);
                         break;
+                    
+                    case KeyEvent.VK_LEFT:
+                        pacMan.setMovDirection(PacMan.MOVE_LEFT);
+                        pacMan.changeDirection(3);
+                        break;
+                    
                     case KeyEvent.VK_RIGHT:
                         pacMan.setMovDirection(PacMan.MOVE_RIGHT);
                         pacMan.changeDirection(0);
                         break;
+                    
                     case KeyEvent.VK_SPACE:
                         pacMan.setMovDirection(PacMan.STOP);
                         break;
@@ -427,7 +452,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 int y2 = e.getPoint().y;
 
                 // Volta para a tela inicial
-                if ((300 <= y2 && y2 <= 400) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
+                if ((350 <= y2 && y2 <= 450) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
                     controlScene = 0;
                     newScene(controlScene);
                 }

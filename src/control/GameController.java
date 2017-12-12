@@ -2,6 +2,7 @@ package control;
 
 import elements.Ball;
 import elements.Element;
+import elements.Enemy;
 import elements.PacMan;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import scene.Scene;
 import utils.Consts;
 
 public class GameController {
-    
+
     // Desenhar todos os elementos do jogo
     public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g, int control) {
         // Desenha cenario e bolinhas
@@ -24,10 +25,10 @@ public class GameController {
             }
         }
     }
-    
-    public void processAllElements(Scene scene, ArrayList<Element> e) {
+
+    public boolean processAllElements(Scene scene, ArrayList<Element> e) {
         if (e.isEmpty()) {
-            return;
+            return false;
         }
 
         PacMan pPacMan = (PacMan) e.get(0);
@@ -35,8 +36,9 @@ public class GameController {
         // Verifica colisao entre pacman e o cenario
         if (!isValidPositionScene(pPacMan, scene)) {
             pPacMan.backToLastPosition();
+            pPacMan.setMovBefDirection(pPacMan.getMovDirection());
             pPacMan.setMovDirection(PacMan.STOP);
-            return;
+            return false;
         }
 
         // Verifica colisao entre as bolinhas e pacman
@@ -48,16 +50,26 @@ public class GameController {
             }
         }
 
+        boolean aux = false;
+
         Element eTemp;
         // Verifica colisao entre PacMan e outros elementos
         for (int i = 1; i < e.size(); i++) {
             eTemp = e.get(i);
             if (!eTemp.isTransposable() && pPacMan.overlap(eTemp)) {
-                e.remove(eTemp);
+                if (eTemp instanceof Enemy) {
+                    aux = true;
+                    pPacMan.backToLastPosition();
+                    pPacMan.setMovDirection(PacMan.STOP);
+                } else {
+                    e.remove(eTemp);
+                }
             }
         }
 
         pPacMan.move();
+
+        return aux;
     }
 
     // Verifica colisão entre elem e cenario

@@ -34,8 +34,9 @@ public class GameOver extends Scene {
     @Override
     public void paintScene(Graphics g) {
         int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
-        g.drawImage(background, 0, 0, aux, aux, null);
-        g.drawImage(imgStart, (aux / 2) - 150, 300, 300, 100, null);
+        g.fillRect(0, 0, aux, aux + 50);
+        g.drawImage(background, 0, 0, aux, aux+50, null);
+        g.drawImage(imgStart, (aux / 2) - 150, 350, 300, 100, null);
     }
 
     @Override
