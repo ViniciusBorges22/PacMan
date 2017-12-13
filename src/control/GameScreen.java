@@ -307,6 +307,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     System.out.println("Entrou");
                     this.controlScene = 4;
                     newScene(controlScene);
+                    return;
                 }
             }
 
@@ -505,7 +506,58 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
         }
     }
+    
+    // Movimenta Clyde
+    private void setClydeMovDirection() {
 
+        // Se a distância foi menor que 4, se move igual ao Blinky.
+        inky.setDistanceBlinky(inky.getPos().getX(), inky.getPos().getY(),
+                blinky.getPos().getX(), blinky.getPos().getY());
+
+        if (inky.getDistanceBlinky() < 4 && inky.getStateDirection() == Inky.MOVE_PAC) {
+            switch (blinky.getMovDirection()) {
+                case Blinky.MOVE_DOWN:
+
+                    if (blinky.getPos().getX() > inky.getPos().getX()) {
+                        inky.setMoveDirection(Enemy.MOVE_DOWN);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_UP);
+                    }
+                    break;
+
+                case Blinky.MOVE_UP:
+
+                    if (blinky.getPos().getX() > inky.getPos().getX()) {
+                        inky.setMoveDirection(Enemy.MOVE_DOWN);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_UP);
+                    }
+                    break;
+
+                case Blinky.MOVE_LEFT:
+
+                    if (blinky.getPos().getY() > inky.getPos().getY()) {
+                        inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_LEFT);
+                    }
+                    break;
+
+                case Blinky.MOVE_RIGHT:
+
+                    if (blinky.getPos().getY() > inky.getPos().getY()) {
+                        inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_LEFT);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+    
     public void go() {
         // Timer para pintar a tela
         TimerTask repaint = new TimerTask() {

@@ -9,10 +9,41 @@ package elements;
  *
  * @author lllgabrielll
  */
-public class Clyde extends Enemy {
+public class Clyde extends Enemy implements Runnable {
+
+    // Se movimentar aleatorio
+    public static int MOVE_ALEAT = 0;
+
+    // Se movimentar paralelamente ao pacman
+    public static int MOVE_PAC = 1;
+
+    private int stateDirection;
+
+    private double distancePacman;
     
     public Clyde() {
         super(new String[] {"clyde.png","vulnerable_ghost.png"});
+        this.stateDirection = MOVE_ALEAT;
+    }
+    
+    public double getDistancePanman() {
+        return distancePacman;
+    }
+
+    public void setDistancePacman(double x1, double y1, double x2, double y2) {
+        this.distancePacman = Math.hypot(x1 - x2, y1 - y2);
+    }
+    
+    public int getStateDirection() {
+        return stateDirection;
+    }
+
+    public void setStateDirection(int stateDirection) {
+        this.stateDirection = stateDirection;
+    }
+    
+    @Override
+    public void run() {
     }
     
 }
