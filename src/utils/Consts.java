@@ -24,7 +24,7 @@ public class Consts {
 
     public static final double WALK_STEP_FRUIT = 0.02;
 
-    public static final double WALK_STEP_ENEMY = 0.06;
+    public static final double WALK_STEP_ENEMY = 0.03;
 
     public static final double WALK_STEP = 0.05;
     

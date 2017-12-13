@@ -18,8 +18,8 @@ public class Position implements Serializable {
     private double x;
     private double y;
 
-    private double previousX;
-    private double previousY;
+    private int previousX;
+    private int previousY;
 
     public Position(double x, double y) {
         this.setPosition(x, y);
@@ -33,13 +33,13 @@ public class Position implements Serializable {
         if (x < 0 || x > utils.Consts.NUM_CELLS - 1) {
             return false;
         }
-        previousX = this.x;
+        previousX = (int) this.x;
         this.x = x;
 
         if (y < 0 || y > utils.Consts.NUM_CELLS - 1) {
             return false;
         }
-        previousY = this.y;
+        previousY = (int) this.y;
         this.y = y;
         return true;
     }
