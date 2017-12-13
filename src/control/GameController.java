@@ -20,7 +20,7 @@ import java.util.TimerTask;
 import scene.Scene;
 
 public class GameController {
-
+    
     private int mult = 0;
 
     // Desenhar todos os elementos do jogo
@@ -36,7 +36,7 @@ public class GameController {
             }
         }
     }
-
+    
     public boolean processAllElements(Scene scene, ArrayList<Element> e, ArrayList<Enemy> enemys) {
         if (e.isEmpty()) {
             return false;
@@ -95,7 +95,7 @@ public class GameController {
                 break;
             }
         }
-
+        
         Iterator<PowerPellet> it2 = scene.getPowerPellet().listIterator();
         while (it2.hasNext()) {
             if (pPacMan.overlapBall(it2.next())) {
@@ -128,7 +128,7 @@ public class GameController {
                 break;
             }
         }
-
+        
         Iterator<PowerPellet> it2_power = scene.getPowerPellet().listIterator();
         while (it2_power.hasNext()) {
             if (pPacMan.overlapBall(it2_power.next())) {
@@ -162,7 +162,7 @@ public class GameController {
 
         // Variavel que detecta que se houve uma colisão entre pacman e inimigo
         boolean aux = false;
-
+        
         Element eTemp;
 
         // Verifica colisao entre PacMan e outros elementos
@@ -210,7 +210,7 @@ public class GameController {
                 }
             }
         }
-
+        
         if (pPacMan.getScoreAux() >= 10000) {
             pPacMan.resetScore();
             pPacMan.addLife();
@@ -223,14 +223,15 @@ public class GameController {
         blinky.move();
         pinky.move();
         inky.move();
-
+        
         return aux;
     }
 
     // Setar movimento do blinky
     private void setInvtMovDirectionBlinky(Enemy enemy, PacMan pPacMan) {
+        
         // Definir uma nova direção para o blinky
-        switch (enemy.getMovDirection()) {  
+        switch (enemy.getMovDirection()) {            
             case Enemy.MOVE_LEFT:
                 if (pPacMan.getPos().getX() > enemy.getPos().getX()) {
                     enemy.setMoveDirection(Enemy.MOVE_DOWN);
@@ -238,7 +239,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
                 }
                 break;
-
+            
             case Enemy.MOVE_RIGHT:
                 if (pPacMan.getPos().getX() > enemy.getPos().getX()) {
                     enemy.setMoveDirection(Enemy.MOVE_DOWN);
@@ -246,7 +247,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
                 }
                 break;
-
+            
             case Enemy.MOVE_DOWN:
                 if (pPacMan.getPos().getY() > enemy.getPos().getY()) {
                     enemy.setMoveDirection(Enemy.MOVE_RIGHT);
@@ -254,7 +255,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_LEFT);
                 }
                 break;
-
+            
             case Enemy.MOVE_UP:
                 if (pPacMan.getPos().getY() > enemy.getPos().getY()) {
                     enemy.setMoveDirection(Enemy.MOVE_RIGHT);
@@ -267,8 +268,8 @@ public class GameController {
 
     // Setar movimento do pinky
     private void setInvtMovDirectionPinky(Enemy enemy) {
-
-        int aux = Math.round((float) Math.random() % 10);
+        
+        int aux = (int) (Math.random() * 10) % 2;
 
         // Definir uma nova direção para o pinky
         switch (enemy.getMovDirection()) {
@@ -279,7 +280,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_DOWN);
                 }
                 break;
-
+            
             case Enemy.MOVE_RIGHT:
                 if (aux == 0) {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
@@ -287,7 +288,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_DOWN);
                 }
                 break;
-
+            
             case Enemy.MOVE_DOWN:
                 if (aux == 0) {
                     enemy.setMoveDirection(Enemy.MOVE_LEFT);
@@ -295,7 +296,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_RIGHT);
                 }
                 break;
-
+            
             case Enemy.MOVE_UP:
                 if (aux == 0) {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
@@ -308,9 +309,9 @@ public class GameController {
 
     // Sertar movimento do inky
     private void setInvtMovDirectionInky(Inky inky) {
-
+        
         int rand = (int) (Math.random() * 10) % 2;
-
+        
         switch (inky.getMovDirection()) {
             case Inky.MOVE_LEFT:
                 if (rand == 0) {
@@ -319,7 +320,7 @@ public class GameController {
                     inky.setMoveDirection(Inky.MOVE_DOWN);
                 }
                 break;
-
+            
             case Inky.MOVE_RIGHT:
                 if (rand == 0) {
                     inky.setMoveDirection(Inky.MOVE_UP);
@@ -327,7 +328,7 @@ public class GameController {
                     inky.setMoveDirection(Inky.MOVE_DOWN);
                 }
                 break;
-
+            
             case Inky.MOVE_UP:
                 if (rand == 0) {
                     inky.setMoveDirection(Inky.MOVE_LEFT);
@@ -335,7 +336,7 @@ public class GameController {
                     inky.setMoveDirection(Inky.MOVE_RIGHT);
                 }
                 break;
-
+            
             case Inky.MOVE_DOWN:
                 if (rand == 0) {
                     inky.setMoveDirection(Inky.MOVE_LEFT);

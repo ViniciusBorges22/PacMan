@@ -101,7 +101,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
-//        this.elemArray.add(inky);
+        this.elemArray.add(inky);
         this.enemys.add(inky);
 
         // Pinky
@@ -150,11 +150,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         }
 
         this.executor_scene_1 = Executors.newCachedThreadPool();
-
-        // Thread para Pinky
         this.executor_scene_1.execute(pinky);
         this.executor_scene_1.execute(pacMan);
-
+        this.executor_scene_1.execute(inky);
+        
         // Cria cenario
         this.controlScene = 1;
         newScene(controlScene);
@@ -223,9 +222,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
 
-                // Atualiza posições
-                initPos();
-
                 break;
 
             // Tela 3
@@ -234,7 +230,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 this.scene.setBlock("brick.png");
                 resetEnemyPac();
 
-// Determinar posição para strawberry
+                // Determinar posição para strawberry
                 do {
                     aux1 = random.nextInt(Consts.NUM_CELLS - 1);
                     aux2 = random.nextInt(Consts.NUM_CELLS - 1);
@@ -392,10 +388,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         }
     }
 
-    private double calculaDistancia(double x1, double y1, double x2, double y2) {
-        return Math.hypot((x2 - x1), (y2 - y1));
-    }
-
     // Movimentar Blinky
     private void setBlinkyMovDirection() {
         // Verifica movimentação do blinky
@@ -442,10 +434,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private void setInkyMovDirection() {
 
         // Se a distância foi menor que 4, se move igual ao Blinky.
-        double distance = calculaDistancia(inky.getPos().getX(), inky.getPos().getY(),
+        inky.setDistanceBlinky(inky.getPos().getX(), inky.getPos().getY(),
                 blinky.getPos().getX(), blinky.getPos().getY());
 
-        if (distance < 4) {
+        if (inky.getDistanceBlinky() < 4 && inky.getStateDirection() == Inky.MOVE_PAC) {
             switch (blinky.getMovDirection()) {
                 case Blinky.MOVE_DOWN:
 
