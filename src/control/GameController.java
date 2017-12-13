@@ -63,7 +63,7 @@ public class GameController {
         // Verifica colisao entre PacMan e outros elementos
         for (int i = 1; i < e.size(); i++) {
             eTemp = e.get(i);
-            if (!eTemp.isTransposable() && pPacMan.overlap(eTemp) && (pPacMan.getTurn() == true)) {
+            if (!eTemp.isTransposable() && pPacMan.overlap(eTemp)) {
                 if (eTemp instanceof Enemy) {
                     aux = true;
                     pPacMan.backToLastPosition();

@@ -393,16 +393,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         // Setar movimentação do pacman
-						pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_UP);
+                        pacMan.setTurn(true);
+                        pacMan.setNextDirection(PacMan.MOVE_UP);
                         //pacMan.setMovDirection(PacMan.MOVE_UP);
                         //pacMan.changeDirection(4);
                         break;
 
                     case KeyEvent.VK_DOWN:
                         // Setar movimentação do pacman
-						pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_DOWN);
+                        pacMan.setTurn(true);
+                        pacMan.setNextDirection(PacMan.MOVE_DOWN);
                         //pacMan.setMovDirection(PacMan.MOVE_DOWN);
                         //pacMan.changeDirection(2);
                         break;
@@ -410,16 +410,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     case KeyEvent.VK_LEFT:
                         // Setar movimentaçao do pacman
                         pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_LEFT);
-						//pacMan.setMovDirection(PacMan.MOVE_LEFT);
+                        pacMan.setNextDirection(PacMan.MOVE_LEFT);
+                        //pacMan.setMovDirection(PacMan.MOVE_LEFT);
                         //pacMan.changeDirection(3);
                         break;
 
                     case KeyEvent.VK_RIGHT:
                         // Setar movimentação do pacman
                         pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_RIGHT);
-						//pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+                        pacMan.setNextDirection(PacMan.MOVE_RIGHT);
+                        //pacMan.setMovDirection(PacMan.MOVE_RIGHT);
                         //pacMan.changeDirection(0);
                         break;
 
