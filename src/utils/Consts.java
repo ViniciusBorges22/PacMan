@@ -12,9 +12,9 @@ public class Consts {
 
     public static final int DELAY = 10;
 
-    public static final int TIMER_CHERRY = 50000;
+    public static final int TIMER_CHERRY = 10000;
 
-    public static final int TIMER_STRAWBERRY = 75000;
+    public static final int TIMER_STRAWBERRY = 7000;
 
     public static final int BALL_SIZE = 3;
 

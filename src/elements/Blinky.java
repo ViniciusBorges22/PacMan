@@ -13,9 +13,9 @@ import java.util.logging.Logger;
  * @author lllgabrielll
  */
 public class Blinky extends Enemy implements Runnable {
-       
+    
     public Blinky() {
-        super(new String[]{"red_ghost.png", "vulnerable_ghost.png"});
+        super(new String[]{"red_ghost.png"});
         
         // Movimentação inicial
         setMoveDirection(Enemy.MOVE_LEFT);
@@ -33,7 +33,9 @@ public class Blinky extends Enemy implements Runnable {
                 Logger.getLogger(Blinky.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            // Calcula rota  
+            // Calcula rota
+            
         }
     }
+    
 }

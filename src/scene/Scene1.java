@@ -6,7 +6,6 @@
 package scene;
 
 import elements.Ball;
-import elements.PowerPellet;
 import java.awt.Graphics;
 import java.util.Iterator;
 import utils.Consts;
@@ -40,11 +39,6 @@ public class Scene1 extends Scene {
             it.next().autoDraw(g);
         }
         
-        Iterator<PowerPellet> it2 =  powerPellet.listIterator();
-        while (it2.hasNext()){
-            it2.next().autoDraw(g);
-        }
-        
         // Calcula a quantidade de pontos nessa fase
         points = (tballs - balls.size()) * 10;
     }
@@ -55,10 +49,7 @@ public class Scene1 extends Scene {
         for (int x = 1; x < Consts.NUM_CELLS-1; x++) {
             for (int y = 1; y < Consts.NUM_CELLS-1; y++) {
                 if (map[x][y] == 0) {
-                    this.balls.add(new Ball("ball.png", 10, x, y));  
-                    if(x == 2 && y == 2){
-                        this.powerPellet.add(new PowerPellet("fire.png", 10, x, y));
-                    }
+                    this.balls.add(new Ball("ball.png", 100, x, y));
                 }
             }
         }

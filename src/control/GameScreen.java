@@ -354,11 +354,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 }
             }
         };
-        
+
         Timer timer = new Timer();
         timer.schedule(repaint, 0, Consts.DELAY);
-        timer.schedule(timerStrawberry, Consts.TIMER_STRAWBERRY, 15000);
-        timer.schedule(timerCherry, Consts.TIMER_CHERRY, 15000);
+        timer.schedule(timerStrawberry, Consts.TIMER_STRAWBERRY, 2000);
+        timer.schedule(timerCherry, Consts.TIMER_CHERRY, 30000);
     }
 
     @Override

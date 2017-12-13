@@ -7,8 +7,6 @@ package elements;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.Timer;
-import java.util.TimerTask;
 import utils.Drawing;
 
 /**
@@ -25,7 +23,7 @@ public abstract class Enemy extends Element {
     protected static final int HOUSE = 1;
     protected static final int CHASE = 2;
     protected static final int DANGER = 3;
-     
+    
     // Posições do pacman
     protected Point pacman_pos;
     
@@ -40,7 +38,6 @@ public abstract class Enemy extends Element {
         this.isVisible = true;
         this.isTransposable = false;
         this.pacman_pos = new Point();
-        this.state = 1;                //1-mortal, 2-vulnerável, 3-morto
     }
 
     public void setMoveDirection(int movDirection) {
@@ -80,24 +77,7 @@ public abstract class Enemy extends Element {
 
     @Override
     public void autoDraw(Graphics g) {
-        switch(this.getState()){
-            case 1:
-                Drawing.draw(g, this.directions[0],  pos.getY(), pos.getX());
-                break;
-            case 2:
-                Drawing.draw(g, this.directions[1],  pos.getY(), pos.getX());
-                break;
-            case 3:
-                this.setVisible(false);
-                TimerTask revive = new TimerTask(){
-                    @Override
-                    public void run(){
-                        setState(1);
-                    }
-                };
-                Timer timer = new Timer();
-                timer.schedule(revive, 5000);
-        }
+        Drawing.draw(g, this.imageIcon,  pos.getY(), pos.getX());
     }
 
     public void setPacman_pos(final int x, final int y) {
