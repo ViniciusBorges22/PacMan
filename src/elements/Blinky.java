@@ -5,8 +5,6 @@
  */
 package elements;
 
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author lllgabrielll
@@ -30,5 +28,9 @@ public class Blinky extends Enemy {
     public int getLastDirection() {
         return lastDirection;
     }
-
+    
+    public void backToLastPosition() {
+        this.pos.comeBack();
+    }
+    
 }

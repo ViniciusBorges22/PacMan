@@ -22,8 +22,8 @@ public class PacMan extends Element implements Serializable, Runnable {
     private int life = 3;
 
     public PacMan() {
-        super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png",
-            "pacman_left.png", "pacman_up.png"}, 0, 1);
+        super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png", "pacman_down2.png",
+            "pacman_left.png", "pacman_left2.png", "pacman_up.png", "pacman_up2.png"}, 0, 1);
         this.isVisible = true;
         this.isTransposable = false;
     }
@@ -123,36 +123,36 @@ public class PacMan extends Element implements Serializable, Runnable {
                     }
                     break;
 
-//                case MOVE_DOWN:
-//                    if (MOVE_DOWN_STATE == 2) {
-//                        changeDirection(3);
-//                        MOVE_DOWN_STATE = 3;
-//                    } else {
-//                        changeDirection(2);
-//                        MOVE_DOWN_STATE = 2;
-//                    }
-//                    break;
-//                    
-//                    case MOVE_LEFT:
-//                    if (MOVE_LEFT_STATE == 4) {
-//                        changeDirection(5);
-//                        MOVE_LEFT_STATE = 5;
-//                    } else {
-//                        changeDirection(4);
-//                        MOVE_LEFT_STATE = 4;
-//                    }
-//                    break;
-//                    
-//                    case MOVE_UP:
-//                    if (MOVE_UP_STATE == 6) {
-//                        changeDirection(7);
-//                        MOVE_UP_STATE = 7;
-//                    } else {
-//                        changeDirection(6);
-//                        MOVE_UP_STATE = 6;
-//                    }
-//                    break;
-                
+                case MOVE_DOWN:
+                    if (MOVE_DOWN_STATE == 2) {
+                        changeDirection(3);
+                        MOVE_DOWN_STATE = 3;
+                    } else {
+                        changeDirection(2);
+                        MOVE_DOWN_STATE = 2;
+                    }
+                    break;
+
+                case MOVE_LEFT:
+                    if (MOVE_LEFT_STATE == 4) {
+                        changeDirection(5);
+                        MOVE_LEFT_STATE = 5;
+                    } else {
+                        changeDirection(4);
+                        MOVE_LEFT_STATE = 4;
+                    }
+                    break;
+
+                case MOVE_UP:
+                    if (MOVE_UP_STATE == 6) {
+                        changeDirection(7);
+                        MOVE_UP_STATE = 7;
+                    } else {
+                        changeDirection(6);
+                        MOVE_UP_STATE = 6;
+                    }
+                    break;
+
                 case STOP:
                     switch (movBefDirection) {
                         case MOVE_RIGHT:
@@ -162,6 +162,36 @@ public class PacMan extends Element implements Serializable, Runnable {
                             } else {
                                 changeDirection(0);
                                 MOVE_RIGHT_STATE = 0;
+                            }
+                            break;
+
+                        case MOVE_DOWN:
+                            if (MOVE_DOWN_STATE == 2) {
+                                changeDirection(3);
+                                MOVE_DOWN_STATE = 3;
+                            } else {
+                                changeDirection(2);
+                                MOVE_DOWN_STATE = 2;
+                            }
+                            break;
+
+                        case MOVE_LEFT:
+                            if (MOVE_LEFT_STATE == 4) {
+                                changeDirection(5);
+                                MOVE_LEFT_STATE = 5;
+                            } else {
+                                changeDirection(4);
+                                MOVE_LEFT_STATE = 4;
+                            }
+                            break;
+
+                        case MOVE_UP:
+                            if (MOVE_UP_STATE == 6) {
+                                changeDirection(7);
+                                MOVE_UP_STATE = 7;
+                            } else {
+                                changeDirection(6);
+                                MOVE_UP_STATE = 6;
                             }
                             break;
                     }

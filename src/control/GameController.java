@@ -52,6 +52,7 @@ public class GameController {
         if (blinky.overlap(scene.getWalls())) {
 
             // Setar movimento do blinky quando ocorre uma colisão
+            blinky.backToLastPosition();
             setInvtMovDirectionBlinky(blinky, pPacMan);
         }
 

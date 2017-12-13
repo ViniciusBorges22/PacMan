@@ -57,7 +57,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final GameController controller = new GameController();
     private final Random random = new Random();
     private final Executor executor_scene_1;
-
+    
     private Scene scene;
 
     private Image imgLife;
@@ -300,6 +300,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     this.controlScene = 4;
                     newScene(controlScene);
                 }
+            } else {
+                
+                // Verifica se pacman ganhou uma vida
+                if (scene.getPoints() > 10000 && pacMan.getLife() < 3) {
+                    pacMan.addLife();
+                } 
+                
             }
 
             // Desenhar informações
@@ -318,10 +325,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             if (elemArray.contains(cherry)) {
                 g2.drawImage(cherry.getImgElement().getImage(), 180, aux + 7, 30, 33, null);
             }
-
-            // Pontuação
+            
             this.pointsTotal = scene.getPoints();
-            g2.drawImage(imgPontuacao, 220, aux + 7, 30, 60, null);
+            
+            // Pontuação
+            g2.drawImage(imgPontuacao, 390, aux + 9, 100, 30, null);
+            
         }
 
         g.dispose();
@@ -515,10 +524,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
-
                             // Setar movimentação do pacman
                             pacMan.setMovDirection(PacMan.MOVE_UP);
-                            pacMan.changeDirection(4);
+                            pacMan.changeDirection(6);
                         }
                         break;
 
@@ -534,7 +542,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                         // Setar movimentaçao do pacman
                         if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
                             pacMan.setMovDirection(PacMan.MOVE_LEFT);
-                            pacMan.changeDirection(3);
+                            pacMan.changeDirection(4);
                         }
                         break;
 
