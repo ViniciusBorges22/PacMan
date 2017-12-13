@@ -20,6 +20,7 @@ public class PacMan extends Element implements Serializable, Runnable {
     private int movDirection = STOP;
     private int movBefDirection = STOP;
     private int life = 3;
+    private int score;
 	
 	private boolean turn;
 	private int nextDirection;
@@ -29,6 +30,7 @@ public class PacMan extends Element implements Serializable, Runnable {
             "pacman_left.png", "pacman_up.png"}, 0);
         this.isVisible = true;
         this.isTransposable = false;
+        this.score = 0;
     }
 
     public void changeDirection(int dir) {
@@ -76,26 +78,26 @@ public class PacMan extends Element implements Serializable, Runnable {
 		}
         switch (movDirection) {
             case MOVE_LEFT:
-				if(flag)
-					this.changeDirection(3);
+		if(flag)
+                    this.changeDirection(3);
                 this.moveLeft();
                 break;
 
             case MOVE_RIGHT:
-				if(flag)
-					this.changeDirection(0);
+		if(flag)
+                    this.changeDirection(0);
                 this.moveRight();
                 break;
 
             case MOVE_UP:
-				if(flag)
-					this.changeDirection(4);
+		if(flag)
+                    this.changeDirection(4);
                 this.moveUp();
                 break;
 
             case MOVE_DOWN:
-				if(flag)
-					this.changeDirection(2);
+		if(flag)
+                    this.changeDirection(2);
                 this.moveDown();
                 break;
 
@@ -128,6 +130,22 @@ public class PacMan extends Element implements Serializable, Runnable {
 
     public void setMovBefDirection(int movBefDirection) {
         this.movBefDirection = movBefDirection;
+    }
+    
+    public int getScore(){
+        return this.score;
+    }
+    
+    public void setScore(int score){
+        this.score = score;
+    }
+    
+    public void resetScore(){
+        this.score = 0;
+    }
+    
+    public void scorePoints(int points){
+        this.score += points;
     }
 
     @Override

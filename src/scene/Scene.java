@@ -83,7 +83,12 @@ public abstract class Scene {
     public List<PowerPellet> getPowerPellet() {
         return powerPellet;
     }
-
+    
+    // Obter total de Power
+    public int getTotalPowerPellet() {
+        return this.powerPellet.size();
+    }
+    
     // Obter total de bolinhas
     public int getTotalBall() {
         return this.balls.size();

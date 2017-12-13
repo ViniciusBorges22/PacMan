@@ -15,10 +15,14 @@ import java.util.logging.Logger;
 public class Blinky extends Enemy implements Runnable {
        
     public Blinky() {
-        super(new String[]{"red_ghost.png", "vulnerable_ghost.png"});
+        super(new String[]{"blinky.png", "vulnerable_ghost.png"});
         
         // Movimentação inicial
-        setMoveDirection(Enemy.MOVE_LEFT);
+        setMoveDirection(Enemy.MOVE_UP);
+    }
+    
+    public void backToLastPosition() {
+        this.pos.comeBack();
     }
 
     @Override

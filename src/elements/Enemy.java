@@ -96,7 +96,7 @@ public abstract class Enemy extends Element {
                     }
                 };
                 Timer timer = new Timer();
-                timer.schedule(revive, 5000);
+                timer.schedule(revive, 1000);
         }
     }
 

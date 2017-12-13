@@ -8,7 +8,12 @@ package scene;
 import elements.Ball;
 import elements.PowerPellet;
 import java.awt.Graphics;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.Consts;
 
 public class Scene1 extends Scene {
@@ -48,20 +53,38 @@ public class Scene1 extends Scene {
         // Calcula a quantidade de pontos nessa fase
         points = (tballs - balls.size()) * 10;
     }
-
+    
+    
     @Override
     protected void drawSceneFinal() {
-        // Criar bolinhas
-        for (int x = 1; x < Consts.NUM_CELLS-1; x++) {
-            for (int y = 1; y < Consts.NUM_CELLS-1; y++) {
-                if (map[x][y] == 0) {
-                    this.balls.add(new Ball("ball.png", 10, x, y));  
-                    if(x == 2 && y == 2){
-                        this.powerPellet.add(new PowerPellet("fire.png", 10, x, y));
+            try {
+            Scanner mapRead = new Scanner(new FileInputStream("./src/maps/map1.txt"));
+            for(int i = 0; i < Consts.NUM_CELLS; i++) {
+                for(int j = 0; j < Consts.NUM_CELLS; j++) {
+                    map[i][j] = (int)mapRead.nextByte();
+                }
+            }
+            mapRead.close();
+            } catch (FileNotFoundException ex) {
+            System.out.println("Erro na abertura do arquivo.");
+            Logger.getLogger(Scene1.class.getName()).log(Level.SEVERE, null, ex);
+            }    // Criar bolinhas
+        
+            for (int x = 0; x < Consts.NUM_CELLS; x++) {
+                for (int y = 0; y < Consts.NUM_CELLS; y++) {
+                    switch(map[x][y]){
+                        case 0:
+                            this.balls.add(new Ball("ball.png", 10, x, y)); 
+                            break;
+                        case 2:
+                            this.powerPellet.add(new PowerPellet("power_pellet.png", 50, x, y));
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
-        }
+            
         map[1][1] = 0;
         
         // Total de bolinhas na tela
