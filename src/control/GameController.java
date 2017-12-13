@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
-import scene.Scene;
+import scene.Stage;
 
 public class GameController {
     
     private int mult = 0;
 
     // Desenhar todos os elementos do jogo
-    public void drawAllElements(Scene scene, ArrayList<Element> elemArray, Graphics g, int control) {
+    public void drawAllElements(Stage scene, ArrayList<Element> elemArray, Graphics g, int control) {
         // Desenha cenario e bolinhas
         scene.paintScene(g);
 
@@ -37,7 +37,7 @@ public class GameController {
         }
     }
     
-    public boolean processAllElements(Scene scene, ArrayList<Element> e, ArrayList<Enemy> enemys) {
+    public boolean processAllElements(Stage scene, ArrayList<Element> e, ArrayList<Enemy> enemys) {
         if (e.isEmpty()) {
             return false;
         }

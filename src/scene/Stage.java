@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import utils.Consts;
 
-public abstract class Scene {
+public abstract class Stage {
 
     // Mapa
     protected int map[][];
@@ -39,7 +39,7 @@ public abstract class Scene {
     // Bloco
     protected Image brick;
 
-    public Scene() {
+    public Stage() {
         this.map = new int[Consts.NUM_CELLS][Consts.NUM_CELLS];
         this.balls = new ArrayList<>();
         this.walls = new ArrayList<>();

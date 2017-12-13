@@ -15,12 +15,12 @@ import utils.Consts;
  *
  * @author lllgabrielll
  */
-public class GameOver extends Scene {
+public class StageGameOver extends Stage {
 
     private Image imgStart;
     private Image background;
 
-    public GameOver() {
+    public StageGameOver() {
         try {
             this.imgStart = Toolkit.getDefaultToolkit().getImage(
                     new java.io.File(".").getCanonicalPath() + Consts.PATH + "button_start.png");

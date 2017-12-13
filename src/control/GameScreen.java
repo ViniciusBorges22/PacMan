@@ -31,13 +31,13 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import scene.GameOver;
-import scene.InitScene;
+import scene.StageGameOver;
+import scene.InitStage;
 
-import scene.Scene;
-import scene.Scene1;
-import scene.Scene2;
-import scene.Scene3;
+import scene.Stage;
+import scene.Stage1;
+import scene.Stage2;
+import scene.Stage3;
 
 public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
@@ -58,7 +58,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final Random random = new Random();
     private final Executor executor_scene_1;
 
-    private Scene scene;
+    private Stage scene;
 
     private Image imgLife;
     private Image imgScore;
@@ -159,7 +159,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         switch (scene) {
             // Tela Inicial
             case 0:
-                this.scene = new InitScene();
+                this.scene = new InitStage();
 
                 // Total de vidas do pacman
                 this.pacMan.setLife(3);
@@ -171,7 +171,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
             // Tela 1
             case 1:
-                this.scene = new Scene1();
+                this.scene = new Stage1();
                 this.scene.setBlock("brick.png");
 
                 // Reseta posições
@@ -201,7 +201,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
             // Tela 2
             case 2:
-                this.scene = new Scene2();
+                this.scene = new Stage2();
                 this.scene.setBlock("brick.png");
 
                 // Resetar posição
@@ -229,7 +229,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
             // Tela 3
             case 3:
-                this.scene = new Scene3();
+                this.scene = new Stage3();
                 this.scene.setBlock("brick.png");
 
                 // Resetar posição
@@ -257,7 +257,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
             // Game Over
             case 4:
-                this.scene = new GameOver();
+                this.scene = new StageGameOver();
                 break;
         }
     }

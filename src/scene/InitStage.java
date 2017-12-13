@@ -16,13 +16,13 @@ import utils.Consts;
  *
  * @author lllgabrielll
  */
-public class InitScene extends Scene {
+public class InitStage extends Stage {
 
     private Image imgStart;
     private Image imgExit;
     private Image background;
 
-    public InitScene() {
+    public InitStage() {
         try {
             this.imgStart = Toolkit.getDefaultToolkit().getImage(
                     new java.io.File(".").getCanonicalPath() + Consts.PATH + "button_start.png");
