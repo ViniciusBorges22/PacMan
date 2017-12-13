@@ -20,6 +20,9 @@ public class PacMan extends Element implements Serializable, Runnable {
     private int movDirection = STOP;
     private int movBefDirection = STOP;
     private int life = 3;
+	
+	private boolean turn;
+	private int nextDirection;
 
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png",
@@ -40,6 +43,18 @@ public class PacMan extends Element implements Serializable, Runnable {
     public void backToLastPosition() {
         this.pos.comeBack();
     }
+	
+	public void setTurn(boolean cond){
+		turn = cond;
+	}
+	
+	public boolean getTurn(){
+		return turn;
+	}
+	
+	public void setNextDirection(int nextDirection){
+		this.nextDirection = nextDirection;
+	}
 
     public void setMovDirection(int direction) {
         movDirection = direction;
@@ -53,20 +68,34 @@ public class PacMan extends Element implements Serializable, Runnable {
     }
 
     public void move() {
+		boolean flag = false;
+		if(turn && this.isPosInteger()){
+			this.setMovDirection(nextDirection);
+			turn = false;
+			flag = true;
+		}
         switch (movDirection) {
             case MOVE_LEFT:
+				if(flag)
+					this.changeDirection(3);
                 this.moveLeft();
                 break;
 
             case MOVE_RIGHT:
+				if(flag)
+					this.changeDirection(0);
                 this.moveRight();
                 break;
 
             case MOVE_UP:
+				if(flag)
+					this.changeDirection(4);
                 this.moveUp();
                 break;
 
             case MOVE_DOWN:
+				if(flag)
+					this.changeDirection(2);
                 this.moveDown();
                 break;
 
