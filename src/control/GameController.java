@@ -1,6 +1,7 @@
 package control;
 
 import elements.Ball;
+import elements.PowerPellet;
 import elements.Blinky;
 import elements.Element;
 import elements.Enemy;
@@ -8,6 +9,8 @@ import elements.PacMan;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 import scene.Scene;
 import utils.Consts;
 
@@ -56,6 +59,24 @@ public class GameController {
                 break;
             }
         }
+        
+        Iterator<PowerPellet> it2 = scene.getPowerPellet().listIterator();
+        while (it2.hasNext()) {
+            if (pPacMan.overlapBall(it2.next())) {
+                it2.remove();
+                blinky.setState(2); //coloca em vulnerável
+                TimerTask vulnerable = new TimerTask(){
+                    @Override
+                    public void run(){
+                        if(blinky.getState() == 2)
+                            blinky.setState(1); //coloca em mortal de novo
+                    } 
+                };
+                Timer timer = new Timer();
+                timer.schedule(vulnerable, 7000);
+                break;
+            }
+        }
 
         boolean aux = false;
 
@@ -65,9 +86,18 @@ public class GameController {
             eTemp = e.get(i);
             if (!eTemp.isTransposable() && pPacMan.overlap(eTemp)) {
                 if (eTemp instanceof Enemy) {
-                    aux = true;
-                    pPacMan.backToLastPosition();
-                    pPacMan.setMovDirection(PacMan.STOP);
+                    switch(((Enemy) eTemp).getState()){
+                        case 1:
+                            aux = true;
+                            pPacMan.backToLastPosition();
+                            pPacMan.setMovDirection(PacMan.STOP);
+                            break;  
+                        case 2:
+                            blinky.setState(3);
+                            break;
+                        default:
+                            break;
+                    }
                 } else {
                     e.remove(eTemp);
                 }
@@ -143,5 +173,4 @@ public class GameController {
                 break;
         }
     }
-
 }
