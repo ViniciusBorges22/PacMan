@@ -1,5 +1,7 @@
 package control;
 
+import data.Save;
+import elements.Ball;
 import elements.Blinky;
 import elements.PacMan;
 import elements.Element;
@@ -8,6 +10,7 @@ import elements.Clyde;
 import elements.Enemy;
 import elements.Inky;
 import elements.Pinky;
+import elements.PowerPellet;
 import elements.Strawberry;
 
 import utils.Consts;
@@ -21,14 +24,22 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import scene.GameOver;
@@ -41,18 +52,18 @@ import scene.Scene3;
 
 public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
-    private final PacMan pacMan;
+    private PacMan pacMan;
 
-    private final Blinky blinky;
-    private final Clyde clyde;
-    private final Inky inky;
-    private final Pinky pinky;
+    private Blinky blinky;
+    private Clyde clyde;
+    private Inky inky;
+    private Pinky pinky;
 
-    private final Strawberry strawberry;
-    private final Cherry cherry;
+    private Strawberry strawberry;
+    private Cherry cherry;
 
-    private final ArrayList<Element> elemArray;
-    private final ArrayList<Enemy> enemys;
+    private ArrayList<Element> elemArray;
+    private ArrayList<Enemy> enemys;
 
     private final GameController controller = new GameController();
     private final Random random = new Random();
@@ -490,15 +501,52 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         switch (aux) {
             // Tela Inicial
             case 0:
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    controlScene = 1;
-                    newScene(controlScene);
-                } else if (e.getKeyCode() == KeyEvent.VK_Q) {
-                    if (JOptionPane.showConfirmDialog(null,
-                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
-                        System.exit(0);
-                    }
-                }
+                switch(e.getKeyCode()) {
+                    case KeyEvent.VK_SPACE:
+                        controlScene = 1;
+                        newScene(controlScene);
+                        break;
+                        
+                    case KeyEvent.VK_Q:
+                        if (JOptionPane.showConfirmDialog(null,
+                                "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+                            System.exit(0);
+                        }
+                        break;
+                        
+                    case KeyEvent.VK_L:
+                        ObjectInputStream load;
+                        try {
+                            load = new ObjectInputStream(new FileInputStream("./src/data/save"));
+                            Save saveClass = (Save) load.readObject();
+                            load.close();
+                            pacMan = saveClass.pacMan;
+                            elemArray.add(pacMan);
+                            blinky = saveClass.blinky;
+                            elemArray.add(blinky);
+                            enemys.add(blinky);
+                            inky = saveClass.inky;
+                            elemArray.add(inky);
+                            enemys.add(inky);
+                            pinky = saveClass.pinky;
+                            elemArray.add(pinky);
+                            enemys.add(pinky);
+                            clyde = saveClass.clyde;
+                            elemArray.add(clyde);
+                            enemys.add(clyde);
+                            cherry = saveClass.cherry;
+                            elemArray.add(cherry);
+                            strawberry = saveClass.strawberry;
+                            elemArray.add(strawberry);
+                            scene.setBalls(saveClass.balls);
+                            scene.setPowerPellet(saveClass.powerPellet);
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException | ClassNotFoundException ex) {
+                            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                } 
                 break;
 
             // Tela Final
@@ -549,6 +597,27 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     case KeyEvent.VK_SPACE:
                         pacMan.setMovDirection(PacMan.STOP);
                         break;
+                    
+                    case KeyEvent.VK_S:
+                        try{
+                            Save saveClass = new Save();
+                            saveClass.pacMan = pacMan;
+                            saveClass.blinky = blinky;
+                            saveClass.inky = inky;
+                            saveClass.pinky = pinky;
+                            saveClass.clyde = clyde;
+                            saveClass.cherry = cherry;
+                            saveClass.strawberry = strawberry;
+                            saveClass.balls = scene.getBalls();
+                            saveClass.powerPellet = scene.getPowerPellet();
+                            ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream("./src/data/save"));
+                            save.writeObject(saveClass);
+                            save.close();
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
                     default:
                         break;

@@ -80,8 +80,16 @@ public abstract class Scene {
         return balls;
     }
     
+    public void setBalls(List<Ball> balls){
+        this.balls = balls;
+    }
+    
     public List<PowerPellet> getPowerPellet() {
         return powerPellet;
+    }
+    
+    public void setPowerPellet(List<PowerPellet> powerPellet){
+        this.powerPellet = powerPellet;
     }
     
     // Obter total de Power

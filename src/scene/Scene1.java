@@ -66,8 +66,8 @@ public class Scene1 extends Scene {
             }
             mapRead.close();
             } catch (FileNotFoundException ex) {
-            System.out.println("Erro na abertura do arquivo.");
-            Logger.getLogger(Scene1.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Erro na abertura do arquivo.");
+                Logger.getLogger(Scene1.class.getName()).log(Level.SEVERE, null, ex);
             }    // Criar bolinhas
         
             for (int x = 0; x < Consts.NUM_CELLS; x++) {
