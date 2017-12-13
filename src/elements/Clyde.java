@@ -9,7 +9,7 @@ package elements;
  *
  * @author lllgabrielll
  */
-public class Clyde extends Enemy implements Runnable {
+public class Clyde extends Enemy {
 
     // Se movimentar aleatorio
     public static int MOVE_ALEAT = 0;
@@ -26,7 +26,11 @@ public class Clyde extends Enemy implements Runnable {
         this.stateDirection = MOVE_ALEAT;
     }
     
-    public double getDistancePanman() {
+    public void backToLastPosition() {
+        this.pos.comeBack();
+    }
+    
+    public double getDistancePacman() {
         return distancePacman;
     }
 
@@ -40,10 +44,6 @@ public class Clyde extends Enemy implements Runnable {
 
     public void setStateDirection(int stateDirection) {
         this.stateDirection = stateDirection;
-    }
-    
-    @Override
-    public void run() {
     }
     
 }

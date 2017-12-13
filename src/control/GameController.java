@@ -85,7 +85,15 @@ public class GameController {
             inky.backToLastPosition();
             setInvtMovDirectionInky(inky);
         }
-
+        
+        //  Verifica colisão entre inky e cenario
+        if (clyde.overlap(scene.getWalls())) {
+            
+            // Setar movimento do clyde quando ocorre uma colisão
+            clyde.backToLastPosition();
+            setInvMovDirectionClyde(clyde);
+        }
+        
         // Verifica colisao entre as bolinhas e pacman
         Iterator<Ball> it = scene.getBalls().listIterator();
         while (it.hasNext()) {
@@ -223,6 +231,7 @@ public class GameController {
         blinky.move();
         pinky.move();
         inky.move();
+        clyde.move();
         
         return aux;
     }
@@ -269,6 +278,46 @@ public class GameController {
     // Setar movimento do pinky
     private void setInvtMovDirectionPinky(Enemy enemy) {
         
+        int aux = (int) (Math.random() * 10) % 2;
+
+        // Definir uma nova direção para o pinky
+        switch (enemy.getMovDirection()) {
+            case Enemy.MOVE_LEFT:
+                if (aux == 0) {
+                    enemy.setMoveDirection(Enemy.MOVE_UP);
+                } else {
+                    enemy.setMoveDirection(Enemy.MOVE_DOWN);
+                }
+                break;
+            
+            case Enemy.MOVE_RIGHT:
+                if (aux == 0) {
+                    enemy.setMoveDirection(Enemy.MOVE_UP);
+                } else {
+                    enemy.setMoveDirection(Enemy.MOVE_DOWN);
+                }
+                break;
+            
+            case Enemy.MOVE_DOWN:
+                if (aux == 0) {
+                    enemy.setMoveDirection(Enemy.MOVE_LEFT);
+                } else {
+                    enemy.setMoveDirection(Enemy.MOVE_RIGHT);
+                }
+                break;
+            
+            case Enemy.MOVE_UP:
+                if (aux == 0) {
+                    enemy.setMoveDirection(Enemy.MOVE_UP);
+                } else {
+                    enemy.setMoveDirection(Enemy.MOVE_DOWN);
+                }
+                break;
+        }
+    }
+    
+    // Movimentar clyde
+    private void setInvMovDirectionClyde(Enemy enemy) {
         int aux = (int) (Math.random() * 10) % 2;
 
         // Definir uma nova direção para o pinky

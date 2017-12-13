@@ -103,12 +103,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
         // Pinky
         this.pinky = new Pinky();
-//        this.elemArray.add(pinky);
+        this.elemArray.add(pinky);
         this.enemys.add(pinky);
 
         // Clyde
         this.clyde = new Clyde();
-//        this.elemArray.add(clyde);
+        this.elemArray.add(clyde);
         this.enemys.add(clyde);
 
         this.strawberry = new Strawberry();
@@ -292,6 +292,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
             // Controla o movimento do inky
             setInkyMovDirection();
+
+            // Controla o movimento do clyde
+            setClydeMovDirection();
 
             // Verificar colisao entre elementos
             if (controller.processAllElements(scene, elemArray, enemys)) {
@@ -506,58 +509,59 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
         }
     }
-    
+
     // Movimenta Clyde
     private void setClydeMovDirection() {
 
         // Se a distância foi menor que 4, se move igual ao Blinky.
-        inky.setDistanceBlinky(inky.getPos().getX(), inky.getPos().getY(),
-                blinky.getPos().getX(), blinky.getPos().getY());
+        clyde.setDistancePacman(clyde.getPos().getX(), clyde.getPos().getY(),
+                pacMan.getPos().getX(), pacMan.getPos().getY());
 
-        if (inky.getDistanceBlinky() < 4 && inky.getStateDirection() == Inky.MOVE_PAC) {
-            switch (blinky.getMovDirection()) {
-                case Blinky.MOVE_DOWN:
+        // Se a distancia for menor que 4, segue pacman
+        if (clyde.getDistancePacman() > 5) {
+            switch (pacMan.getMovDirection()) {
+                case PacMan.MOVE_DOWN:
 
-                    if (blinky.getPos().getX() > inky.getPos().getX()) {
-                        inky.setMoveDirection(Enemy.MOVE_DOWN);
+                    if (pacMan.getPos().getX() > clyde.getPos().getX()) {
+                        clyde.setMoveDirection(Enemy.MOVE_DOWN);
                     } else {
-                        inky.setMoveDirection(Enemy.MOVE_UP);
+                        clyde.setMoveDirection(Enemy.MOVE_UP);
                     }
+                    
                     break;
 
-                case Blinky.MOVE_UP:
+                case PacMan.MOVE_UP:
 
-                    if (blinky.getPos().getX() > inky.getPos().getX()) {
-                        inky.setMoveDirection(Enemy.MOVE_DOWN);
+                    if (pacMan.getPos().getX() > clyde.getPos().getX()) {
+                        clyde.setMoveDirection(Enemy.MOVE_DOWN);
                     } else {
-                        inky.setMoveDirection(Enemy.MOVE_UP);
+                        clyde.setMoveDirection(Enemy.MOVE_UP);
                     }
+                    
                     break;
 
-                case Blinky.MOVE_LEFT:
+                case PacMan.MOVE_LEFT:
 
-                    if (blinky.getPos().getY() > inky.getPos().getY()) {
-                        inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    if (pacMan.getPos().getY() > clyde.getPos().getY()) {
+                        clyde.setMoveDirection(Enemy.MOVE_RIGHT);
                     } else {
-                        inky.setMoveDirection(Enemy.MOVE_LEFT);
+                        clyde.setMoveDirection(Enemy.MOVE_LEFT);
                     }
+                    
                     break;
 
-                case Blinky.MOVE_RIGHT:
+                case PacMan.MOVE_RIGHT:
 
-                    if (blinky.getPos().getY() > inky.getPos().getY()) {
-                        inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    if (pacMan.getPos().getY() > blinky.getPos().getY()) {
+                        clyde.setMoveDirection(Enemy.MOVE_RIGHT);
                     } else {
-                        inky.setMoveDirection(Enemy.MOVE_LEFT);
+                        clyde.setMoveDirection(Enemy.MOVE_LEFT);
                     }
-                    break;
-
-                default:
                     break;
             }
         }
     }
-    
+
     public void go() {
         // Timer para pintar a tela
         TimerTask repaint = new TimerTask() {

@@ -72,13 +72,13 @@ public class Scene1 extends Scene {
             for (int y = 0; y < Consts.NUM_CELLS; y++) {
                 switch (map[x][y]) {
                     case 0:
-//                        this.balls.add(new Ball("ball.png", 10, x, y));
+                        this.balls.add(new Ball("ball.png", 10, x, y));
                         break;
                     case 1:
                         this.walls.add(new Wall("brick.png", x, y));
                         break;
                     case 2:
-//                        this.powerPellet.add(new PowerPellet("power_pellet.png", 50, x, y));
+                        this.powerPellet.add(new PowerPellet("power_pellet.png", 50, x, y));
                         break;
                     default:
                         break;
