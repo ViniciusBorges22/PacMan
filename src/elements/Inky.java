@@ -12,23 +12,10 @@ import java.util.logging.Logger;
  *
  * @author lllgabrielll
  */
-public class Inky extends Enemy implements Runnable {
+public class Inky extends Enemy {
 
     public Inky() {
         super(new String[]{"inky.png", "vulnerable_ghost.png"});
-    }
-
-    @Override
-    public void run() {
-        
-        // Calcula rota entre inimigo e pacman
-        while (true) {
-            try {
-                Thread.sleep(8000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Blinky.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     public void backToLastPosition() {

@@ -20,6 +20,7 @@ public class Pinky extends Enemy implements Runnable {
     private int stateDirection;
 
     public Pinky() {
+<<<<<<< HEAD
         super(new String[]{"pink_ghost.png", "vulnerable_ghost.png"});
         setMoveDirection(Enemy.MOVE_RIGHT);
         this.stateDirection = MOVE_PAC;
@@ -35,6 +36,9 @@ public class Pinky extends Enemy implements Runnable {
     
     public void backToLastPosition() {
         this.pos.comeBack();
+=======
+        super(new String[] {"pink_ghost.png","vulnerable_ghost.png"});
+>>>>>>> origin/Score/Menu/Níveis
     }
     
     @Override

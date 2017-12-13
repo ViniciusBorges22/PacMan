@@ -96,7 +96,11 @@ public abstract class Enemy extends Element {
                     }
                 };
                 Timer timer = new Timer();
+<<<<<<< HEAD
                 timer.schedule(revive, 5000);
+=======
+                timer.schedule(revive, 1000);
+>>>>>>> origin/Score/Menu/Níveis
         }
     }
 

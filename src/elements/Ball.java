@@ -31,5 +31,4 @@ public class Ball extends Element {
     public void autoDraw(Graphics g) {
         Drawing.draw(g, imageIcon, pos.getY(), pos.getX());
     }
-
 }
