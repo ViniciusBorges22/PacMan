@@ -27,7 +27,7 @@ public class GameController {
             }
         }
     }
-    
+
     public boolean processAllElements(Scene scene, ArrayList<Element> e, ArrayList<Enemy> enemys) {
         if (e.isEmpty()) {
             return false;
@@ -60,7 +60,8 @@ public class GameController {
         if (pinky.overlap(scene.getWalls())) {
 
             // Setar movimento do pinky quando ocorre uma colisão
-            setInvtMovDirectionPinky(pinky, pPacMan);
+            pinky.backToLastPosition();
+            setInvtMovDirectionPinky(pinky);
 
             // Se houve colisão, entao pinky passa para estado aleatorio
             pinky.setState(Pinky.MOVE_ALEAT);
@@ -77,7 +78,7 @@ public class GameController {
 
         // Variavel que detecta que se houve uma colisão entre pacman e inimigo 
         boolean aux = false;
-        
+
         Element eTemp;
 
         // Verifica colisao entre PacMan e outros elementos
@@ -104,7 +105,7 @@ public class GameController {
         // Movimentar inimigos
         blinky.move();
         pinky.move();
-        
+
         return aux;
     }
 
@@ -116,7 +117,7 @@ public class GameController {
                 if (map[y][x] == 1) {
                     double x_aux = Math.abs(x - elem.getPos().getX());
                     double y_aux = Math.abs(y - elem.getPos().getY());
-                    
+
                     if (x_aux < 0.7 && y_aux < 0.7) {
                         return false;
                     }
@@ -125,7 +126,7 @@ public class GameController {
         }
         return true;
     }
-    
+
     private boolean isValidPositionScenePacman(final Element elem, final Scene scene) {
         int map[][] = scene.getMap();
         for (int y = 0; y < Consts.NUM_CELLS; y++) {
@@ -133,7 +134,7 @@ public class GameController {
                 if (map[y][x] == 1) {
                     double x_aux = Math.abs(y - elem.getPos().getX());
                     double y_aux = Math.abs(x - elem.getPos().getY());
-                    
+
                     if (x_aux < 0.95 && y_aux < 0.95) {
                         return false;
                     }
@@ -156,7 +157,7 @@ public class GameController {
                 }
 //                enemy.setMoveDirection(Enemy.MOVE_RIGHT);
                 break;
-            
+
             case Enemy.MOVE_RIGHT:
                 if (pPacMan.getPos().getX() > enemy.getPos().getX()) {
                     enemy.setMoveDirection(Enemy.MOVE_DOWN);
@@ -165,7 +166,7 @@ public class GameController {
                 }
 //                enemy.setMoveDirection(Enemy.MOVE_LEFT);
                 break;
-            
+
             case Enemy.MOVE_DOWN:
                 if (pPacMan.getPos().getY() > enemy.getPos().getY()) {
                     enemy.setMoveDirection(Enemy.MOVE_RIGHT);
@@ -174,7 +175,7 @@ public class GameController {
                 }
 //                enemy.setMoveDirection(Enemy.MOVE_UP);
                 break;
-            
+
             case Enemy.MOVE_UP:
                 if (pPacMan.getPos().getY() > enemy.getPos().getY()) {
                     enemy.setMoveDirection(Enemy.MOVE_RIGHT);
@@ -187,8 +188,8 @@ public class GameController {
     }
 
     // Setar movimento do blinky
-    private void setInvtMovDirectionPinky(Enemy enemy, PacMan pPacMan) {
-        
+    private void setInvtMovDirectionPinky(Enemy enemy) {
+
         int aux = Math.round((float) Math.random() % 10);
 
         // Definir uma nova direção para o blinky
@@ -200,7 +201,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_DOWN);
                 }
                 break;
-            
+
             case Enemy.MOVE_RIGHT:
                 if (aux == 0) {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
@@ -208,7 +209,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_DOWN);
                 }
                 break;
-            
+
             case Enemy.MOVE_DOWN:
                 if (aux == 0) {
                     enemy.setMoveDirection(Enemy.MOVE_LEFT);
@@ -216,7 +217,7 @@ public class GameController {
                     enemy.setMoveDirection(Enemy.MOVE_RIGHT);
                 }
                 break;
-            
+
             case Enemy.MOVE_UP:
                 if (aux == 0) {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
@@ -226,5 +227,5 @@ public class GameController {
                 break;
         }
     }
-    
+
 }

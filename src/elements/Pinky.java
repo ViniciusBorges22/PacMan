@@ -18,17 +18,11 @@ public class Pinky extends Enemy implements Runnable {
     public static int MOVE_PAC = 1;
 
     private int stateDirection;
-    private int antStateDirection;
 
     public Pinky() {
         super(new String[]{"pink_ghost.png"});
         setMoveDirection(Enemy.MOVE_RIGHT);
         this.stateDirection = MOVE_PAC;
-        this.stateDirection = MOVE_PAC;
-    }
-
-    public int getAntStateDirection() {
-        return antStateDirection;
     }
 
     public int getStateDirection() {
@@ -39,14 +33,6 @@ public class Pinky extends Enemy implements Runnable {
         this.pos.comeBack();
     }
     
-    public void setAntStateDirectioni(int antStateDirection) {
-        this.antStateDirection = antStateDirection;
-    }
-
-    public void setStateDirection(int stateDirection) {
-        this.stateDirection = stateDirection;
-    }
-
     @Override
     public void run() {
         while (true) {
@@ -56,17 +42,14 @@ public class Pinky extends Enemy implements Runnable {
                 System.out.println(e.getMessage());
             }
 
-            // Altera o estado de movimentação a cada 0.5s
+            // Altera o estado de movimentação a cada 2s
+            
             // Movimentar aleatorio
             if (stateDirection == MOVE_ALEAT) {
                 stateDirection = MOVE_PAC;
-                antStateDirection = MOVE_ALEAT;
-
             } else {
-
                 // Seguir pacman
                 stateDirection = MOVE_ALEAT;
-                antStateDirection = MOVE_PAC;
             }
         }
     }
