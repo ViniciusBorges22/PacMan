@@ -1,11 +1,11 @@
 package control;
 
-import scene.GameOver;
 import elements.Blinky;
 import elements.PacMan;
 import elements.Element;
 import elements.Cherry;
 import elements.Clyde;
+import elements.Enemy;
 import elements.Inky;
 import elements.Pinky;
 import elements.Strawberry;
@@ -15,21 +15,29 @@ import utils.Drawing;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import scene.GameOver;
 import scene.InitScene;
 
 import scene.Scene;
 import scene.Scene1;
+import scene.Scene2;
+import scene.Scene3;
 
 public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
@@ -44,14 +52,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final Cherry cherry;
 
     private final ArrayList<Element> elemArray;
-    private final GameController controller = new GameController();
+    private final ArrayList<Enemy> enemys;
 
+    private final GameController controller = new GameController();
     private final Random random = new Random();
+    private final Executor executor_scene_1;
 
     private Scene scene;
-    
+
+    private Image imgLife;
     private Image imgPontuacao;
-    private Image imgFase;
 
     // Controle de tela
     // 0 - Tela inicial
@@ -61,6 +71,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     // 4 - Tela de fim do jogo
     private int controlScene;
 
+    // Pontos
+    private int pointsTotal;
+
     // Construtor
     public GameScreen() {
         Drawing.setGameScreen(this);
@@ -69,8 +82,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.addKeyListener(this);
         this.addMouseListener(this);
 
+        this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
+                Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom + 50);
+
         // Lista de elementos
         this.elemArray = new ArrayList<>();
+        this.enemys = new ArrayList<>();
 
         // Pacman
         this.pacMan = new PacMan();
@@ -80,83 +97,164 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Blinky
         this.blinky = new Blinky();
         this.blinky.setPosition(10, 10);
+        this.elemArray.add(blinky);
+        this.enemys.add(blinky);
 
         // Clyde
         this.clyde = new Clyde();
         this.clyde.setPosition(10, 10);
+        this.enemys.add(clyde);
 
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
+        this.enemys.add(inky);
 
         // Pinky
         this.pinky = new Pinky();
-        this.pinky.setPosition(10, 10);
+        this.pinky.setPosition(5, 5);
+        this.elemArray.add(pinky);
+        this.enemys.add(pinky);
 
         this.strawberry = new Strawberry();
         this.cherry = new Cherry();
 
-        // Tela inicial
+        // Vida
+        try {
+            this.imgLife = Toolkit.getDefaultToolkit().getImage(
+                    new File(".").getCanonicalPath() + Consts.PATH + "pacman_right.png");
+            this.imgPontuacao = Toolkit.getDefaultToolkit().getImage(new File(".").getCanonicalPath()
+                    + Consts.PATH + "pontuacao.png");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        this.executor_scene_1 = Executors.newCachedThreadPool();
+        // Thread para a animação do pacman
+        this.executor_scene_1.execute(pacMan);
+
+        // Thread para Pinky
+        this.executor_scene_1.execute(pinky);
+
+        // Cria cenario
         this.controlScene = 1;
         newScene(controlScene);
     }
 
     // Cria cenario com todos os seus elementos
-    private void newScene(final int sc) {
-        switch (sc) {
+    private void newScene(int scene) {
+        switch (scene) {
             // Tela Inicial
             case 0:
-                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
-                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
+                this.scene = new InitScene();
 
-                this.scene = new InitScene(new String[]{"button_start.png",
-                    "button_start.png", "background_pacman1.jpg"});
+                // Total de vidas do pacman
+                this.pacMan.setLife(3);
                 break;
 
             // Tela 1
             case 1:
-                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right + 300,
-                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
-
                 this.scene = new Scene1();
                 this.scene.setBlock("brick.png");
 
-                // Determinar posição strawberry
+                // Determinar posição para strawberry
                 int aux1,
                  aux2;
                 do {
-                    aux1 = random.nextInt(29);
-                    aux2 = random.nextInt(29);
-                } while (scene.map(aux1, aux2) == 1);
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
 
                 this.strawberry.setPosition(aux1, aux2);
                 this.addElement(strawberry);
 
-                // Determinar posição cherry
+                // Determinar posição para cherry
                 do {
-                    aux1 = random.nextInt(29);
-                    aux2 = random.nextInt(29);
-                } while (scene.map(aux1, aux2) == 1);
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
 
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
+
+                // Atualiza posições
+                initPos();
                 break;
 
             // Tela 2
             case 2:
+                this.scene = new Scene2();
+                this.scene.setBlock("brick.png");
+
+                // Determinar posição para strawberry
+                do {
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
+
+                this.strawberry.setPosition(aux1, aux2);
+                this.addElement(strawberry);
+
+                // Determinar posição para cherry
+                do {
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
+
+                this.cherry.setPosition(aux1, aux2);
+                this.addElement(cherry);
+
+                // Atualiza posições
+                initPos();
+
                 break;
 
             // Tela 3
             case 3:
+                this.scene = new Scene3();
+                // Determinar posição para strawberry
+                do {
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
+
+                this.strawberry.setPosition(aux1, aux2);
+                this.addElement(strawberry);
+
+                // Determinar posição para cherry
+                do {
+                    aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                    aux2 = random.nextInt(Consts.NUM_CELLS - 1);
+                } while (this.scene.map(aux1, aux2) == 1);
+
+                this.cherry.setPosition(aux1, aux2);
+                this.addElement(cherry);
+
+                // Atualiza posições
+                initPos();
+
                 break;
 
             // Game Over
             case 4:
-                this.setSize(Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().left + getInsets().right,
-                        Consts.NUM_CELLS * Consts.CELL_SIZE + getInsets().top + getInsets().bottom);
-
                 this.scene = new GameOver();
                 break;
+        }
+    }
+
+    // Retorna para a posição inicial os elementos
+    private void initPos() {
+        // Atualiza posições
+        this.pacMan.setPosition(1, 1);
+        this.blinky.setPosition(10, 10);
+        this.inky.setPosition(20, 20);
+        this.clyde.setPosition(15, 15);
+        this.pinky.setPosition(15, 3);
+
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException i) {
+            System.out.println(i.getMessage());
         }
     }
 
@@ -176,26 +274,135 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         Graphics g2 = g.create(getInsets().right, getInsets().top,
                 getWidth() - getInsets().left, getHeight() - getInsets().bottom);
 
-        // Se estiver na primeira ou ultima tela, não é necessario desenhar todo os elementos
-        if (controlScene == 0 || controlScene == 4) {
-            // Desenhar tela
-            scene.paintScene(g);
-        } else {
-            // Desenha todos os elementos
-            this.controller.drawAllElements(scene, elemArray, g);
+        // Pintar elementos
+        this.controller.drawAllElements(scene, elemArray, g2, controlScene);
+
+        // Se nao for a tela inicial nem a final
+        if (controlScene != 0 && controlScene != 4) {
+
+            // Controla o movimento do blinky
+            setBlinkyMovDirection();
+
+            // Controla o movimento do pinky
+            setPinkyMovDirection();
 
             // Verificar colisao entre elementos
-            this.controller.processAllElements(scene, elemArray);
-        }
+            if (controller.processAllElements(scene, elemArray, enemys)) {
 
-        // Pontuação / Fase atual / Vidas
-        this.setTitle("Tela atual: " + controlScene + " Pontuação: "
-                + scene.getPoints() + " Vidas: " + pacMan.getLife());
+                // Remove uma vida do pacman
+                pacMan.removeLife();
+
+                // Retorna posições iniciais
+                initPos();
+
+                // Verifica se acabou as vidas
+                if (pacMan.getLife() == 0) {
+                    this.controlScene = 4;
+                    newScene(controlScene);
+                }
+            }
+
+            // Desenhar informações
+            int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
+
+            // Vidas
+            for (int i = 0; i < pacMan.getLife(); i++) {
+                g2.drawImage(imgLife, 10 + (32 * i), aux + 10, 30, 30, null);
+            }
+
+            // Frutas
+            if (elemArray.contains(strawberry)) {
+                g2.drawImage(strawberry.getImgElement().getImage(), 140, aux + 7, 30, 33, null);
+            }
+
+            if (elemArray.contains(cherry)) {
+                g2.drawImage(cherry.getImgElement().getImage(), 180, aux + 7, 30, 33, null);
+            }
+
+            // Pontuação
+            this.pointsTotal = scene.getPoints();
+            g2.drawImage(imgPontuacao, 220, aux + 7, 30, 60, null);
+        }
 
         g.dispose();
         g2.dispose();
         if (!getBufferStrategy().contentsLost()) {
             getBufferStrategy().show();
+        }
+    }
+
+    // Movimentar Blinky
+    private void setBlinkyMovDirection() {
+        // Verifica movimentação do blinky
+        switch (pacMan.getMovDirection()) {
+            case PacMan.MOVE_DOWN:
+                blinky.setLastDirection(blinky.getMovDirection());
+
+                if (pacMan.getPos().getX() > blinky.getPos().getX()) {
+                    blinky.setMoveDirection(Enemy.MOVE_DOWN);
+                } else {
+                    blinky.setMoveDirection(Enemy.MOVE_UP);
+                }
+                break;
+
+            case PacMan.MOVE_UP:
+                blinky.setLastDirection(blinky.getMovDirection());
+
+                if (pacMan.getPos().getX() > blinky.getPos().getX()) {
+                    blinky.setMoveDirection(Enemy.MOVE_DOWN);
+                } else {
+                    blinky.setMoveDirection(Enemy.MOVE_UP);
+                }
+                break;
+
+            case PacMan.MOVE_LEFT:
+                blinky.setLastDirection(blinky.getMovDirection());
+
+                if (pacMan.getPos().getY() > blinky.getPos().getY()) {
+                    blinky.setMoveDirection(Enemy.MOVE_RIGHT);
+                } else {
+                    blinky.setMoveDirection(Enemy.MOVE_LEFT);
+                }
+                break;
+
+            case PacMan.MOVE_RIGHT:
+                blinky.setLastDirection(blinky.getMovDirection());
+
+                if (pacMan.getPos().getY() > blinky.getPos().getY()) {
+                    blinky.setMoveDirection(Enemy.MOVE_RIGHT);
+                } else {
+                    blinky.setMoveDirection(Enemy.MOVE_LEFT);
+                }
+                break;
+        }
+    }
+
+    // Movimenta Pinky
+    private void setPinkyMovDirection() {
+        switch (pacMan.getMovDirection()) {
+            case PacMan.MOVE_DOWN:
+                if (pinky.getStateDirection() == Pinky.MOVE_PAC) {
+                    pinky.setMoveDirection(Enemy.MOVE_DOWN);
+                }
+                break;
+
+            case PacMan.MOVE_UP:
+                if (pinky.getStateDirection() == Pinky.MOVE_PAC) {
+                    pinky.setMoveDirection(Enemy.MOVE_UP);
+                }
+                break;
+
+            case PacMan.MOVE_LEFT:
+                if (pinky.getStateDirection() == Pinky.MOVE_PAC) {
+                    pinky.setMoveDirection(Enemy.MOVE_LEFT);
+                }
+                break;
+
+            case PacMan.MOVE_RIGHT:
+                if (pinky.getStateDirection() == Pinky.MOVE_PAC) {
+                    pinky.setMoveDirection(Enemy.MOVE_RIGHT);
+                }
+                break;
         }
     }
 
@@ -219,8 +426,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                         // a cada nova aparição
                         int aux1, aux2;
                         do {
-                            aux1 = random.nextInt(29);
-                            aux2 = random.nextInt(29);
+                            aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                            aux2 = random.nextInt(Consts.NUM_CELLS - 1);
                         } while (scene.map(aux1, aux2) == 1);
 
                         strawberry.setPosition(aux1, aux2);
@@ -250,8 +457,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                         // a cada nova aparição
                         int aux1, aux2;
                         do {
-                            aux1 = random.nextInt(29);
-                            aux2 = random.nextInt(29);
+                            aux1 = random.nextInt(Consts.NUM_CELLS - 1);
+                            aux2 = random.nextInt(Consts.NUM_CELLS - 1);
                         } while (scene.map(aux1, aux2) == 1);
 
                         strawberry.setPosition(aux1, aux2);
@@ -307,67 +514,46 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             default:
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
-                        pacMan.setMovDirection(PacMan.MOVE_UP);
-                        pacMan.changeDirection(3);
+                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
+
+                            // Setar movimentação do pacman
+                            pacMan.setMovDirection(PacMan.MOVE_UP);
+                            pacMan.changeDirection(4);
+                        }
                         break;
+
                     case KeyEvent.VK_DOWN:
-                        pacMan.setMovDirection(PacMan.MOVE_DOWN);
-                        pacMan.changeDirection(1);
+                        // Setar movimentação do pacman
+                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
+                            pacMan.setMovDirection(PacMan.MOVE_DOWN);
+                            pacMan.changeDirection(2);
+                        }
                         break;
+
                     case KeyEvent.VK_LEFT:
-                        pacMan.setMovDirection(PacMan.MOVE_LEFT);
-                        pacMan.changeDirection(2);
+                        // Setar movimentaçao do pacman
+                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
+                            pacMan.setMovDirection(PacMan.MOVE_LEFT);
+                            pacMan.changeDirection(3);
+                        }
                         break;
+
                     case KeyEvent.VK_RIGHT:
-                        pacMan.setMovDirection(PacMan.MOVE_RIGHT);
-                        pacMan.changeDirection(0);
+                        // Setar movimentação do pacman
+                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
+                            pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+                            pacMan.changeDirection(0);
+                        }
                         break;
+
                     case KeyEvent.VK_SPACE:
                         pacMan.setMovDirection(PacMan.STOP);
                         break;
+
                     default:
                         break;
                 }
 
-                break;
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        int aux = controlScene;
-        switch (aux) {
-            // Tela inicial
-            case 0:
-                // Verifica se clicou em algum botao
-                int a1 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
-                int x1 = e.getPoint().x;
-                int y1 = e.getPoint().y;
-
-                if ((200 <= y1 && y1 <= 300) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
-                    controlScene = 1;
-                    newScene(controlScene);
-                } else if ((340 <= y1 && y1 <= 440) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
-                    if (JOptionPane.showConfirmDialog(null,
-                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
-                        System.exit(0);
-                    }
-                }
-
-                break;
-
-            // Game Over
-            case 4:
-                // Verifica se clicou em algum botao
-                int a2 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
-                int x2 = e.getPoint().x;
-                int y2 = e.getPoint().y;
-
-                // Volta para a tela inicial
-                if ((500 <= y2 && y2 <= 600) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
-                    controlScene = 0;
-                    newScene(controlScene);
-                }
                 break;
         }
     }
@@ -412,18 +598,57 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(MouseEvent me) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
+        int aux = controlScene;
+        switch (aux) {
+            // Tela inicial
+            case 0:
+                // Verifica se clicou em algum botao
+                int a1 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
+                int x1 = e.getPoint().x;
+                int y1 = e.getPoint().y;
+
+                if ((100 <= y1 && y1 <= 200) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                    controlScene = 1;
+                    newScene(controlScene);
+                } else if ((240 <= y1 && y1 <= 340) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+                        System.exit(0);
+                    }
+                }
+
+                break;
+
+            // Game Over
+            case 4:
+                // Verifica se clicou em algum botao
+                int a2 = (Consts.NUM_CELLS * Consts.CELL_SIZE) / 2;
+                int x2 = e.getPoint().x;
+                int y2 = e.getPoint().y;
+
+                // Volta para a tela inicial
+                if ((350 <= y2 && y2 <= 450) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
+                    controlScene = 0;
+                    newScene(controlScene);
+                }
+                break;
+        }
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseReleased(MouseEvent me) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
 }

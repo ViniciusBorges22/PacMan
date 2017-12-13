@@ -43,7 +43,7 @@ public class Position implements Serializable {
         this.y = y;
         return true;
     }
-    
+
     public double getX() {
         return x;
     }
@@ -55,8 +55,7 @@ public class Position implements Serializable {
     public boolean comeBack() {
         return this.setPosition(previousX, previousY);
     }
-    
-    // Movimentação do Pacman
+
     public boolean moveUp() {
         return this.setPosition(this.getX() - Consts.WALK_STEP, this.getY());
     }
@@ -72,26 +71,7 @@ public class Position implements Serializable {
     public boolean moveLeft() {
         return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP);
     }
-    
-    
-    // Movimentação da fruta
-    public boolean moveUpFruit() {
-        return this.setPosition(this.getX() - Consts.WALK_STEP_FRUIT, this.getY());
-    }
 
-    public boolean moveDownFruit() {
-        return this.setPosition(this.getX() + Consts.WALK_STEP_FRUIT, this.getY());
-    }
-
-    public boolean moveRightFruit() {
-        return this.setPosition(this.getX(), this.getY() + Consts.WALK_STEP_FRUIT);
-    }
-
-    public boolean moveLeftFruit() {
-        return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_FRUIT);
-    }    
-    
-    // Movimentação Blinky
     public boolean moveUpEnemy() {
         return this.setPosition(this.getX() - Consts.WALK_STEP_ENEMY, this.getY());
     }

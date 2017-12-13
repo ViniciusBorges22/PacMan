@@ -21,15 +21,15 @@ public class InitScene extends Scene {
     private Image imgStart;
     private Image imgExit;
     private Image background;
-    
-    public InitScene(String[] imgs) {
+
+    public InitScene() {
         try {
             this.imgStart = Toolkit.getDefaultToolkit().getImage(
-                    new java.io.File(".").getCanonicalPath() + Consts.PATH + imgs[0]);
+                    new java.io.File(".").getCanonicalPath() + Consts.PATH + "button_start.png");
             this.imgExit = Toolkit.getDefaultToolkit().getImage(
-                    new File(".").getCanonicalPath() + Consts.PATH + imgs[1]);
+                    new File(".").getCanonicalPath() + Consts.PATH + "button_start.png");
             this.background = Toolkit.getDefaultToolkit().getImage(
-                    new File(".").getCanonicalPath() + Consts.PATH + imgs[2]);
+                    new File(".").getCanonicalPath() + Consts.PATH + "background_pacman1.jpg");
         } catch (IOException e) {
             System.err.println("Erro: Imagens da tela inicial não encontradas\n " + e.getMessage());
         }
@@ -37,14 +37,15 @@ public class InitScene extends Scene {
 
     @Override
     public void paintScene(Graphics g) {
-        int aux = Consts.NUM_CELLS * Consts.CELL_SIZE;
-        g.drawImage(background, 0, 0, aux, aux, null);
-        g.drawImage(imgStart, (aux / 2) - 150, 200, 300, 100, null);
-        g.drawImage(imgExit, (aux / 2) - 150, 340, 300, 100, null);
+        int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
+        g.fillRect(0, 0, aux, aux + 50);
+        g.drawImage(background, 0, 0, aux, aux+50, null);
+        g.drawImage(imgStart, (aux / 2) - 150, 100, 300, 100, null);
+        g.drawImage(imgExit, (aux / 2) - 150, 240, 300, 100, null);
     }
 
     @Override
-    protected void drawScene() {
+    protected void drawSceneFinal() {
     }
 
 }

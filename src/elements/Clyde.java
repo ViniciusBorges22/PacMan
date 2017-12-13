@@ -5,28 +5,14 @@
  */
 package elements;
 
-import java.awt.Graphics;
-
 /**
  *
  * @author lllgabrielll
  */
-public class Clyde extends Enemy implements Runnable {
-
+public class Clyde extends Enemy {
+    
     public Clyde() {
         super(new String[] {"blue_ghost.png"});
     }
-
-    @Override
-    public void autoDraw(Graphics g) {
-        
-    }
-
-    @Override
-    public void run() {
-        // Implementar movimentação
-    }
-    
-    
     
 }

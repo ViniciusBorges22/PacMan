@@ -6,6 +6,7 @@
 package scene;
 
 import elements.Ball;
+import elements.Element;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -22,23 +23,35 @@ public abstract class Scene {
     // Lista de bolinhas
     protected List<Ball> balls;
     
+    // Lista de blocos
+    protected List<Element> walls;
+    
     // Total de bolinhas
     protected int tballs;
-    
+
     // Pontos da fase
     protected int points;
-    
+
     // Bloco
     protected Image brick;
 
     public Scene() {
         this.map = new int[Consts.NUM_CELLS][Consts.NUM_CELLS];
         this.balls = new ArrayList<>();
+        this.walls = new ArrayList<>();
         this.points = 0;
+
+        // Bordas
+        for (int i = 0; i < Consts.NUM_CELLS; i++) {
+            map[i][0] = 1;
+            map[0][i] = 1;
+            map[i][Consts.NUM_CELLS - 1] = 1;
+            map[Consts.NUM_CELLS - 1][i] = 1;
+        }
     }
-    
-    // Imagem
+
     public void setBlock(String imageName) {
+        // Imagem
         try {
             this.brick = Toolkit.getDefaultToolkit().getImage(
                     new java.io.File(".").getCanonicalPath() + Consts.PATH + imageName);
@@ -60,13 +73,18 @@ public abstract class Scene {
     public abstract void paintScene(Graphics g);
 
     // Termina de definir cenario
-    protected abstract void drawScene();
+    protected abstract void drawSceneFinal();
 
     // Obter elementos bolinhas
     public List<Ball> getBalls() {
         return balls;
     }
-
+    
+    // Obter lista de bloquinhos
+    public List<Element> getWalls() {
+        return walls;
+    }
+    
     // Obter total de bolinhas
     public int getTotalBall() {
         return this.balls.size();
@@ -76,5 +94,4 @@ public abstract class Scene {
     public int getPoints() {
         return points;
     }
-    
 }

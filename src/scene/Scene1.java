@@ -6,98 +6,86 @@
 package scene;
 
 import elements.Ball;
+import elements.Element;
+import elements.Wall;
 import java.awt.Graphics;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.Consts;
 
 public class Scene1 extends Scene {
 
     public Scene1() {
-        super();
-        this.drawScene();
+        this.drawSceneFinal();
     }
 
     @Override
     public void paintScene(Graphics g) {
-        g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS + 300, Consts.CELL_SIZE * Consts.NUM_CELLS);
+        g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS, Consts.CELL_SIZE * Consts.NUM_CELLS + 50);
 
         // Desenha cenario
-        for (int i = 0; i < Consts.NUM_CELLS; i++) {
-            for (int j = 0; j < Consts.NUM_CELLS; j++) {
-                if (map[i][j] == 1) {
-                    g.drawImage(brick, j * Consts.CELL_SIZE, i * Consts.CELL_SIZE,
-                            Consts.CELL_SIZE, Consts.CELL_SIZE, null);
-                } else {
-                    g.fillRect(j * Consts.CELL_SIZE, i * Consts.CELL_SIZE,
-                            Consts.CELL_SIZE, Consts.CELL_SIZE);
-                }
-            }
+//        for (int i = 0; i < Consts.NUM_CELLS; i++) {
+//            for (int j = 0; j < Consts.NUM_CELLS; j++) {
+//                if (map[i][j] == 1) {
+//                    g.drawImage(brick, j * Consts.CELL_SIZE, i * Consts.CELL_SIZE,
+//                            Consts.CELL_SIZE, Consts.CELL_SIZE, null);
+//                } else {
+//                    g.fillRect(j * Consts.CELL_SIZE, i * Consts.CELL_SIZE,
+//                            Consts.CELL_SIZE, Consts.CELL_SIZE);
+//                }
+//            }
+//        }
+        
+        // Desenha blocos
+        Iterator<Element> it_wall = walls.listIterator();
+        while (it_wall.hasNext()) {
+            it_wall.next().autoDraw(g);
         }
-
+        
         // Desenhar bolinhas da tela
         Iterator<Ball> it = balls.listIterator();
         while (it.hasNext()) {
             it.next().autoDraw(g);
         }
-
+        
         // Calcula a quantidade de pontos nessa fase
         points = (tballs - balls.size()) * 10;
     }
 
     @Override
-    protected void drawScene() {
-        // Bordas
-        for (int i = 0; i < Consts.NUM_CELLS; i++) {
-            for (int j = 0; j < Consts.NUM_CELLS; j++) {
-                if (i == 0 || i == Consts.NUM_CELLS - 1 || j == 0 || j == Consts.NUM_CELLS - 1) {
-                    map[i][j] = 1;
-                } else {
-                    map[i][j] = 0;
+    protected void drawSceneFinal() {
+        // Ler cenario
+        Scanner mapRead;
+        try {
+            mapRead = new Scanner(new FileInputStream("./src/maps/map2.txt"));
+            for (int i = 0; i < Consts.NUM_CELLS; i++) {
+                for (int j = 0; j < Consts.NUM_CELLS; j++) {
+                    map[i][j] = (int) mapRead.nextByte();
                 }
             }
+            mapRead.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Erro no arqv");
+            Logger.getLogger(Scene1.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        // Criar bolinhas
-        map[13][11] = 1;
-        map[13][12] = 1;
-        map[13][13] = 1;
-        map[13][14] = 1;
-        map[13][15] = 1;
-        map[13][16] = 1;
-        map[13][17] = 1;
-        map[13][18] = 1;
-
-        map[16][11] = 1;
-        map[16][12] = 1;
-        map[16][13] = 1;
-        map[16][14] = 1;
-        map[16][15] = 1;
-        map[16][16] = 1;
-        map[16][17] = 1;
-        map[16][18] = 1;
-
-        map[14][11] = 1;
-        map[14][18] = 1;
-        map[15][11] = 1;
-        map[15][18] = 1;
-
-        map[1][1] = 1;
 
         for (int x = 0; x < Consts.NUM_CELLS; x++) {
             for (int y = 0; y < Consts.NUM_CELLS; y++) {
-                if (map[x][y] == 0
-                        && !(x > 13 && x < 16 && y > 11 && y < 19)) {
-                    this.balls.add(new Ball("ball.png", 100, x, y));
+                if (map[x][y] == 0) {
+                    this.balls.add(new Ball("ball.png", 10, x, y));
+                } else if (map[x][y] == 1){
+                    this.walls.add(new Wall("brick.png", x, y));
                 }
             }
         }
 
         map[1][1] = 0;
-        map[13][14] = 3;
-        map[13][15] = 3;
 
-        // Total de bolinhas
+        // Total de bolinhas na tela
         tballs = balls.size();
     }
-
 }

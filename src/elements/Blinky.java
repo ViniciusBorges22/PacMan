@@ -5,19 +5,30 @@
  */
 package elements;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author lllgabrielll
  */
-public class Blinky extends Enemy implements Runnable {
-    
+public class Blinky extends Enemy {
+
+    private int lastDirection;
+
     public Blinky() {
         super(new String[]{"red_ghost.png"});
+
+        // Movimentação inicial
+        setMoveDirection(Enemy.MOVE_LEFT);
+        this.lastDirection = Enemy.MOVE_LEFT;
     }
 
-    @Override
-    public void run() {
-        // Thread para realizar algum calculo para seguir o pacman
+    public void setLastDirection(int lastDirection) {
+        this.lastDirection = lastDirection;
+    }
+
+    public int getLastDirection() {
+        return lastDirection;
     }
 
 }

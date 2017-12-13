@@ -14,14 +14,14 @@ public class Ball extends Element {
    
     // Construtor
     public Ball(final String imageName, final int point) {
-        super(new String[]{imageName}, 0);
+        super(new String[]{imageName}, 0, 2);
         this.point = point;
         this.isTransposable = false;
     }
     
     // Construtor
     public Ball(final String imageName, final int point, final double x, final double y) {
-        super(new String[]{imageName}, 0);
+        super(new String[]{imageName}, 0, 2);
         this.point = point;
         this.isTransposable = false;
         this.setPosition(x, y);
