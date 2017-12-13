@@ -12,7 +12,7 @@ package elements;
 public class Pinky extends Enemy {
 
     public Pinky() {
-        super(new String[] {"pinky_ghost.png"});
+        super(new String[] {"pink_ghost.png","vulnerable_ghost.png"});
     }
     
 }

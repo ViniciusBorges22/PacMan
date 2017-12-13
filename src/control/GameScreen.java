@@ -97,21 +97,24 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.blinky.setPosition(10, 10);
         this.elemArray.add(blinky);
         this.enemys.add(blinky);
-
-        // Clyde
-        this.clyde = new Clyde();
-        this.clyde.setPosition(10, 10);
-        this.enemys.add(clyde);
-
+        
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
+        this.elemArray.add(inky);
         this.enemys.add(inky);
-
+        
         // Pinky
         this.pinky = new Pinky();
-        this.pinky.setPosition(10, 10);
+        this.pinky.setPosition(8, 8);
+        this.elemArray.add(pinky);
         this.enemys.add(pinky);
+
+        // Clyde
+        this.clyde = new Clyde();
+        this.clyde.setPosition(7, 7);
+        this.elemArray.add(clyde);
+        this.enemys.add(clyde);
 
         this.strawberry = new Strawberry();
         this.cherry = new Cherry();
@@ -167,7 +170,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 // Thread para a animação do pacman
                 this.executor_scene_1.execute(pacMan);
-                this.blinky.setMap(this.scene.getMap());
+                this.blinky.setMap(this.scene.getMap()); 
+                this.executor_scene_1.execute(inky);
                 break;
 
             // Tela 2
@@ -210,7 +214,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
         // Se nao for a tela inicial nem a final
         if (controlScene != 0 && controlScene != 4) {
-
+            
+            setInkyMovDirection(blinky, inky);
+            
             // Verifica movimentação do blinky
             switch (pacMan.getMovDirection()) {
                 case PacMan.MOVE_DOWN:
@@ -283,9 +289,43 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             getBufferStrategy().show();
         }
     }
+    
+    private void setInkyMovDirection(Blinky blinky, Inky inky){
+        // Se a distância foi menor que 4, se move igual ao Blinky.
+        
+        double distance = calculaDistancia(inky.getPos().getX(), inky.getPos().getY(),
+                                            blinky.getPos().getX(), blinky.getPos().getY());
+        
+        if(distance < 4){
+            switch (blinky.getMovDirection()) {
+                case Blinky.MOVE_LEFT:
+                    inky.setMoveDirection(Inky.MOVE_LEFT);
+                    break;
+
+                case Blinky.MOVE_RIGHT:
+                    inky.setMoveDirection(Inky.MOVE_RIGHT);
+                    break;
+
+                case Blinky.MOVE_DOWN:
+                    inky.setMoveDirection(Inky.MOVE_DOWN);
+                    break;
+
+                case Blinky.MOVE_UP:
+                    inky.setMoveDirection(Inky.MOVE_UP);
+                    break;
+                
+                default: 
+                    break;   
+            }
+        }
+    }
+ 
+    private double calculaDistancia(double x1, double y1, double x2, double y2){
+        return Math.hypot((x2-x1),(y2-y1));
+    }
 
     public void go() {
-        // Time para pintar a tela
+        // Timer para pintar a tela
         TimerTask repaint = new TimerTask() {
             @Override
             public void run() {
@@ -354,11 +394,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 }
             }
         };
-
+        
         Timer timer = new Timer();
         timer.schedule(repaint, 0, Consts.DELAY);
-        timer.schedule(timerStrawberry, Consts.TIMER_STRAWBERRY, 2000);
-        timer.schedule(timerCherry, Consts.TIMER_CHERRY, 30000);
+        timer.schedule(timerStrawberry, Consts.TIMER_STRAWBERRY, 15000);
+        timer.schedule(timerCherry, Consts.TIMER_CHERRY, 15000);
     }
 
     @Override
@@ -393,16 +433,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         // Setar movimentação do pacman
-						pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_UP);
+			pacMan.setTurn(true);
+			pacMan.setNextDirection(PacMan.MOVE_UP);
                         //pacMan.setMovDirection(PacMan.MOVE_UP);
                         //pacMan.changeDirection(4);
                         break;
 
                     case KeyEvent.VK_DOWN:
                         // Setar movimentação do pacman
-						pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_DOWN);
+                        pacMan.setTurn(true);
+			pacMan.setNextDirection(PacMan.MOVE_DOWN);
                         //pacMan.setMovDirection(PacMan.MOVE_DOWN);
                         //pacMan.changeDirection(2);
                         break;
@@ -410,16 +450,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     case KeyEvent.VK_LEFT:
                         // Setar movimentaçao do pacman
                         pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_LEFT);
-						//pacMan.setMovDirection(PacMan.MOVE_LEFT);
+			pacMan.setNextDirection(PacMan.MOVE_LEFT);
+                        //pacMan.setMovDirection(PacMan.MOVE_LEFT);
                         //pacMan.changeDirection(3);
                         break;
 
                     case KeyEvent.VK_RIGHT:
                         // Setar movimentação do pacman
                         pacMan.setTurn(true);
-						pacMan.setNextDirection(PacMan.MOVE_RIGHT);
-						//pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+			pacMan.setNextDirection(PacMan.MOVE_RIGHT);
+			//pacMan.setMovDirection(PacMan.MOVE_RIGHT);
                         //pacMan.changeDirection(0);
                         break;
 

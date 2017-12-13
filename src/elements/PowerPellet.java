@@ -8,21 +8,24 @@ package elements;
 import java.awt.Graphics;
 import utils.Drawing;
 
-public class Ball extends Element {
-
-    protected int point;
-   
+/**
+ *
+ * @author vrtornisiello
+ */
+public class PowerPellet extends Element{
+    private int points;
+    
     // Construtor
-    public Ball(final String imageName, final int point) {
+    public PowerPellet(final String imageName, final int points) {
         super(new String[]{imageName}, 0);
-        this.point = point;
+        this.points = points;
         this.isTransposable = false;
     }
     
     // Construtor
-    public Ball(final String imageName, final int point, final double x, final double y) {
+    public PowerPellet(final String imageName, final int point, final double x, final double y) {
         super(new String[]{imageName}, 0);
-        this.point = point;
+        this.points = point;
         this.isTransposable = false;
         this.setPosition(x, y);
     }

@@ -5,14 +5,30 @@
  */
 package elements;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author lllgabrielll
  */
-public class Inky extends Enemy {
+public class Inky extends Enemy implements Runnable{
         
     public Inky() {
-        super(new String[] {"green_ghost.png"});
+        super(new String[] {"inky.png", "vulnerable_ghost.png"});        
+    }
+    
+    @Override
+    public void run() {
+        // Calcula rota entre inimigo e pacman
+        while (true) {
+            try {
+                Thread.sleep(8000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Blinky.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            setMoveDirection(Enemy.MOVE_UP);  
+        }
     }
     
 }

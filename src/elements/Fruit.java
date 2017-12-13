@@ -1,7 +1,6 @@
 package elements;
 
 import java.awt.Graphics;
-import utils.Consts;
 import utils.Drawing;
 
 public abstract class Fruit extends Element {
@@ -10,7 +9,7 @@ public abstract class Fruit extends Element {
     protected int duration;
 
     public Fruit(String iconName) {
-        super(new String[]{iconName}, 0, Consts.ELEMENT_SIZE);
+        super(new String[]{iconName}, 0);
 
         // Condições iniciais da fruta
         this.isTransposable = true;
