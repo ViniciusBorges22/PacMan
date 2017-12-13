@@ -69,12 +69,12 @@ public class PacMan extends Element implements Serializable, Runnable {
     }
 
     public void move() {
-		boolean flag = false;
-		if(turn && this.isPosInteger()){
-			this.setMovDirection(nextDirection);
-			turn = false;
-			flag = true;
-		}
+        boolean flag = false;
+        if(turn && this.isPosInteger()){
+                this.setMovDirection(nextDirection);
+                turn = false;
+                flag = true;
+        }
         switch (movDirection) {
             case MOVE_LEFT:
 				if(flag)

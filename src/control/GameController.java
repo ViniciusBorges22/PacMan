@@ -92,7 +92,7 @@ public class GameController {
                     double x_aux = Math.abs(y - elem.getPos().getX());
                     double y_aux = Math.abs(x - elem.getPos().getY());
 
-                    if (x_aux < 0.9 && y_aux < 0.9) {
+                    if (x_aux < 1 && y_aux < 1) {
                         return false;
                     }
                 }
