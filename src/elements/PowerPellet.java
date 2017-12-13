@@ -17,14 +17,14 @@ public class PowerPellet extends Element{
     
     // Construtor
     public PowerPellet(final String imageName, final int points) {
-        super(new String[]{imageName}, 0);
+        super(new String[]{imageName}, 0, 2);
         this.points = points;
         this.isTransposable = false;
     }
     
     // Construtor
     public PowerPellet(final String imageName, final int point, final double x, final double y) {
-        super(new String[]{imageName}, 0);
+        super(new String[]{imageName}, 0, 2);
         this.points = point;
         this.isTransposable = false;
         this.setPosition(x, y);

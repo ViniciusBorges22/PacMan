@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package control;
 
 import elements.Blinky;
@@ -58,7 +57,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private final GameController controller = new GameController();
     private final Random random = new Random();
     private final Executor executor_scene_1;
-    
+
     private Scene scene;
 
     private Image imgLife;
@@ -101,21 +100,23 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.elemArray.add(blinky);
         this.enemys.add(blinky);
 
-        // Clyde
-        this.clyde = new Clyde();
-        this.clyde.setPosition(10, 10);
-        this.enemys.add(clyde);
-
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
+        this.elemArray.add(inky);
         this.enemys.add(inky);
 
         // Pinky
         this.pinky = new Pinky();
-        this.pinky.setPosition(5, 5);
+        this.pinky.setPosition(10, 10);
         this.elemArray.add(pinky);
         this.enemys.add(pinky);
+
+        // Clyde
+        this.clyde = new Clyde();
+        this.clyde.setPosition(10, 10);
+        this.elemArray.add(clyde);
+        this.enemys.add(clyde);
 
         this.strawberry = new Strawberry();
         this.cherry = new Cherry();
@@ -287,8 +288,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             // Controla o movimento do pinky
             setPinkyMovDirection();
 
-	    // Controla o movimento do inky
-	    setInkyMovDirection(blinky, inky);
+            // Controla o movimento do inky
+            setInkyMovDirection();
 
             // Verificar colisao entre elementos
             if (controller.processAllElements(scene, elemArray, enemys)) {
@@ -305,12 +306,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     newScene(controlScene);
                 }
             } else {
-                
+
                 // Verifica se pacman ganhou uma vida
                 if (scene.getPoints() > 10000 && pacMan.getLife() < 3) {
                     pacMan.addLife();
-                } 
-                
+                }
+
             }
 
             // Desenhar informações
@@ -329,12 +330,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             if (elemArray.contains(cherry)) {
                 g2.drawImage(cherry.getImgElement().getImage(), 180, aux + 7, 30, 33, null);
             }
-            
+
             this.pointsTotal = scene.getPoints();
-            
+
             // Pontuação
             g2.drawImage(imgPontuacao, 390, aux + 9, 100, 30, null);
-            
+
         }
 
         g.dispose();
@@ -349,7 +350,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Verifica movimentação do blinky
         switch (pacMan.getMovDirection()) {
             case PacMan.MOVE_DOWN:
-                blinky.setLastDirection(blinky.getMovDirection());
 
                 if (pacMan.getPos().getX() > blinky.getPos().getX()) {
                     blinky.setMoveDirection(Enemy.MOVE_DOWN);
@@ -359,7 +359,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
 
             case PacMan.MOVE_UP:
-                blinky.setLastDirection(blinky.getMovDirection());
 
                 if (pacMan.getPos().getX() > blinky.getPos().getX()) {
                     blinky.setMoveDirection(Enemy.MOVE_DOWN);
@@ -369,7 +368,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
 
             case PacMan.MOVE_LEFT:
-                blinky.setLastDirection(blinky.getMovDirection());
 
                 if (pacMan.getPos().getY() > blinky.getPos().getY()) {
                     blinky.setMoveDirection(Enemy.MOVE_RIGHT);
@@ -379,7 +377,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
 
             case PacMan.MOVE_RIGHT:
-                blinky.setLastDirection(blinky.getMovDirection());
 
                 if (pacMan.getPos().getY() > blinky.getPos().getY()) {
                     blinky.setMoveDirection(Enemy.MOVE_RIGHT);
@@ -389,39 +386,56 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
         }
     }
+    
+    // Movimenta Inky
+    private void setInkyMovDirection() {
 
-private void setInkyMovDirection(Blinky blinky, Inky inky){
         // Se a distância foi menor que 4, se move igual ao Blinky.
-        
         double distance = calculaDistancia(inky.getPos().getX(), inky.getPos().getY(),
-                                            blinky.getPos().getX(), blinky.getPos().getY());
-        
-        if(distance < 4){
+                blinky.getPos().getX(), blinky.getPos().getY());
+
+        if (distance < 4) {
             switch (blinky.getMovDirection()) {
-                case Blinky.MOVE_LEFT:
-                    inky.setMoveDirection(Inky.MOVE_LEFT);
-                    break;
-
-                case Blinky.MOVE_RIGHT:
-                    inky.setMoveDirection(Inky.MOVE_RIGHT);
-                    break;
-
                 case Blinky.MOVE_DOWN:
-                    inky.setMoveDirection(Inky.MOVE_DOWN);
-                    break;
 
-                case Blinky.MOVE_UP:
-                    inky.setMoveDirection(Inky.MOVE_UP);
+                if (blinky.getPos().getX() > inky.getPos().getX()) {
+                    inky.setMoveDirection(Enemy.MOVE_DOWN);
+                } else {
+                    inky.setMoveDirection(Enemy.MOVE_UP);
+                }
+                break;
+
+            case Blinky.MOVE_UP:
+
+                if (blinky.getPos().getX() > inky.getPos().getX()) {
+                    inky.setMoveDirection(Enemy.MOVE_DOWN);
+                } else {
+                    inky.setMoveDirection(Enemy.MOVE_UP);
+                }
+                break;
+
+            case Blinky.MOVE_LEFT:
+
+                if (blinky.getPos().getY() > inky.getPos().getY()) {
+                    inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                } else {
+                    inky.setMoveDirection(Enemy.MOVE_LEFT);
+                }
+                break;
+
+            case Blinky.MOVE_RIGHT:
+
+                if (blinky.getPos().getY() > inky.getPos().getY()) {
+                    inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                } else {
+                    inky.setMoveDirection(Enemy.MOVE_LEFT);
+                }
+                break;
+
+                default:
                     break;
-                
-                default: 
-                    break;   
             }
         }
-    }
- 
-    private double calculaDistancia(double x1, double y1, double x2, double y2){
-        return Math.hypot((x2-x1),(y2-y1));
     }
 
     // Movimenta Pinky
@@ -451,6 +465,10 @@ private void setInkyMovDirection(Blinky blinky, Inky inky){
                 }
                 break;
         }
+    }
+
+    private double calculaDistancia(double x1, double y1, double x2, double y2) {
+        return Math.hypot((x2 - x1), (y2 - y1));
     }
 
     public void go() {

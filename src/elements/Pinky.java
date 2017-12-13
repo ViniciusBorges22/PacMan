@@ -29,6 +29,10 @@ public class Pinky extends Enemy implements Runnable {
         return stateDirection;
     }
     
+    public void setStateDirection(int stateDirection) {
+        this.stateDirection = stateDirection;
+    }
+    
     public void backToLastPosition() {
         this.pos.comeBack();
     }

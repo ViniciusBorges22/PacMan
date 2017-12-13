@@ -36,7 +36,7 @@ public abstract class Enemy extends Element {
     private int state;
     
     public Enemy(String[] imgs) {
-        super(imgs, 0);
+        super(imgs, 0, 3);
         this.isVisible = true;
         this.isTransposable = false;
         this.pacman_pos = new Point();
@@ -109,4 +109,3 @@ public abstract class Enemy extends Element {
         this.map = map;
     }
 }
->>>>>>> vagina_transgenica

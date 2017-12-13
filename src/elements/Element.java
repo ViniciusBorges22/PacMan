@@ -156,7 +156,7 @@ public abstract class Element implements Serializable {
     }
 
     public boolean moveLeftEnemy() {
-        return this.pos.moveLeftEnemy();
+        return this.pos.moveLeftEnemt();
     }
 
     public Position getPos() {

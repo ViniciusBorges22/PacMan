@@ -26,4 +26,3 @@ public class Scene3 extends Scene {
     }
     
 }
->>>>>>> vagina_transgenica

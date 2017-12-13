@@ -12,14 +12,15 @@ import java.util.logging.Logger;
  *
  * @author lllgabrielll
  */
-public class Inky extends Enemy implements Runnable{
-        
+public class Inky extends Enemy implements Runnable {
+
     public Inky() {
-        super(new String[] {"inky.png", "vulnerable_ghost.png"});        
+        super(new String[]{"inky.png", "vulnerable_ghost.png"});
     }
-    
+
     @Override
     public void run() {
+        
         // Calcula rota entre inimigo e pacman
         while (true) {
             try {
@@ -27,8 +28,11 @@ public class Inky extends Enemy implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(Blinky.class.getName()).log(Level.SEVERE, null, ex);
             }
-            setMoveDirection(Enemy.MOVE_UP);  
         }
     }
-    
+
+    public void backToLastPosition() {
+        this.pos.comeBack();
+    }
+
 }
