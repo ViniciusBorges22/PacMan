@@ -19,7 +19,7 @@ public class GameOver extends Scene {
 
     private Image imgStart;
     private Image background;
-    
+
     public GameOver() {
         try {
             this.imgStart = Toolkit.getDefaultToolkit().getImage(
@@ -34,14 +34,14 @@ public class GameOver extends Scene {
     @Override
     public void paintScene(Graphics g) {
         int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
+        g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS, Consts.CELL_SIZE * Consts.NUM_CELLS + 50);
         g.fillRect(0, 0, aux, aux + 50);
-        g.drawImage(background, 0, 0, aux, aux+50, null);
+        g.drawImage(background, 0, 0, aux, aux + 50, null);
         g.drawImage(imgStart, (aux / 2) - 150, 350, 300, 100, null);
     }
 
     @Override
     protected void drawSceneFinal() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

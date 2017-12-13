@@ -89,30 +89,25 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
         // Pacman
         this.pacMan = new PacMan();
-        this.pacMan.setPosition(1, 1);
         this.addElement(pacMan);
 
         // Blinky
         this.blinky = new Blinky();
-        this.blinky.setPosition(10, 10);
         this.elemArray.add(blinky);
         this.enemys.add(blinky);
 
         // Inky
         this.inky = new Inky();
-        this.inky.setPosition(10, 10);
         this.elemArray.add(inky);
         this.enemys.add(inky);
 
         // Pinky
         this.pinky = new Pinky();
-        this.pinky.setPosition(9, 9);
 //        this.elemArray.add(pinky);
         this.enemys.add(pinky);
 
         // Clyde
         this.clyde = new Clyde();
-        this.clyde.setPosition(7, 7);
 //        this.elemArray.add(clyde);
         this.enemys.add(clyde);
 
@@ -153,7 +148,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.executor_scene_1.execute(pinky);
         this.executor_scene_1.execute(pacMan);
         this.executor_scene_1.execute(inky);
-        
+
         // Cria cenario
         this.controlScene = 1;
         newScene(controlScene);
@@ -168,12 +163,18 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 // Total de vidas do pacman
                 this.pacMan.setLife(3);
+
+                // Resetar pontos
+                this.pacMan.resetTotalScore();
+
                 break;
 
             // Tela 1
             case 1:
                 this.scene = new Scene1();
                 this.scene.setBlock("brick.png");
+
+                // Reseta posições
                 resetEnemyPac();
 
                 // Determinar posição para strawberry
@@ -202,6 +203,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 2:
                 this.scene = new Scene2();
                 this.scene.setBlock("brick.png");
+
+                // Resetar posição
                 resetEnemyPac();
 
                 // Determinar posição para strawberry
@@ -228,6 +231,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 3:
                 this.scene = new Scene3();
                 this.scene.setBlock("brick.png");
+
+                // Resetar posição
                 resetEnemyPac();
 
                 // Determinar posição para strawberry
@@ -254,22 +259,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 4:
                 this.scene = new GameOver();
                 break;
-        }
-    }
-
-    // Retorna para a posição inicial os elementos
-    private void initPos() {
-        // Atualiza posições
-        this.pacMan.setPosition(1, 1);
-        this.blinky.setPosition(10, 10);
-        this.inky.setPosition(20, 20);
-        this.clyde.setPosition(15, 15);
-        this.pinky.setPosition(15, 3);
-
-        try {
-            Thread.sleep(1200);
-        } catch (InterruptedException i) {
-            System.out.println(i.getMessage());
         }
     }
 
@@ -315,9 +304,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 // Verifica se acabou as vidas
                 if (pacMan.getLife() == 0) {
+                    System.out.println("Entrou");
                     this.controlScene = 4;
                     newScene(controlScene);
                 }
+            }
+
+            // Verifica se comeu todas as bolinhas
+            if (scene.getBalls().isEmpty() && scene.getPowerPellet().isEmpty()) {
+                controlScene++;
+                newScene(controlScene);
             }
 
             // Desenhar informações
@@ -761,6 +757,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
+
         this.pacMan.setPosition(1, 1);
         this.pinky.setPosition(9, 9);
         this.blinky.setPosition(9, 9);

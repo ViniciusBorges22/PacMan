@@ -28,19 +28,6 @@ public class Scene1 extends Scene {
     public void paintScene(Graphics g) {
         g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS, Consts.CELL_SIZE * Consts.NUM_CELLS + 50);
 
-        // Desenha cenario
-//        for (int i = 0; i < Consts.NUM_CELLS; i++) {
-//            for (int j = 0; j < Consts.NUM_CELLS; j++) {
-//                if (map[i][j] == 1) {
-//                    g.drawImage(brick, j * Consts.CELL_SIZE, i * Consts.CELL_SIZE,
-//                            Consts.CELL_SIZE, Consts.CELL_SIZE, null);
-//                } else {
-//                    g.fillRect(j * Consts.CELL_SIZE, i * Consts.CELL_SIZE,
-//                            Consts.CELL_SIZE, Consts.CELL_SIZE);
-//                }
-//            }
-//        }
-
         // Desenha blocos
         Iterator<Element> it_wall = walls.listIterator();
         while (it_wall.hasNext()) {
@@ -85,20 +72,22 @@ public class Scene1 extends Scene {
             for (int y = 0; y < Consts.NUM_CELLS; y++) {
                 switch (map[x][y]) {
                     case 0:
-                        this.balls.add(new Ball("ball.png", 10, x, y));
+//                        this.balls.add(new Ball("ball.png", 10, x, y));
                         break;
                     case 1:
                         this.walls.add(new Wall("brick.png", x, y));
                         break;
                     case 2:
-                        this.powerPellet.add(new PowerPellet("power_pellet.png", 50, x, y));
+//                        this.powerPellet.add(new PowerPellet("power_pellet.png", 50, x, y));
                         break;
                     default:
                         break;
                 }
             }
         }
-
+        
+        this.balls.add(new Ball("ball.png", 10, 1, 2));
+        
         map[1][1] = 0;
 
         // Total de bolinhas na tela

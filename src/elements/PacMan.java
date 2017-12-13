@@ -20,6 +20,7 @@ public class PacMan extends Element implements Serializable, Runnable {
     private int movDirection = STOP;
     private int movBefDirection = STOP;
     private int life = 3;
+    
     private int score;
     private int aux_score;
 
@@ -151,7 +152,12 @@ public class PacMan extends Element implements Serializable, Runnable {
     public void resetScore() {
         this.aux_score -= 10000;
     }
-
+    
+    public void resetTotalScore() {
+        this.aux_score = 0;
+        this.score = 0;
+    }
+    
     public void scorePoints(int points) {
         this.score += points;
         this.aux_score += points;

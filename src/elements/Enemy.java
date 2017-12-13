@@ -93,6 +93,7 @@ public abstract class Enemy extends Element {
                     @Override
                     public void run(){
                         setState(1);
+                        
                     }
                 };
                 Timer timer = new Timer();
