@@ -20,13 +20,10 @@ public class PacMan extends Element implements Serializable, Runnable {
     private int movDirection = STOP;
     private int movBefDirection = STOP;
     private int life = 3;
-<<<<<<< HEAD
-=======
     private int score;
-	
+
 	private boolean turn;
 	private int nextDirection;
->>>>>>> origin/Score/Menu/Níveis
 
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png", "pacman_down2.png",
@@ -63,38 +60,26 @@ public class PacMan extends Element implements Serializable, Runnable {
     public void move() {
         switch (movDirection) {
             case MOVE_LEFT:
-<<<<<<< HEAD
-=======
 		if(flag)
                     this.changeDirection(3);
->>>>>>> origin/Score/Menu/Níveis
                 this.moveLeft();
                 break;
 
             case MOVE_RIGHT:
-<<<<<<< HEAD
-=======
 		if(flag)
                     this.changeDirection(0);
->>>>>>> origin/Score/Menu/Níveis
                 this.moveRight();
                 break;
 
             case MOVE_UP:
-<<<<<<< HEAD
-=======
 		if(flag)
                     this.changeDirection(4);
->>>>>>> origin/Score/Menu/Níveis
                 this.moveUp();
                 break;
 
             case MOVE_DOWN:
-<<<<<<< HEAD
-=======
 		if(flag)
                     this.changeDirection(2);
->>>>>>> origin/Score/Menu/Níveis
                 this.moveDown();
                 break;
 
@@ -128,19 +113,19 @@ public class PacMan extends Element implements Serializable, Runnable {
     public void setMovBefDirection(int movBefDirection) {
         this.movBefDirection = movBefDirection;
     }
-    
+
     public int getScore(){
         return this.score;
     }
-    
+
     public void setScore(int score){
         this.score = score;
     }
-    
+
     public void resetScore(){
         this.score = 0;
     }
-    
+
     public void scorePoints(int points){
         this.score += points;
     }

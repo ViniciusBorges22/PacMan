@@ -20,7 +20,6 @@ public class Pinky extends Enemy implements Runnable {
     private int stateDirection;
 
     public Pinky() {
-<<<<<<< HEAD
         super(new String[]{"pink_ghost.png", "vulnerable_ghost.png"});
         setMoveDirection(Enemy.MOVE_RIGHT);
         this.stateDirection = MOVE_PAC;
@@ -29,18 +28,15 @@ public class Pinky extends Enemy implements Runnable {
     public int getStateDirection() {
         return stateDirection;
     }
-    
+
     public void setStateDirection(int stateDirection) {
         this.stateDirection = stateDirection;
     }
-    
+
     public void backToLastPosition() {
         this.pos.comeBack();
-=======
-        super(new String[] {"pink_ghost.png","vulnerable_ghost.png"});
->>>>>>> origin/Score/Menu/Níveis
     }
-    
+
     @Override
     public void run() {
         while (true) {
@@ -51,7 +47,7 @@ public class Pinky extends Enemy implements Runnable {
             }
 
             // Altera o estado de movimentação a cada 2s
-            
+
             // Movimentar aleatorio
             if (stateDirection == MOVE_ALEAT) {
                 stateDirection = MOVE_PAC;

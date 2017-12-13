@@ -6,13 +6,9 @@
 package scene;
 
 import elements.Ball;
-<<<<<<< HEAD
 import elements.Element;
 import elements.PowerPellet;
 import elements.Wall;
-=======
-import elements.PowerPellet;
->>>>>>> origin/Score/Menu/Níveis
 import java.awt.Graphics;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,7 +52,6 @@ public class Scene1 extends Scene {
         while (it.hasNext()) {
             it.next().autoDraw(g);
         }
-<<<<<<< HEAD
 
         // Desenha Power Pellets
         Iterator<PowerPellet> it2 = powerPellet.listIterator();
@@ -64,22 +59,13 @@ public class Scene1 extends Scene {
             it2.next().autoDraw(g);
         }
 
-=======
-        
-        Iterator<PowerPellet> it2 =  powerPellet.listIterator();
-        while (it2.hasNext()){
-            it2.next().autoDraw(g);
-        }
-        
->>>>>>> origin/Score/Menu/Níveis
         // Calcula a quantidade de pontos nessa fase
         points = (tballs - balls.size()) * 10;
     }
-    
-    
+
+
     @Override
     protected void drawSceneFinal() {
-<<<<<<< HEAD
         // Ler cenario
         Scanner mapRead;
         try {
@@ -113,36 +99,6 @@ public class Scene1 extends Scene {
             }
         }
 
-=======
-            try {
-            Scanner mapRead = new Scanner(new FileInputStream("./src/maps/map1.txt"));
-            for(int i = 0; i < Consts.NUM_CELLS; i++) {
-                for(int j = 0; j < Consts.NUM_CELLS; j++) {
-                    map[i][j] = (int)mapRead.nextByte();
-                }
-            }
-            mapRead.close();
-            } catch (FileNotFoundException ex) {
-            System.out.println("Erro na abertura do arquivo.");
-            Logger.getLogger(Scene1.class.getName()).log(Level.SEVERE, null, ex);
-            }    // Criar bolinhas
-        
-            for (int x = 0; x < Consts.NUM_CELLS; x++) {
-                for (int y = 0; y < Consts.NUM_CELLS; y++) {
-                    switch(map[x][y]){
-                        case 0:
-                            this.balls.add(new Ball("ball.png", 10, x, y)); 
-                            break;
-                        case 2:
-                            this.powerPellet.add(new PowerPellet("power_pellet.png", 50, x, y));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            
->>>>>>> origin/Score/Menu/Níveis
         map[1][1] = 0;
 
         // Total de bolinhas na tela

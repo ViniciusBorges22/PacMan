@@ -16,7 +16,7 @@ import utils.Drawing;
  * @author lllgabrielll
  */
 public abstract class Enemy extends Element {
-    
+
     public static final int MOVE_LEFT = 1;
     public static final int MOVE_RIGHT = 2;
     public static final int MOVE_UP = 3;
@@ -25,16 +25,16 @@ public abstract class Enemy extends Element {
     protected static final int HOUSE = 1;
     protected static final int CHASE = 2;
     protected static final int DANGER = 3;
-     
+
     // Posições do pacman
     protected Point pacman_pos;
-    
+
     // Mapa da tela
     protected int map[][];
-    
+
     private int movDirection;
     private int state;
-    
+
     public Enemy(String[] imgs) {
         super(imgs, 0, 3);
         this.isVisible = true;
@@ -96,11 +96,7 @@ public abstract class Enemy extends Element {
                     }
                 };
                 Timer timer = new Timer();
-<<<<<<< HEAD
                 timer.schedule(revive, 5000);
-=======
-                timer.schedule(revive, 1000);
->>>>>>> origin/Score/Menu/Níveis
         }
     }
 
@@ -108,7 +104,7 @@ public abstract class Enemy extends Element {
         this.pacman_pos.x = x;
         this.pacman_pos.y = y;
     }
-    
+
     public void setMap(int map[][]) {
         this.map = map;
     }

@@ -61,12 +61,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     private Scene scene;
 
     private Image imgLife;
-<<<<<<< HEAD
-    private Image imgPontuacao;
-=======
     private Image imgScore;
     private Image imgNum0, imgNum1, imgNum2, imgNum3, imgNum4, imgNum5, imgNum6, imgNum7, imgNum8, imgNum9;
->>>>>>> origin/Score/Menu/Níveis
 
     // Controle de tela
     // 0 - Tela inicial
@@ -104,34 +100,22 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.blinky.setPosition(10, 10);
         this.elemArray.add(blinky);
         this.enemys.add(blinky);
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/Score/Menu/Níveis
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
         this.elemArray.add(inky);
         this.enemys.add(inky);
-        
+
         // Pinky
         this.pinky = new Pinky();
-<<<<<<< HEAD
-        this.pinky.setPosition(10, 10);
-=======
         this.pinky.setPosition(9, 9);
->>>>>>> origin/Score/Menu/Níveis
         this.elemArray.add(pinky);
         this.enemys.add(pinky);
 
         // Clyde
         this.clyde = new Clyde();
-<<<<<<< HEAD
-        this.clyde.setPosition(10, 10);
-=======
         this.clyde.setPosition(7, 7);
->>>>>>> origin/Score/Menu/Níveis
         this.elemArray.add(clyde);
         this.enemys.add(clyde);
 
@@ -179,20 +163,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             System.out.println(e.getMessage());
         }
 
-<<<<<<< HEAD
         this.executor_scene_1 = Executors.newCachedThreadPool();
-        // Thread para a animação do pacman
-        this.executor_scene_1.execute(pacMan);
 
         // Thread para Pinky
         this.executor_scene_1.execute(pinky);
+        this.executor_scene_1.execute(pacMan);
+        this.blinky.setMap(this.scene.getMap()); 
+        this.executor_scene_1.execute(inky);
 
         // Cria cenario
         this.controlScene = 1;
-=======
-        // Cria Menu Inicial
-        this.controlScene = 0;
->>>>>>> origin/Score/Menu/Níveis
         newScene(controlScene);
     }
 
@@ -232,22 +212,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
 
-<<<<<<< HEAD
-                // Atualiza posições
-                initPos();
-=======
-                // Thread para a animação do pacman
-                this.executor_scene_1.execute(pacMan);
-                this.blinky.setMap(this.scene.getMap()); 
-                this.executor_scene_1.execute(inky);
->>>>>>> origin/Score/Menu/Níveis
                 break;
 
             // Tela 2
             case 2:
                 this.scene = new Scene2();
                 this.scene.setBlock("brick.png");
-<<<<<<< HEAD
 
                 // Determinar posição para strawberry
                 do {
@@ -270,15 +240,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 // Atualiza posições
                 initPos();
 
-=======
-                resetEnemyPac();
->>>>>>> origin/Score/Menu/Níveis
                 break;
 
             // Tela 3
             case 3:
                 this.scene = new Scene3();
-<<<<<<< HEAD
                 // Determinar posição para strawberry
                 do {
                     aux1 = random.nextInt(Consts.NUM_CELLS - 1);
@@ -300,10 +266,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 // Atualiza posições
                 initPos();
 
-=======
-                this.scene.setBlock("brick.png");
-                resetEnemyPac();
->>>>>>> origin/Score/Menu/Níveis
                 break;
 
             // Game Over
@@ -350,56 +312,16 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
         // Se nao for a tela inicial nem a final
         if (controlScene != 0 && controlScene != 4) {
-<<<<<<< HEAD
 
             // Controla o movimento do blinky
             setBlinkyMovDirection();
-=======
-            
-            setInkyMovDirection(blinky, inky);
-            
-            // Verifica movimentação do blinky
-            switch (pacMan.getMovDirection()) {
-                case PacMan.MOVE_DOWN:
-                    if (pacMan.getPos().getX() > blinky.getPos().getX()) {
-                        blinky.setMoveDirection(Enemy.MOVE_DOWN);
-                    } else {
-                        blinky.setMoveDirection(Enemy.MOVE_UP);
-                    }
-                    break;
-
-                case PacMan.MOVE_UP:
-                    if (pacMan.getPos().getX() > blinky.getPos().getX()) {
-                        blinky.setMoveDirection(Enemy.MOVE_DOWN);
-                    } else {
-                        blinky.setMoveDirection(Enemy.MOVE_UP);
-                    }
-                    break;
->>>>>>> origin/Score/Menu/Níveis
 
             // Controla o movimento do pinky
             setPinkyMovDirection();
 
-<<<<<<< HEAD
             // Controla o movimento do inky
             setInkyMovDirection();
 
-=======
-                case PacMan.MOVE_RIGHT:
-                    if (pacMan.getPos().getY() > blinky.getPos().getY()) {
-                        blinky.setMoveDirection(Enemy.MOVE_RIGHT);
-                    } else {
-                        blinky.setMoveDirection(Enemy.MOVE_LEFT);
-                    }
-                    break;
-            }
-            //Verifica se acabaram as bolinhas, para avançar de fase
-            if(scene.getTotalBall() == 0 && scene.getTotalPowerPellet() == 0){
-                this.controlScene ++;
-                newScene(controlScene);
-            }
-            
->>>>>>> origin/Score/Menu/Níveis
             // Verificar colisao entre elementos
             if (controller.processAllElements(scene, elemArray, enemys)) {
 
@@ -415,7 +337,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     this.controlScene = 4;
                     newScene(controlScene);
                 }
-<<<<<<< HEAD
             } else {
 
                 // Verifica se pacman ganhou uma vida
@@ -423,9 +344,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     pacMan.addLife();
                 }
 
-=======
-                
->>>>>>> origin/Score/Menu/Níveis
             }
 
             // Desenhar informações
@@ -444,19 +362,11 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             if (elemArray.contains(cherry)) {
                 g2.drawImage(cherry.getImgElement().getImage(), 180, aux + 7, 30, 33, null);
             }
-<<<<<<< HEAD
 
-            this.pointsTotal = scene.getPoints();
-
-            // Pontuação
-            g2.drawImage(imgPontuacao, 390, aux + 9, 100, 30, null);
-
-=======
-            
             g2.drawImage(imgScore, 230, aux + 7, 75, 45, null);
-            
+
             String score = Integer.toString(pacMan.getScore());
-            
+
             for(int i = 0; i < score.length(); i++){
                switch(score.charAt(i)){
                    case '0':
@@ -490,10 +400,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                        g2.drawImage(imgNum9, 310 + (30*i), aux + 7, 30, 30, null);
                        break;
                     default:
-                        break; 
+                        break;
                }
             }
->>>>>>> origin/Score/Menu/Níveis
         }
 
         g.dispose();
@@ -502,13 +411,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             getBufferStrategy().show();
         }
     }
-    
+
     private void setInkyMovDirection(Blinky blinky, Inky inky){
         // Se a distância foi menor que 4, se move igual ao Blinky.
-        
+
         double distance = calculaDistancia(inky.getPos().getX(), inky.getPos().getY(),
                                             blinky.getPos().getX(), blinky.getPos().getY());
-        
+
         if(distance < 4){
             switch (blinky.getMovDirection()) {
                 case Blinky.MOVE_LEFT:
@@ -526,13 +435,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 case Blinky.MOVE_UP:
                     inky.setMoveDirection(Inky.MOVE_UP);
                     break;
-                
-                default: 
-                    break;   
+
+                default:
+                    break;
             }
         }
     }
- 
+
     private double calculaDistancia(double x1, double y1, double x2, double y2){
         return Math.hypot((x2-x1),(y2-y1));
     }
@@ -578,7 +487,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 break;
         }
     }
-    
+
     // Movimenta Inky
     private void setInkyMovDirection() {
 
@@ -733,7 +642,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 }
             }
         };
-        
+
         Timer timer = new Timer();
         timer.schedule(repaint, 0, Consts.DELAY);
         timer.schedule(timerStrawberry, Consts.TIMER_STRAWBERRY, 15000);
@@ -771,64 +680,35 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             default:
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
-<<<<<<< HEAD
-                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
-                            // Setar movimentação do pacman
-                            pacMan.setMovDirection(PacMan.MOVE_UP);
-                            pacMan.changeDirection(6);
-                        }
-=======
                         // Setar movimentação do pacman
 			pacMan.setTurn(true);
 			pacMan.setNextDirection(PacMan.MOVE_UP);
                         //pacMan.setMovDirection(PacMan.MOVE_UP);
                         //pacMan.changeDirection(4);
->>>>>>> origin/Score/Menu/Níveis
                         break;
 
                     case KeyEvent.VK_DOWN:
                         // Setar movimentação do pacman
-<<<<<<< HEAD
-                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
-                            pacMan.setMovDirection(PacMan.MOVE_DOWN);
-                            pacMan.changeDirection(2);
-                        }
-=======
                         pacMan.setTurn(true);
 			pacMan.setNextDirection(PacMan.MOVE_DOWN);
                         //pacMan.setMovDirection(PacMan.MOVE_DOWN);
                         //pacMan.changeDirection(2);
->>>>>>> origin/Score/Menu/Níveis
                         break;
 
                     case KeyEvent.VK_LEFT:
                         // Setar movimentaçao do pacman
-<<<<<<< HEAD
-                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
-                            pacMan.setMovDirection(PacMan.MOVE_LEFT);
-                            pacMan.changeDirection(4);
-                        }
-=======
                         pacMan.setTurn(true);
 			pacMan.setNextDirection(PacMan.MOVE_LEFT);
                         //pacMan.setMovDirection(PacMan.MOVE_LEFT);
                         //pacMan.changeDirection(3);
->>>>>>> origin/Score/Menu/Níveis
                         break;
 
                     case KeyEvent.VK_RIGHT:
                         // Setar movimentação do pacman
-<<<<<<< HEAD
-                        if (scene.map((int) pacMan.getPos().getX(), (int) pacMan.getPos().getY()) != 1) {
-                            pacMan.setMovDirection(PacMan.MOVE_RIGHT);
-                            pacMan.changeDirection(0);
-                        }
-=======
                         pacMan.setTurn(true);
 			pacMan.setNextDirection(PacMan.MOVE_RIGHT);
 			//pacMan.setMovDirection(PacMan.MOVE_RIGHT);
                         //pacMan.changeDirection(0);
->>>>>>> origin/Score/Menu/Níveis
                         break;
 
                     case KeyEvent.VK_SPACE:
