@@ -14,7 +14,7 @@ public class Blinky extends Enemy {
     private int lastDirection;
 
     public Blinky() {
-        super(new String[]{"red_ghost.png"});
+        super(new String[]{"red_ghost.png", "vulnerable_ghost.png"});
 
         // Movimentação inicial
         setMoveDirection(Enemy.MOVE_LEFT);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package control;
 
 import elements.Blinky;
@@ -286,6 +287,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             // Controla o movimento do pinky
             setPinkyMovDirection();
 
+	    // Controla o movimento do inky
+	    setInkyMovDirection(blinky, inky);
+
             // Verificar colisao entre elementos
             if (controller.processAllElements(scene, elemArray, enemys)) {
 
@@ -384,6 +388,40 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 }
                 break;
         }
+    }
+
+private void setInkyMovDirection(Blinky blinky, Inky inky){
+        // Se a distância foi menor que 4, se move igual ao Blinky.
+        
+        double distance = calculaDistancia(inky.getPos().getX(), inky.getPos().getY(),
+                                            blinky.getPos().getX(), blinky.getPos().getY());
+        
+        if(distance < 4){
+            switch (blinky.getMovDirection()) {
+                case Blinky.MOVE_LEFT:
+                    inky.setMoveDirection(Inky.MOVE_LEFT);
+                    break;
+
+                case Blinky.MOVE_RIGHT:
+                    inky.setMoveDirection(Inky.MOVE_RIGHT);
+                    break;
+
+                case Blinky.MOVE_DOWN:
+                    inky.setMoveDirection(Inky.MOVE_DOWN);
+                    break;
+
+                case Blinky.MOVE_UP:
+                    inky.setMoveDirection(Inky.MOVE_UP);
+                    break;
+                
+                default: 
+                    break;   
+            }
+        }
+    }
+ 
+    private double calculaDistancia(double x1, double y1, double x2, double y2){
+        return Math.hypot((x2-x1),(y2-y1));
     }
 
     // Movimenta Pinky

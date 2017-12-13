@@ -1,16 +1,23 @@
 package control;
 
 import elements.Ball;
+import elements.PowerPellet;
 import elements.Blinky;
+import elements.Clyde;
 import elements.Element;
 import elements.Enemy;
+import elements.Inky;
 import elements.PacMan;
 import elements.Pinky;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.lang.Math;
 import scene.Scene;
 import utils.Consts;
+import utils.Position;
 
 public class GameController {
 
@@ -35,6 +42,10 @@ public class GameController {
 
         // Pacmen
         PacMan pPacMan = (PacMan) e.get(0);
+        Blinky blinky = (Blinky) enemys.get(0);
+        Inky inky = (Inky) enemys.get(1);
+        Pinky pinky = (Pinky) enemys.get(2);
+        Clyde clyde = (Clyde) enemys.get(3);
 
         // Inimigos
         Blinky blinky = (Blinky) enemys.get(0);
@@ -67,6 +78,14 @@ public class GameController {
             pinky.setState(Pinky.MOVE_ALEAT);
         }
 
+	// Verifica colisão entre inky e cenario
+        if (inky.overlap(scene.getWalls())) {
+
+            // Setar movimento do pinky quando ocorre uma colisão
+            inky.backToLastPosition();
+            setInvtMovDirectionInky(inky);
+        }
+
         // Verifica colisao entre as bolinhas e pacman
         Iterator<Ball> it = scene.getBalls().listIterator();
         while (it.hasNext()) {
@@ -75,6 +94,35 @@ public class GameController {
                 break;
             }
         }
+        
+        Iterator<PowerPellet> it2 = scene.getPowerPellet().listIterator();
+        while (it2.hasNext()) {
+            if (pPacMan.overlapBall(it2.next())) {
+                it2.remove();
+                blinky.setState(2); //coloca em vulnerável
+                inky.setState(2);
+                pinky.setState(2);
+                clyde.setState(2);
+                TimerTask vulnerable = new TimerTask(){
+                    @Override
+                    public void run(){ //coloca em mortal de novo
+                        if(blinky.getState() == 2)
+                            blinky.setState(1);
+                        if(inky.getState() == 2)
+                            inky.setState(1);
+                        if(pinky.getState() == 2)
+                            pinky.setState(1);
+                        if(clyde.getState() == 2)
+                            clyde.setState(1);
+                    } 
+                };
+                Timer timer = new Timer();
+                timer.schedule(vulnerable, 7000);
+                break;
+            }
+        }
+
+        boolean aux = false;
 
         // Variavel que detecta que se houve uma colisão entre pacman e inimigo 
         boolean aux = false;
@@ -86,14 +134,27 @@ public class GameController {
             eTemp = e.get(i);
             if (!eTemp.isTransposable() && pPacMan.overlap(eTemp)) {
 
-                // Verifica se a colisão é com um inimigo
                 if (eTemp instanceof Enemy) {
-                    aux = true;
-                    pPacMan.backToLastPosition();
-                    pPacMan.setMovDirection(PacMan.STOP);
+                    switch(((Enemy) eTemp).getState()){
+                        case 1:
+                            aux = true;
+                            pPacMan.backToLastPosition();
+                            pPacMan.setMovDirection(PacMan.STOP);
+                            break;  
+                        case 2:
+                            if(eTemp instanceof Blinky)
+                                blinky.setState(3);
+                            if(eTemp instanceof Inky)
+                                inky.setState(3);
+                            if(eTemp instanceof Pinky)
+                                pinky.setState(3);
+                            if(eTemp instanceof Clyde)
+                                clyde.setState(3);
+                            break;
+                        default:
+                            break;
+                    }
                 } else {
-
-                    // Se nao for um inimigo remove o elemento da lista
                     e.remove(eTemp);
                 }
             }
@@ -105,6 +166,7 @@ public class GameController {
         // Movimentar inimigos
         blinky.move();
         pinky.move();
+        inky.move();
 
         return aux;
     }
@@ -146,7 +208,6 @@ public class GameController {
 
     // Setar movimento do blinky
     private void setInvtMovDirectionBlinky(Enemy enemy, PacMan pPacMan) {
-
         // Definir uma nova direção para o blinky
         switch (enemy.getMovDirection()) {
             case Enemy.MOVE_LEFT:
@@ -155,7 +216,6 @@ public class GameController {
                 } else {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
                 }
-//                enemy.setMoveDirection(Enemy.MOVE_RIGHT);
                 break;
 
             case Enemy.MOVE_RIGHT:
@@ -164,7 +224,6 @@ public class GameController {
                 } else {
                     enemy.setMoveDirection(Enemy.MOVE_UP);
                 }
-//                enemy.setMoveDirection(Enemy.MOVE_LEFT);
                 break;
 
             case Enemy.MOVE_DOWN:
@@ -173,7 +232,6 @@ public class GameController {
                 } else {
                     enemy.setMoveDirection(Enemy.MOVE_LEFT);
                 }
-//                enemy.setMoveDirection(Enemy.MOVE_UP);
                 break;
 
             case Enemy.MOVE_UP:
@@ -182,7 +240,6 @@ public class GameController {
                 } else {
                     enemy.setMoveDirection(Enemy.MOVE_LEFT);
                 }
-//                enemy.setMoveDirection(Enemy.MOVE_DOWN);
                 break;
         }
     }
@@ -227,5 +284,39 @@ public class GameController {
                 break;
         }
     }
-
+    
+    private void setInvtMovDirectionInky(Inky inky){
+        
+        double rand = (Math.random()*10)%2;
+        
+        switch(inky.getMovDirection()){
+            case Inky.MOVE_LEFT:
+                if(rand == 0)
+                    inky.setMoveDirection(Inky.MOVE_UP);
+                else    
+                    inky.setMoveDirection(Inky.MOVE_DOWN);
+                break;
+            
+            case Inky.MOVE_RIGHT:
+                if(rand == 0)
+                    inky.setMoveDirection(Inky.MOVE_UP);
+                else    
+                    inky.setMoveDirection(Inky.MOVE_DOWN);
+                break;
+            
+            case Inky.MOVE_UP:
+                if(rand == 0)
+                    inky.setMoveDirection(Inky.MOVE_LEFT);
+                else    
+                    inky.setMoveDirection(Inky.MOVE_RIGHT);
+                break;
+                
+            case Inky.MOVE_DOWN:
+                if(rand == 0)
+                    inky.setMoveDirection(Inky.MOVE_LEFT);
+                else    
+                    inky.setMoveDirection(Inky.MOVE_RIGHT);
+                break;
+        }
+    }
 }

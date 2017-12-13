@@ -12,17 +12,17 @@ public class Consts {
 
     public static final int DELAY = 10;
 
-    public static final int TIMER_CHERRY = 10000;
+    public static final int TIMER_CHERRY = 50000;
 
-    public static final int TIMER_STRAWBERRY = 7000;
+    public static final int TIMER_STRAWBERRY = 75000;
 
     public static final int BALL_SIZE = 3;
 
     public static final double WALK_STEP_FRUIT = 0.02;
 
-    public static final double WALK_STEP_ENEMY = 0.04;
+    public static final double WALK_STEP_ENEMY = 0.05;
 
-    public static final double WALK_STEP = 0.07;
+    public static final double WALK_STEP = 0.1;
     
     public static final String PATH = File.separator + "imgs" + File.separator;
 }

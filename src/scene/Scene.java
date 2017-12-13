@@ -6,7 +6,7 @@
 package scene;
 
 import elements.Ball;
-import elements.Element;
+import elements.PowerPellet;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -23,9 +23,9 @@ public abstract class Scene {
     // Lista de bolinhas
     protected List<Ball> balls;
     
-    // Lista de blocos
-    protected List<Element> walls;
-    
+    // Lista de PowerPellet
+    protected List<PowerPellet> powerPellet;
+
     // Total de bolinhas
     protected int tballs;
 
@@ -38,7 +38,7 @@ public abstract class Scene {
     public Scene() {
         this.map = new int[Consts.NUM_CELLS][Consts.NUM_CELLS];
         this.balls = new ArrayList<>();
-        this.walls = new ArrayList<>();
+        this.powerPellet = new ArrayList<>();
         this.points = 0;
 
         // Bordas
@@ -80,11 +80,10 @@ public abstract class Scene {
         return balls;
     }
     
-    // Obter lista de bloquinhos
-    public List<Element> getWalls() {
-        return walls;
+    public List<PowerPellet> getPowerPellet() {
+        return powerPellet;
     }
-    
+
     // Obter total de bolinhas
     public int getTotalBall() {
         return this.balls.size();

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package utils;
 
 import java.io.Serializable;
@@ -84,7 +85,7 @@ public class Position implements Serializable {
         return this.setPosition(this.getX(), this.getY() + Consts.WALK_STEP_ENEMY);
     }
 
-    public boolean moveLeftEnemy() {
-        return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_ENEMY);
-    }
+    public boolean moveLeftEnemt() {
+	return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_ENEMY);
+    } 
 }
