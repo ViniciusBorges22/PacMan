@@ -91,7 +91,7 @@ public abstract class Element implements Serializable {
             double xDist = Math.abs(w.pos.getX() - this.pos.getX());
             double yDist = Math.abs(w.pos.getY() - this.pos.getY());
 
-            if (xDist < 0.9 && yDist < 0.9) {
+            if (xDist < 1.0 && yDist < 1.0) {
                 return true;
             }
         }

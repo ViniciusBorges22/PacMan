@@ -20,7 +20,7 @@ public class Pinky extends Enemy implements Runnable {
     private int stateDirection;
 
     public Pinky() {
-        super(new String[]{"pink_ghost.png", "vulnerable_ghost.png"});
+        super(new String[]{"pinky.png", "vulnerable_ghost.png"});
         setMoveDirection(Enemy.MOVE_RIGHT);
         this.stateDirection = MOVE_PAC;
     }

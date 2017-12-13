@@ -22,7 +22,7 @@ public class Consts {
 
     public static final double WALK_STEP_ENEMY = 0.05;
 
-    public static final double WALK_STEP = 0.2;
+    public static final double WALK_STEP = 0.1;
     
     public static final String PATH = File.separator + "imgs" + File.separator;
 }

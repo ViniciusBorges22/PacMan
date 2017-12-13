@@ -6,6 +6,7 @@
 package scene;
 
 import elements.Ball;
+import elements.Element;
 import elements.PowerPellet;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -28,9 +29,6 @@ public abstract class Scene {
 
     // Lista de blocos
     protected List<Element> walls;
-
-    // Lista de PowerPellet
-    protected List<PowerPellet> powerPellet;
 
     // Total de bolinhas
     protected int tballs;

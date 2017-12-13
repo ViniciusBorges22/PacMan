@@ -21,9 +21,10 @@ public class PacMan extends Element implements Serializable, Runnable {
     private int movBefDirection = STOP;
     private int life = 3;
     private int score;
+    private int aux_score;
 
-	private boolean turn;
-	private int nextDirection;
+    private boolean turn;
+    private int nextDirection;
 
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png", "pacman_down2.png",
@@ -31,6 +32,7 @@ public class PacMan extends Element implements Serializable, Runnable {
         this.isVisible = true;
         this.isTransposable = false;
         this.score = 0;
+        this.aux_score = 0;
     }
 
     public void changeDirection(int dir) {
@@ -46,6 +48,18 @@ public class PacMan extends Element implements Serializable, Runnable {
         this.pos.comeBack();
     }
 
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    public boolean getTurn() {
+        return turn;
+    }
+
+    public void setNextDirection(int nextDirection) {
+        this.nextDirection = nextDirection;
+    }
+
     public void setMovDirection(int direction) {
         movDirection = direction;
     }
@@ -58,28 +72,40 @@ public class PacMan extends Element implements Serializable, Runnable {
     }
 
     public void move() {
+        boolean flag = false;
+
+        if (turn && this.isPosInteger()) {
+            this.setMovDirection(nextDirection);
+            turn = false;
+            flag = true;
+        }
+
         switch (movDirection) {
             case MOVE_LEFT:
-		if(flag)
+                if (flag) {
                     this.changeDirection(3);
+                }
                 this.moveLeft();
                 break;
 
             case MOVE_RIGHT:
-		if(flag)
+                if (flag) {
                     this.changeDirection(0);
+                }
                 this.moveRight();
                 break;
 
             case MOVE_UP:
-		if(flag)
+                if (flag) {
                     this.changeDirection(4);
+                }
                 this.moveUp();
                 break;
 
             case MOVE_DOWN:
-		if(flag)
+                if (flag) {
                     this.changeDirection(2);
+                }
                 this.moveDown();
                 break;
 
@@ -114,22 +140,27 @@ public class PacMan extends Element implements Serializable, Runnable {
         this.movBefDirection = movBefDirection;
     }
 
-    public int getScore(){
+    public int getScore() {
         return this.score;
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public void resetScore(){
-        this.score = 0;
+    public void resetScore() {
+        this.aux_score -= 10000;
     }
 
-    public void scorePoints(int points){
+    public void scorePoints(int points) {
         this.score += points;
+        this.aux_score += points;
     }
 
+    public int getScoreAux() {
+        return aux_score;
+    }
+    
     @Override
     public void run() {
         while (true) {
@@ -228,4 +259,5 @@ public class PacMan extends Element implements Serializable, Runnable {
             }
         }
     }
+
 }

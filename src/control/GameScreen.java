@@ -72,9 +72,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     // 4 - Tela de fim do jogo
     private int controlScene;
 
-    // Pontos
-    private int pointsTotal;
-
     // Construtor
     public GameScreen() {
         Drawing.setGameScreen(this);
@@ -104,41 +101,30 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Inky
         this.inky = new Inky();
         this.inky.setPosition(10, 10);
-        this.elemArray.add(inky);
+//        this.elemArray.add(inky);
         this.enemys.add(inky);
 
         // Pinky
         this.pinky = new Pinky();
         this.pinky.setPosition(9, 9);
-        this.elemArray.add(pinky);
+//        this.elemArray.add(pinky);
         this.enemys.add(pinky);
 
         // Clyde
         this.clyde = new Clyde();
         this.clyde.setPosition(7, 7);
-        this.elemArray.add(clyde);
+//        this.elemArray.add(clyde);
         this.enemys.add(clyde);
 
         this.strawberry = new Strawberry();
         this.cherry = new Cherry();
 
-        // Vida
-        try {
-            this.imgLife = Toolkit.getDefaultToolkit().getImage(
-                    new File(".").getCanonicalPath() + Consts.PATH + "pacman_right.png");
-            this.imgPontuacao = Toolkit.getDefaultToolkit().getImage(new File(".").getCanonicalPath()
-                    + Consts.PATH + "pontuacao.png");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        //Score Button
         try {
             this.imgScore = Toolkit.getDefaultToolkit().getImage(
                     new File(".").getCanonicalPath() + Consts.PATH + "button_score.png");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        try {
+            this.imgLife = Toolkit.getDefaultToolkit().getImage(
+                    new File(".").getCanonicalPath() + Consts.PATH + "pacman_right.png");
+
             this.imgNum0 = Toolkit.getDefaultToolkit().getImage(
                     new File(".").getCanonicalPath() + Consts.PATH + "num0.png");
             this.imgNum1 = Toolkit.getDefaultToolkit().getImage(
@@ -168,8 +154,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         // Thread para Pinky
         this.executor_scene_1.execute(pinky);
         this.executor_scene_1.execute(pacMan);
-        this.blinky.setMap(this.scene.getMap()); 
-        this.executor_scene_1.execute(inky);
 
         // Cria cenario
         this.controlScene = 1;
@@ -192,6 +176,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 this.scene = new Scene1();
                 this.scene.setBlock("brick.png");
                 resetEnemyPac();
+
                 // Determinar posição para strawberry
                 int aux1,
                  aux2;
@@ -218,6 +203,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 2:
                 this.scene = new Scene2();
                 this.scene.setBlock("brick.png");
+                resetEnemyPac();
 
                 // Determinar posição para strawberry
                 do {
@@ -245,7 +231,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             // Tela 3
             case 3:
                 this.scene = new Scene3();
-                // Determinar posição para strawberry
+                this.scene.setBlock("brick.png");
+                resetEnemyPac();
+
+// Determinar posição para strawberry
                 do {
                     aux1 = random.nextInt(Consts.NUM_CELLS - 1);
                     aux2 = random.nextInt(Consts.NUM_CELLS - 1);
@@ -262,9 +251,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 this.cherry.setPosition(aux1, aux2);
                 this.addElement(cherry);
-
-                // Atualiza posições
-                initPos();
 
                 break;
 
@@ -327,23 +313,15 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
                 // Remove uma vida do pacman
                 pacMan.removeLife();
-                resetEnemyPac();
 
                 // Retorna posições iniciais
-                initPos();
+                resetEnemyPac();
 
                 // Verifica se acabou as vidas
                 if (pacMan.getLife() == 0) {
                     this.controlScene = 4;
                     newScene(controlScene);
                 }
-            } else {
-
-                // Verifica se pacman ganhou uma vida
-                if (scene.getPoints() > 10000 && pacMan.getLife() < 3) {
-                    pacMan.addLife();
-                }
-
             }
 
             // Desenhar informações
@@ -363,45 +341,47 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 g2.drawImage(cherry.getImgElement().getImage(), 180, aux + 7, 30, 33, null);
             }
 
-            g2.drawImage(imgScore, 230, aux + 7, 75, 45, null);
+            // Pontuação
+            g2.drawImage(imgScore, 340, aux + 2, 75, 45, null);
 
+            // Determinar pontos
             String score = Integer.toString(pacMan.getScore());
 
-            for(int i = 0; i < score.length(); i++){
-               switch(score.charAt(i)){
-                   case '0':
-                       g2.drawImage(imgNum0, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+            for (int i = 0; i < score.length(); i++) {
+                switch (score.charAt(i)) {
+                    case '0':
+                        g2.drawImage(imgNum0, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '1':
-                       g2.drawImage(imgNum1, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum1, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '2':
-                       g2.drawImage(imgNum2, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum2, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '3':
-                       g2.drawImage(imgNum3, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum3, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '4':
-                       g2.drawImage(imgNum4, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum4, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '5':
-                       g2.drawImage(imgNum5, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum5, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '6':
-                       g2.drawImage(imgNum6, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum6, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '7':
-                       g2.drawImage(imgNum7, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum7, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '8':
-                       g2.drawImage(imgNum8, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum8, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     case '9':
-                       g2.drawImage(imgNum9, 310 + (30*i), aux + 7, 30, 30, null);
-                       break;
+                        g2.drawImage(imgNum9, 410 + (30 * i), aux + 7, 30, 30, null);
+                        break;
                     default:
                         break;
-               }
+                }
             }
         }
 
@@ -412,38 +392,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         }
     }
 
-    private void setInkyMovDirection(Blinky blinky, Inky inky){
-        // Se a distância foi menor que 4, se move igual ao Blinky.
-
-        double distance = calculaDistancia(inky.getPos().getX(), inky.getPos().getY(),
-                                            blinky.getPos().getX(), blinky.getPos().getY());
-
-        if(distance < 4){
-            switch (blinky.getMovDirection()) {
-                case Blinky.MOVE_LEFT:
-                    inky.setMoveDirection(Inky.MOVE_LEFT);
-                    break;
-
-                case Blinky.MOVE_RIGHT:
-                    inky.setMoveDirection(Inky.MOVE_RIGHT);
-                    break;
-
-                case Blinky.MOVE_DOWN:
-                    inky.setMoveDirection(Inky.MOVE_DOWN);
-                    break;
-
-                case Blinky.MOVE_UP:
-                    inky.setMoveDirection(Inky.MOVE_UP);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
-
-    private double calculaDistancia(double x1, double y1, double x2, double y2){
-        return Math.hypot((x2-x1),(y2-y1));
+    private double calculaDistancia(double x1, double y1, double x2, double y2) {
+        return Math.hypot((x2 - x1), (y2 - y1));
     }
 
     // Movimentar Blinky
@@ -499,39 +449,39 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             switch (blinky.getMovDirection()) {
                 case Blinky.MOVE_DOWN:
 
-                if (blinky.getPos().getX() > inky.getPos().getX()) {
-                    inky.setMoveDirection(Enemy.MOVE_DOWN);
-                } else {
-                    inky.setMoveDirection(Enemy.MOVE_UP);
-                }
-                break;
+                    if (blinky.getPos().getX() > inky.getPos().getX()) {
+                        inky.setMoveDirection(Enemy.MOVE_DOWN);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_UP);
+                    }
+                    break;
 
-            case Blinky.MOVE_UP:
+                case Blinky.MOVE_UP:
 
-                if (blinky.getPos().getX() > inky.getPos().getX()) {
-                    inky.setMoveDirection(Enemy.MOVE_DOWN);
-                } else {
-                    inky.setMoveDirection(Enemy.MOVE_UP);
-                }
-                break;
+                    if (blinky.getPos().getX() > inky.getPos().getX()) {
+                        inky.setMoveDirection(Enemy.MOVE_DOWN);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_UP);
+                    }
+                    break;
 
-            case Blinky.MOVE_LEFT:
+                case Blinky.MOVE_LEFT:
 
-                if (blinky.getPos().getY() > inky.getPos().getY()) {
-                    inky.setMoveDirection(Enemy.MOVE_RIGHT);
-                } else {
-                    inky.setMoveDirection(Enemy.MOVE_LEFT);
-                }
-                break;
+                    if (blinky.getPos().getY() > inky.getPos().getY()) {
+                        inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_LEFT);
+                    }
+                    break;
 
-            case Blinky.MOVE_RIGHT:
+                case Blinky.MOVE_RIGHT:
 
-                if (blinky.getPos().getY() > inky.getPos().getY()) {
-                    inky.setMoveDirection(Enemy.MOVE_RIGHT);
-                } else {
-                    inky.setMoveDirection(Enemy.MOVE_LEFT);
-                }
-                break;
+                    if (blinky.getPos().getY() > inky.getPos().getY()) {
+                        inky.setMoveDirection(Enemy.MOVE_RIGHT);
+                    } else {
+                        inky.setMoveDirection(Enemy.MOVE_LEFT);
+                    }
+                    break;
 
                 default:
                     break;
@@ -566,10 +516,6 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 }
                 break;
         }
-    }
-
-    private double calculaDistancia(double x1, double y1, double x2, double y2) {
-        return Math.hypot((x2 - x1), (y2 - y1));
     }
 
     public void go() {
@@ -681,8 +627,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         // Setar movimentação do pacman
-			pacMan.setTurn(true);
-			pacMan.setNextDirection(PacMan.MOVE_UP);
+                        pacMan.setTurn(true);
+                        pacMan.setNextDirection(PacMan.MOVE_UP);
                         //pacMan.setMovDirection(PacMan.MOVE_UP);
                         //pacMan.changeDirection(4);
                         break;
@@ -690,7 +636,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     case KeyEvent.VK_DOWN:
                         // Setar movimentação do pacman
                         pacMan.setTurn(true);
-			pacMan.setNextDirection(PacMan.MOVE_DOWN);
+                        pacMan.setNextDirection(PacMan.MOVE_DOWN);
                         //pacMan.setMovDirection(PacMan.MOVE_DOWN);
                         //pacMan.changeDirection(2);
                         break;
@@ -698,7 +644,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     case KeyEvent.VK_LEFT:
                         // Setar movimentaçao do pacman
                         pacMan.setTurn(true);
-			pacMan.setNextDirection(PacMan.MOVE_LEFT);
+                        pacMan.setNextDirection(PacMan.MOVE_LEFT);
                         //pacMan.setMovDirection(PacMan.MOVE_LEFT);
                         //pacMan.changeDirection(3);
                         break;
@@ -706,8 +652,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     case KeyEvent.VK_RIGHT:
                         // Setar movimentação do pacman
                         pacMan.setTurn(true);
-			pacMan.setNextDirection(PacMan.MOVE_RIGHT);
-			//pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+                        pacMan.setNextDirection(PacMan.MOVE_RIGHT);
+                        //pacMan.setMovDirection(PacMan.MOVE_RIGHT);
                         //pacMan.changeDirection(0);
                         break;
 
@@ -816,12 +762,13 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent me) {
     }
-    public void resetEnemyPac(){
-    try {
-        Thread.sleep(1000);
-    }catch (Exception e) {
-        e.printStackTrace();
-         }
+
+    public void resetEnemyPac() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
         this.pacMan.setPosition(1, 1);
         this.pinky.setPosition(9, 9);
         this.blinky.setPosition(9, 9);
