@@ -167,13 +167,13 @@ public abstract class Element implements Serializable {
         return imageIcon;
     }
 
-	protected boolean isPosInteger() {
-		int x = (int) pos.getX();
-		int y = (int) pos.getY();
+    protected boolean isPosInteger() {
+        int x = (int) pos.getX();
+        int y = (int) pos.getY();
 
-		if((x - pos.getX()) == 0 && (y - pos.getY()) == 0)
-                    return true;
-		else
-                    return false;
-	}
+        if((x - pos.getX()) == 0 && (y - pos.getY()) == 0)
+            return true;
+        else
+            return false;
+    }
 }
