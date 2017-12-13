@@ -393,26 +393,34 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
                         // Setar movimentação do pacman
-                        pacMan.setMovDirection(PacMan.MOVE_UP);
-                        pacMan.changeDirection(4);
+						pacMan.setTurn(true);
+						pacMan.setNextDirection(PacMan.MOVE_UP);
+                        //pacMan.setMovDirection(PacMan.MOVE_UP);
+                        //pacMan.changeDirection(4);
                         break;
 
                     case KeyEvent.VK_DOWN:
                         // Setar movimentação do pacman
-                        pacMan.setMovDirection(PacMan.MOVE_DOWN);
-                        pacMan.changeDirection(2);
+						pacMan.setTurn(true);
+						pacMan.setNextDirection(PacMan.MOVE_DOWN);
+                        //pacMan.setMovDirection(PacMan.MOVE_DOWN);
+                        //pacMan.changeDirection(2);
                         break;
 
                     case KeyEvent.VK_LEFT:
                         // Setar movimentaçao do pacman
-                        pacMan.setMovDirection(PacMan.MOVE_LEFT);
-                        pacMan.changeDirection(3);
+                        pacMan.setTurn(true);
+						pacMan.setNextDirection(PacMan.MOVE_LEFT);
+						//pacMan.setMovDirection(PacMan.MOVE_LEFT);
+                        //pacMan.changeDirection(3);
                         break;
 
                     case KeyEvent.VK_RIGHT:
                         // Setar movimentação do pacman
-                        pacMan.setMovDirection(PacMan.MOVE_RIGHT);
-                        pacMan.changeDirection(0);
+                        pacMan.setTurn(true);
+						pacMan.setNextDirection(PacMan.MOVE_RIGHT);
+						//pacMan.setMovDirection(PacMan.MOVE_RIGHT);
+                        //pacMan.changeDirection(0);
                         break;
 
                     case KeyEvent.VK_SPACE:
