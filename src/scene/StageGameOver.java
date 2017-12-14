@@ -18,12 +18,15 @@ import utils.Consts;
 public class StageGameOver extends Stage {
 
     private Image imgStart;
+    private Image imgExit;
     private Image background;
 
     public StageGameOver() {
         try {
             this.imgStart = Toolkit.getDefaultToolkit().getImage(
                     new java.io.File(".").getCanonicalPath() + Consts.PATH + "button_start.png");
+            this.imgExit = Toolkit.getDefaultToolkit().getImage(
+                    new java.io.File(".").getCanonicalPath() + Consts.PATH + "button_exit.png");
             this.background = Toolkit.getDefaultToolkit().getImage(
                     new java.io.File(".").getCanonicalPath() + Consts.PATH + "background_game_over.jpg");
         } catch (IOException e) {
@@ -34,10 +37,10 @@ public class StageGameOver extends Stage {
     @Override
     public void paintScene(Graphics g) {
         int aux = Consts.CELL_SIZE * Consts.NUM_CELLS;
-        g.fillRect(0, 0, Consts.CELL_SIZE * Consts.NUM_CELLS, Consts.CELL_SIZE * Consts.NUM_CELLS + 50);
         g.fillRect(0, 0, aux, aux + 50);
         g.drawImage(background, 0, 0, aux, aux + 50, null);
-        g.drawImage(imgStart, (aux / 2) - 150, 350, 300, 100, null);
+        g.drawImage(imgStart, (aux / 2) - 210, 350, 200, 60, null);
+        g.drawImage(imgExit, (aux / 2) + 10, 340, 200, 70, null);
     }
 
     @Override

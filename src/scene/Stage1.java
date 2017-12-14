@@ -86,8 +86,6 @@ public class Stage1 extends Stage {
             }
         }
         
-        this.balls.add(new Ball("ball.png", 10, 1, 2));
-        
         map[1][1] = 0;
 
         // Total de bolinhas na tela

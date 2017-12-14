@@ -1,7 +1,6 @@
 package control;
 
 import data.Save;
-import elements.Ball;
 import elements.Blinky;
 import elements.PacMan;
 import elements.Element;
@@ -10,7 +9,6 @@ import elements.Clyde;
 import elements.Enemy;
 import elements.Inky;
 import elements.Pinky;
-import elements.PowerPellet;
 import elements.Strawberry;
 
 import utils.Consts;
@@ -32,7 +30,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -161,7 +158,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         this.executor_scene_1.execute(inky);
 
         // Cria cenario
-        this.controlScene = 1;
+        this.controlScene = 0;
         newScene(controlScene);
     }
 
@@ -270,6 +267,10 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 4:
                 this.scene = new StageGameOver();
                 break;
+                
+            case 5:
+                
+                break;
         }
     }
 
@@ -357,34 +358,34 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             for (int i = 0; i < score.length(); i++) {
                 switch (score.charAt(i)) {
                     case '0':
-                        g2.drawImage(imgNum0, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum0, 410 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '1':
-                        g2.drawImage(imgNum1, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum1, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '2':
-                        g2.drawImage(imgNum2, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum2, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '3':
-                        g2.drawImage(imgNum3, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum3, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '4':
-                        g2.drawImage(imgNum4, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum4, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '5':
-                        g2.drawImage(imgNum5, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum5, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '6':
-                        g2.drawImage(imgNum6, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum6, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '7':
-                        g2.drawImage(imgNum7, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum7, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '8':
-                        g2.drawImage(imgNum8, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum8, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     case '9':
-                        g2.drawImage(imgNum9, 410 + (30 * i), aux + 7, 30, 30, null);
+                        g2.drawImage(imgNum9, 415 + (30 * i), aux + 8, 30, 30, null);
                         break;
                     default:
                         break;
@@ -675,26 +676,24 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                             load = new ObjectInputStream(new FileInputStream("./src/data/save"));
                             Save saveClass = (Save) load.readObject();
                             load.close();
+                            
+                            scene = new Stage1();
+                            scene.setBlock("brick.png");
+                            
                             pacMan = saveClass.pacMan;
-                            elemArray.add(pacMan);
                             blinky = saveClass.blinky;
-                            elemArray.add(blinky);
-                            enemys.add(blinky);
                             inky = saveClass.inky;
-                            elemArray.add(inky);
-                            enemys.add(inky);
                             pinky = saveClass.pinky;
-                            elemArray.add(pinky);
-                            enemys.add(pinky);
                             clyde = saveClass.clyde;
-                            elemArray.add(clyde);
-                            enemys.add(clyde);
                             cherry = saveClass.cherry;
-                            elemArray.add(cherry);
                             strawberry = saveClass.strawberry;
-                            elemArray.add(strawberry);
+                            elemArray = saveClass.elemArray;
+                            enemys = saveClass.enemys;
                             scene.setBalls(saveClass.balls);
                             scene.setPowerPellet(saveClass.powerPellet);
+                            scene.setWalls(saveClass.walls);
+                            this.controlScene = saveClass.controlScene;
+                            
                         } catch (FileNotFoundException ex) {
                             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IOException | ClassNotFoundException ex) {
@@ -763,8 +762,12 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                             saveClass.clyde = clyde;
                             saveClass.cherry = cherry;
                             saveClass.strawberry = strawberry;
+                            saveClass.elemArray = elemArray;
+                            saveClass.enemys = enemys;
                             saveClass.balls = scene.getBalls();
                             saveClass.powerPellet = scene.getPowerPellet();
+                            saveClass.walls = scene.getWalls();
+                            saveClass.controlScene = this.controlScene;
                             ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream("./src/data/save"));
                             save.writeObject(saveClass);
                             save.close();

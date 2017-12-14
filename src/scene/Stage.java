@@ -84,10 +84,22 @@ public abstract class Stage {
     public List<Ball> getBalls() {
         return balls;
     }
+    
+    public void setBalls(List<Ball> balls){
+        this.balls = balls;
+    }
+    
+    public void setPowerPellet(List<PowerPellet> powerPellet){
+        this.powerPellet = powerPellet;
+    }
 
     // Obter lista de bloquinhos
     public List<Element> getWalls() {
         return walls;
+    }
+    
+    public void setWalls(List<Element> walls){
+        this.walls = walls;
     }
 
     // Obter total de bolinhas
