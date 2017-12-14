@@ -51,11 +51,12 @@ public class Position implements Serializable {
     public double getY() {
         return y;
     }
-
+    
     public boolean comeBack() {
         return this.setPosition(previousX, previousY);
     }
-
+    
+    // Pacman
     public boolean moveUp() {
         return this.setPosition(this.getX() - Consts.WALK_STEP, this.getY());
     }
@@ -71,7 +72,8 @@ public class Position implements Serializable {
     public boolean moveLeft() {
         return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP);
     }
-
+    
+    // Enemy
     public boolean moveUpEnemy() {
         return this.setPosition(this.getX() - Consts.WALK_STEP_ENEMY, this.getY());
     }
@@ -86,5 +88,22 @@ public class Position implements Serializable {
 
     public boolean moveLeftEnemt() {
 	return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_ENEMY);
-    } 
+    }
+    
+    // Slow enemy
+    public boolean moveUpSlowEnemy() {
+        return this.setPosition(this.getX() - Consts.WALK_STEP_SLOW_ENEMY, this.getY());
+    }
+
+    public boolean moveDownSlowEnemy() {
+        return this.setPosition(this.getX() + Consts.WALK_STEP_SLOW_ENEMY, this.getY());
+    }
+
+    public boolean moveRightSlowEnemy() {
+        return this.setPosition(this.getX(), this.getY() + Consts.WALK_STEP_SLOW_ENEMY);
+    }
+
+    public boolean moveLeftSlowEnemt() {
+	return this.setPosition(this.getX(), this.getY() - Consts.WALK_STEP_SLOW_ENEMY);
+    }
 }

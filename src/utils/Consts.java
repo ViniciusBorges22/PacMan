@@ -10,7 +10,7 @@ public class Consts {
 
     public static final int WALK_STEP_DEC_PLACES = 1;
 
-    public static final int DELAY = 8;
+    public static final int DELAY = 10;
 
     public static final int TIMER_CHERRY = 50000;
 
@@ -21,6 +21,8 @@ public class Consts {
     public static final double WALK_STEP_FRUIT = 0.02;
 
     public static final double WALK_STEP_ENEMY = 0.05;
+    
+    public static final double WALK_STEP_SLOW_ENEMY = 0.02;
 
     public static final double WALK_STEP = 0.1;
     

@@ -24,8 +24,9 @@ public class PacMan extends Element implements Serializable, Runnable {
     private int score;
     private int aux_score;
 
-    private boolean turn;
-    private int nextDirection;
+    private boolean turn; //boolean auxiliar que indica que o pacman deverá mudar
+                          //de direção na próxima posição inteira
+    private int nextDirection; //código com a próxima direção do pacman
 
     public PacMan() {
         super(new String[]{"pacman_right.png", "pacman_right2.png", "pacman_down.png", "pacman_down2.png",
@@ -73,14 +74,14 @@ public class PacMan extends Element implements Serializable, Runnable {
     }
 
     public void move() {
-        boolean flag = false;
-
+        boolean flag = false; //flag para checar se entrou no if abaixo
+        //caso o pacman esteja em uma posição inteira e o usuário teclou alguma seta
         if (turn && this.isPosInteger()) {
             this.setMovDirection(nextDirection);
             turn = false;
             flag = true;
         }
-
+        //verifica a próxima direção do pacman e executa a mudança
         switch (movDirection) {
             case MOVE_LEFT:
                 if (flag) {

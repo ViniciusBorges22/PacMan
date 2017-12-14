@@ -158,7 +158,24 @@ public abstract class Element implements Serializable {
     public boolean moveLeftEnemy() {
         return this.pos.moveLeftEnemt();
     }
+    
+    // Slow Enemy
+    public boolean moveUpSlowEnemy() {
+        return this.pos.moveUpSlowEnemy();
+    }
 
+    public boolean moveDownSlowEnemy() {
+        return this.pos.moveDownSlowEnemy();
+    }
+
+    public boolean moveRightSlowEnemy() {
+        return this.pos.moveRightSlowEnemy();
+    }
+
+    public boolean moveLeftSlowEnemy() {
+        return this.pos.moveLeftSlowEnemt();
+    }
+    
     public Position getPos() {
         return pos;
     }

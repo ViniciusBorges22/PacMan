@@ -70,7 +70,8 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
 
     private Image imgLife;
     private Image imgScore;
-    private Image imgNum0, imgNum1, imgNum2, imgNum3, imgNum4, imgNum5, imgNum6, imgNum7, imgNum8, imgNum9;
+    private Image imgNum0, imgNum1, imgNum2, imgNum3,
+            imgNum4, imgNum5, imgNum6, imgNum7, imgNum8, imgNum9;
 
     // Controle de tela
     // 0 - Tela inicial
@@ -267,9 +268,9 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             case 4:
                 this.scene = new StageGameOver();
                 break;
-                
+
             case 5:
-                
+
                 break;
         }
     }
@@ -539,7 +540,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     } else {
                         clyde.setMoveDirection(Enemy.MOVE_UP);
                     }
-                    
+
                     break;
 
                 case PacMan.MOVE_UP:
@@ -549,7 +550,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     } else {
                         clyde.setMoveDirection(Enemy.MOVE_UP);
                     }
-                    
+
                     break;
 
                 case PacMan.MOVE_LEFT:
@@ -559,7 +560,7 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                     } else {
                         clyde.setMoveDirection(Enemy.MOVE_LEFT);
                     }
-                    
+
                     break;
 
                 case PacMan.MOVE_RIGHT:
@@ -657,29 +658,32 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
         switch (aux) {
             // Tela Inicial
             case 0:
-                switch(e.getKeyCode()) {
+                switch (e.getKeyCode()) {
+                    //Caso o usuário digite espaço pausa o pacman
                     case KeyEvent.VK_SPACE:
                         controlScene = 1;
                         newScene(controlScene);
                         break;
-                        
+                    
+                    //Caso o usuário digite Q pergunta se deseja sair do jogo
                     case KeyEvent.VK_Q:
                         if (JOptionPane.showConfirmDialog(null,
                                 "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
                             System.exit(0);
                         }
                         break;
-                        
+                    
+                    //Caso o usuário digite L executa a operação de salvamento
                     case KeyEvent.VK_L:
                         ObjectInputStream load;
                         try {
                             load = new ObjectInputStream(new FileInputStream("./src/data/save"));
                             Save saveClass = (Save) load.readObject();
                             load.close();
-                            
+
                             scene = new Stage1();
                             scene.setBlock("brick.png");
-                            
+
                             pacMan = saveClass.pacMan;
                             blinky = saveClass.blinky;
                             inky = saveClass.inky;
@@ -693,14 +697,14 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                             scene.setPowerPellet(saveClass.powerPellet);
                             scene.setWalls(saveClass.walls);
                             this.controlScene = saveClass.controlScene;
-                            
+
                         } catch (FileNotFoundException ex) {
                             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IOException | ClassNotFoundException ex) {
                             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                } 
+                }
                 break;
 
             // Tela Final
@@ -717,43 +721,38 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
             default:
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
-                        // Setar movimentação do pacman
+                        // Setar movimentação do pacman para cima
                         pacMan.setTurn(true);
                         pacMan.setNextDirection(PacMan.MOVE_UP);
-                        //pacMan.setMovDirection(PacMan.MOVE_UP);
-                        //pacMan.changeDirection(4);
                         break;
 
                     case KeyEvent.VK_DOWN:
-                        // Setar movimentação do pacman
+                        // Setar movimentação do pacman para baixo
                         pacMan.setTurn(true);
                         pacMan.setNextDirection(PacMan.MOVE_DOWN);
-                        //pacMan.setMovDirection(PacMan.MOVE_DOWN);
-                        //pacMan.changeDirection(2);
                         break;
 
                     case KeyEvent.VK_LEFT:
-                        // Setar movimentaçao do pacman
+                        // Setar movimentaçao do pacman para a esquerda
                         pacMan.setTurn(true);
                         pacMan.setNextDirection(PacMan.MOVE_LEFT);
-                        //pacMan.setMovDirection(PacMan.MOVE_LEFT);
-                        //pacMan.changeDirection(3);
                         break;
 
                     case KeyEvent.VK_RIGHT:
-                        // Setar movimentação do pacman
+                        // Setar movimentação do pacman para a direita
                         pacMan.setTurn(true);
                         pacMan.setNextDirection(PacMan.MOVE_RIGHT);
-                        //pacMan.setMovDirection(PacMan.MOVE_RIGHT);
-                        //pacMan.changeDirection(0);
                         break;
 
                     case KeyEvent.VK_SPACE:
-                        pacMan.setMovDirection(PacMan.STOP);
+                        // Pausa o pacman
+                        pacMan.setTurn(true);
+                        pacMan.setNextDirection(PacMan.STOP);
                         break;
                     
+                    //Executa a operação de salvamento do jogo
                     case KeyEvent.VK_S:
-                        try{
+                        try {
                             Save saveClass = new Save();
                             saveClass.pacMan = pacMan;
                             saveClass.blinky = blinky;
@@ -839,10 +838,46 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 int x1 = e.getPoint().x;
                 int y1 = e.getPoint().y;
 
-                if ((100 <= y1 && y1 <= 200) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+                // iniciar jogo
+                if ((100 <= y1 && y1 <= 160) && (a1 - 110 <= x1 && x1 <= a1 + 110)) {
                     controlScene = 1;
                     newScene(controlScene);
-                } else if ((240 <= y1 && y1 <= 340) && (a1 - 150 <= x1 && x1 <= a1 + 150)) {
+
+                } else if ((200 <= y1 && y1 <= 260) && (a1 - 110 <= x1 && x1 <= a1 + 110)) {
+
+                    // Iniciar jogo salvo
+                    ObjectInputStream load;
+                    try {
+                        load = new ObjectInputStream(new FileInputStream("./src/data/save"));
+                        Save saveClass = (Save) load.readObject();
+                        load.close();
+
+                        scene = new Stage1();
+                        scene.setBlock("brick.png");
+
+                        pacMan = saveClass.pacMan;
+                        blinky = saveClass.blinky;
+                        inky = saveClass.inky;
+                        pinky = saveClass.pinky;
+                        clyde = saveClass.clyde;
+                        cherry = saveClass.cherry;
+                        strawberry = saveClass.strawberry;
+                        elemArray = saveClass.elemArray;
+                        enemys = saveClass.enemys;
+                        scene.setBalls(saveClass.balls);
+                        scene.setPowerPellet(saveClass.powerPellet);
+                        scene.setWalls(saveClass.walls);
+                        this.controlScene = saveClass.controlScene;
+
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } else if ((300 <= y1 && y1 <= 360) && (a1 - 110 <= x1 && x1 <= a1 + 110)) {
+
+                    // Sair
                     if (JOptionPane.showConfirmDialog(null,
                             "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
                         System.exit(0);
@@ -859,9 +894,15 @@ public class GameScreen extends JFrame implements KeyListener, MouseListener {
                 int y2 = e.getPoint().y;
 
                 // Volta para a tela inicial
-                if ((350 <= y2 && y2 <= 450) && (a2 - 150 <= x2 && x2 <= a2 + 150)) {
+                if ((350 <= y2 && y2 <= 410) && (a2 - 210 <= x2 && x2 <= a2 - 10)) {
                     controlScene = 0;
                     newScene(controlScene);
+                } else if ((350 <= y2 && y2 <= 410) && (a2 + 10 <= x2 && x2 <= a2 + 210)) {
+                    // Sair
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente sair ?", "Sair", JOptionPane.YES_NO_OPTION) == 0) {
+                        System.exit(0);
+                    }
                 }
                 break;
         }

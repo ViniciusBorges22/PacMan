@@ -22,9 +22,9 @@ public abstract class Enemy extends Element {
     public static final int MOVE_UP = 3;
     public static final int MOVE_DOWN = 4;
 
-    protected static final int HOUSE = 1;
-    protected static final int CHASE = 2;
-    protected static final int DANGER = 3;
+    public static final int HOUSE = 1;
+    public static final int CHASE = 2;
+    public static final int DANGER = 3;
 
     // Posições do pacman
     protected Point pacman_pos;
@@ -62,16 +62,34 @@ public abstract class Enemy extends Element {
     public void move() {
         switch (movDirection) {
             case MOVE_LEFT:
-                this.moveLeftEnemy();
+                if (state == CHASE) {
+                    this.moveLeftSlowEnemy();
+                } else {
+                    this.moveLeftEnemy();
+                }
                 break;
             case MOVE_RIGHT:
-                this.moveRightEnemy();
+                
+                if (state == CHASE) {
+                    this.moveRightSlowEnemy();
+                } else {
+                    this.moveRightEnemy();
+                }
+                
                 break;
             case MOVE_UP:
-                this.moveUpEnemy();
+                if (state == CHASE) {
+                    this.moveUpSlowEnemy();
+                } else {
+                    this.moveUpEnemy();
+                }
                 break;
             case MOVE_DOWN:
-                this.moveDownEnemy();
+                if (state == CHASE) {
+                    this.moveDownSlowEnemy();
+                } else {
+                    this.moveDownEnemy();
+                }
                 break;
             default:
                 break;
@@ -80,20 +98,20 @@ public abstract class Enemy extends Element {
 
     @Override
     public void autoDraw(Graphics g) {
-        switch(this.getState()){
+        switch (this.getState()) {
             case 1:
-                Drawing.draw(g, this.directions[0],  pos.getY(), pos.getX());
+                Drawing.draw(g, this.directions[0], pos.getY(), pos.getX());
                 break;
             case 2:
-                Drawing.draw(g, this.directions[1],  pos.getY(), pos.getX());
+                Drawing.draw(g, this.directions[1], pos.getY(), pos.getX());
                 break;
             case 3:
                 this.setVisible(false);
-                TimerTask revive = new TimerTask(){
+                TimerTask revive = new TimerTask() {
                     @Override
-                    public void run(){
+                    public void run() {
                         setState(1);
-                        
+
                     }
                 };
                 Timer timer = new Timer();

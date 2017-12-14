@@ -110,24 +110,24 @@ public class GameController {
                 mult = 1;
                 pPacMan.scorePoints(50);
                 it2.remove();
-                blinky.setState(2); //coloca em vulnerável
-                inky.setState(2);
-                pinky.setState(2);
-                clyde.setState(2);
+                blinky.setState(Enemy.CHASE); //coloca em vulnerável
+                inky.setState(Enemy.CHASE);
+                pinky.setState(Enemy.CHASE);
+                clyde.setState(Enemy.CHASE);
                 TimerTask vulnerable = new TimerTask() {
                     @Override
                     public void run() { //coloca em mortal de novo
-                        if (blinky.getState() == 2) {
-                            blinky.setState(1);
+                        if (blinky.getState() == Enemy.CHASE) {
+                            blinky.setState(Enemy.HOUSE);
                         }
-                        if (inky.getState() == 2) {
-                            inky.setState(1);
+                        if (inky.getState() == Enemy.CHASE) {
+                            inky.setState(Enemy.HOUSE);
                         }
-                        if (pinky.getState() == 2) {
-                            pinky.setState(1);
+                        if (pinky.getState() == Enemy.CHASE) {
+                            pinky.setState(Enemy.HOUSE);
                         }
-                        if (clyde.getState() == 2) {
-                            clyde.setState(1);
+                        if (clyde.getState() == Enemy.CHASE) {
+                            clyde.setState(Enemy.HOUSE);
                         }
                     }
                 };
